@@ -9,7 +9,7 @@ describe("context resolution", () => {
 
     expect(result.disposition).toBe("MONITOR");
     expect(result.observations.flatMap((item) => item.evidenceIds)).toEqual(
-      expect.arrayContaining(["tc-609-mode-switch", "plan-609-calibration"]),
+      expect.arrayContaining(["tc-609-recorded", "plan-609-event-14"]),
     );
   });
 

@@ -18,7 +18,7 @@
 - Scores are normalized against nominal calibration samples using `clip((z - 1.5) / 7, 0, 1)` where `z` is the robust z-score against calibration, and fused at weights `0.30 / 0.30 / 0.40`.
 - An alert requires at least three of five recent fused scores at or above `0.78`.
 
-The full Python pipeline (`scripts/data_pipeline/train_ensemble.py`) trains a **nonlinear MLPRegressor autoencoder** with the architecture 4-8-2-8-4 on ESA Mission 2 nominal data. It exports an ONNX artifact and runs a validation grid search to select ensemble weights and write provenance. Running the pipeline replaces the bundled linear demo model with a source-derived artifact. Bundled values demonstrate the interface and are not official ESA benchmark results.
+The full Python pipeline (`scripts/data_pipeline/train_ensemble.py`) trains a **nonlinear MLPRegressor autoencoder** with the architecture 4-8-2-8-4 on ESA Mission 2 nominal data. It exports a staged ONNX candidate and runs a validation grid search to select ensemble weights and write provenance. Source artifacts remain under ignored staging by default; writing under `public/` requires `--promote-web` after evaluation and browser-parity review. Bundled values demonstrate the interface and are not official ESA benchmark results.
 
 ## Granite failure handling
 

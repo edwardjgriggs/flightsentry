@@ -1,5 +1,6 @@
 import { detectorConfiguration } from "@/lib/detectors";
 import type { DetectorFrame, Scenario } from "@/lib/types";
+import sourceEvaluation from "@/data/source-evaluation.json";
 
 export function TechnicalProof({
   scenarios,
@@ -111,13 +112,80 @@ export function TechnicalProof({
         </div>
       </section>
 
+      <section className="hairline-panel mt-5 overflow-hidden">
+        <div className="grid gap-px bg-[var(--line)] lg:grid-cols-[1.15fr_.85fr]">
+          <div className="bg-[var(--panel)] p-5">
+            <p className="kicker mb-1 text-[var(--mint)]">Source-data evaluation / 03</p>
+            <h2 className="display-type text-2xl font-semibold text-white">Authentic data. Staged deployment.</h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+              The checksum-verified Mission 2 extracts confirm the operational contrast: event 609 includes a priority-3 telecommand and overlapping event record; event 618 includes neither.
+            </p>
+            <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
+              <ProofRow label="Archive checksum" value="MD5 verified" />
+              <ProofRow label="Shared channels" value={`${sourceEvaluation.source.channels.length}`} />
+              <ProofRow label="Source samples" value={`${sourceEvaluation.source.samples}`} />
+              <ProofRow label="ONNX checker" value={sourceEvaluation.candidate.onnxValidation} />
+              <ProofRow label="Validation event 609" value={`${sourceEvaluation.results.validation609.detectionDelaySeconds}s detection`} />
+              <ProofRow label="Held-out event 618" value={`${sourceEvaluation.results.heldOut618.detectionDelaySeconds}s detection`} />
+            </dl>
+            <div className="mono mt-4 flex flex-wrap gap-4 text-xs">
+              <a className="text-[var(--mint)] underline-offset-4 hover:underline" href="/data/source-evaluation/esa-m2-609.json">Event 609 extract</a>
+              <a className="text-[var(--mint)] underline-offset-4 hover:underline" href="/data/source-evaluation/esa-m2-618.json">Event 618 extract</a>
+            </div>
+          </div>
+          <div className="bg-[#0d211c] p-5">
+            <p className="kicker text-[var(--amber)]">Deployment gate</p>
+            <p className="mono mt-3 text-sm text-white">{sourceEvaluation.deploymentDecision.status.replaceAll("_", " ")}</p>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{sourceEvaluation.deploymentDecision.reason}</p>
+            <p className="mono mt-5 text-xs text-[var(--faint)]">
+              Candidate weights {sourceEvaluation.candidate.weights.mad.toFixed(2)} / {sourceEvaluation.candidate.weights.isolationForest.toFixed(2)} / {sourceEvaluation.candidate.weights.autoencoder.toFixed(2)}
+            </p>
+          </div>
+        </div>
+        <div className="overflow-x-auto border-t border-[var(--line)]">
+          <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+            <thead className="kicker text-[var(--muted)]">
+              <tr>
+                <th className="border-b border-[var(--line)] px-5 py-3 font-normal">Held-out event 618</th>
+                <th className="border-b border-l border-[var(--line)] px-5 py-3 font-normal">Detected</th>
+                <th className="border-b border-l border-[var(--line)] px-5 py-3 font-normal">Event F1</th>
+                <th className="border-b border-l border-[var(--line)] px-5 py-3 font-normal">False-alert episodes</th>
+                <th className="border-b border-l border-[var(--line)] px-5 py-3 font-normal">Delay</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(sourceEvaluation.results.heldOutAblation).map(([method, result]) => (
+                <tr key={method}>
+                  <td className="border-b border-[var(--line)] px-5 py-4 text-[var(--ink)]">{formatMethod(method)}</td>
+                  <td className={`mono border-b border-l border-[var(--line)] px-5 py-4 ${result.detected ? "text-[var(--mint)]" : "text-[var(--red)]"}`}>
+                    {result.detected ? "YES" : "NO"}
+                  </td>
+                  <td className="mono border-b border-l border-[var(--line)] px-5 py-4 text-[var(--ink)]">{result.eventF1.toFixed(2)}</td>
+                  <td className="mono border-b border-l border-[var(--line)] px-5 py-4 text-[var(--ink)]">{result.falseAlertEpisodes}</td>
+                  <td className="mono border-b border-l border-[var(--line)] px-5 py-4 text-[var(--ink)]">
+                    {result.detectionDelaySeconds === null ? "—" : `${result.detectionDelaySeconds}s`}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="px-5 py-4 text-xs text-[var(--faint)]">{sourceEvaluation.scope} {sourceEvaluation.evaluationDesign.limitation}.</p>
+      </section>
+
       <div className="mt-5 grid gap-5 lg:grid-cols-3">
-        <ProofCard number="03" title="Grounded by construction" body="Granite can cite only evidence IDs present in the server-created packet. Unknown references fail validation and trigger the reference brief." />
-        <ProofCard number="04" title="Human remains in command" body="FlightSentry recommends low-risk checks. It exposes uncertainty and cannot create or execute spacecraft commands." />
-        <ProofCard number="05" title="Reproducible data path" body="The Python pipeline verifies the ESA archive checksum, extracts attributed windows, trains artifacts, and records configuration provenance." />
+        <ProofCard number="04" title="Grounded by construction" body="Granite can cite only evidence IDs present in the server-created packet. Unknown references fail validation and trigger the reference brief." />
+        <ProofCard number="05" title="Human remains in command" body="FlightSentry recommends low-risk checks. It exposes uncertainty and cannot create or execute spacecraft commands." />
+        <ProofCard number="06" title="Reproducible data path" body="The Python pipeline verifies the ESA archive checksum, extracts attributed windows, trains artifacts, and records configuration provenance." />
       </div>
     </main>
   );
+}
+
+function formatMethod(method: string): string {
+  return method
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (character) => character.toUpperCase());
 }
 
 function ProofRow({ label, value }: { label: string; value: string }) {

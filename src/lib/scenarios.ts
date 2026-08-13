@@ -95,18 +95,18 @@ const evidence609: EvidenceItem[] = [
     channelId: "aocs_wheel_current",
   },
   {
-    id: "tc-609-mode-switch",
+    id: "tc-609-recorded",
     kind: "telecommand",
     timestamp: 49,
-    label: "Accepted mode-switch telecommand",
-    detail: "A high-priority calibration mode command was accepted immediately before the telemetry change.",
+    label: "Recorded priority-3 telecommand",
+    detail: "Mission 2 source data records anonymized telecommand_6 at 09:18:31 UTC, aligned with the annotated onset.",
   },
   {
-    id: "plan-609-calibration",
+    id: "plan-609-event-14",
     kind: "planned-event",
     timestamp: 48,
-    label: "Planned calibration window",
-    detail: "The mission timeline contains an approved attitude-control calibration covering the event window.",
+    label: "Overlapping operational event",
+    detail: "The source events timeline records anonymized event_14 from 09:18:52 to 11:03:52 UTC.",
   },
 ];
 
@@ -138,30 +138,30 @@ const evidence618: EvidenceItem[] = [
 
 const analysis609: IncidentBrief = {
   disposition: "MONITOR",
-  summary: "The telemetry shift is consistent with an approved calibration activity, but should remain under observation through recovery.",
+  summary: "The telemetry shift coincides with recorded command and operational-event context, so it should be monitored through recovery.",
   observations: [
     {
       statement: "All three detectors identify a real change in spacecraft behavior.",
       evidenceIds: ["model-609-ensemble", "tel-609-wheel"],
     },
     {
-      statement: "A verified telecommand and planned calibration overlap the onset.",
-      evidenceIds: ["tc-609-mode-switch", "plan-609-calibration"],
+      statement: "A recorded priority-3 telecommand and operational event overlap the onset.",
+      evidenceIds: ["tc-609-recorded", "plan-609-event-14"],
     },
   ],
   hypotheses: [
     {
       rank: 1,
-      label: "Commanded calibration response",
-      rationale: "The command, plan, onset, and bounded response are temporally aligned.",
-      confidence: 0.94,
-      evidenceIds: ["tc-609-mode-switch", "plan-609-calibration", "tel-609-wheel"],
+      label: "Commanded operational response",
+      rationale: "The telecommand, operational event, onset, and bounded response are temporally aligned.",
+      confidence: 0.9,
+      evidenceIds: ["tc-609-recorded", "plan-609-event-14", "tel-609-wheel"],
     },
   ],
   uncertainty: "The replay does not prove the command caused every observed channel response.",
   diagnosticChecks: [
-    "Confirm the mode transition completed with the expected acknowledgement.",
-    "Verify wheel current returns to its nominal envelope after the calibration window.",
+    "Confirm the recorded telecommand completed with the expected acknowledgement.",
+    "Verify wheel current returns to its nominal envelope after the operational event.",
     "Escalate if attitude error persists beyond the planned recovery interval.",
   ],
 };
@@ -207,7 +207,7 @@ const common = {
   channels,
   sourceUrl: SOURCE_URL,
   dataNotice:
-    "Bundled challenge fixture modeled on the paired Mission 2 cases described by ESA. Run the repository pipeline to replace it with licensed source extracts.",
+    "Telemetry traces are a deterministic fixture. Context labels mirror the anonymized Mission 2 source records verified by the repository pipeline.",
 } as const;
 
 const scenarios: Record<ScenarioId, Scenario> = {
@@ -215,10 +215,10 @@ const scenarios: Record<ScenarioId, Scenario> = {
     ...common,
     id: "esa-m2-609",
     eventId: 609,
-    title: "Commanded calibration",
+    title: "Commanded rare nominal",
     eyebrow: "CASE A · CONTEXT EXPLAINS CHANGE",
     classification: "RARE_NOMINAL",
-    description: "A planned mode transition produces an unusual but expected telemetry signature.",
+    description: "An unusual telemetry signature aligns with recorded command and operational-event context.",
     eventWindow: [50, 61],
     telemetry: makeTelemetry(609),
     evidence: evidence609,

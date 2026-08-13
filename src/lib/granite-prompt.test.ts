@@ -8,7 +8,7 @@ describe("Granite prompt boundary", () => {
     const messages = buildGraniteMessages(getScenario("esa-m2-609"));
     const prompt = messages.map((message) => message.content).join("\n");
 
-    expect(prompt).toContain("tc-609-mode-switch");
+    expect(prompt).toContain("tc-609-recorded");
     expect(prompt).toMatch(/never issue or execute spacecraft commands/i);
     expect(prompt).toMatch(/INVESTIGATE/i);
   });

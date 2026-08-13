@@ -179,3 +179,53 @@ Reports:
 - `reports/lighthouse-baseline.report.html` records the pre-optimization run.
 
 The final optimization moved ONNX Runtime behind the replay action and changed local fonts to optional display, improving Performance from 64 to 96 and CLS from 0.13 to 0.
+
+### Codex session (August 13, 2026) — Session 5 (authentic Mission 2 evidence)
+
+**Goal:** Execute the real ESA Mission 2 path, publish reviewable source evidence, measure the staged candidate on a held-out paired event, and prevent weak artifacts from silently replacing the browser demo.
+
+**Source verification:**
+
+- Downloaded `ESA-Mission2.zip` from Zenodo record `12528696` using resumable parallel byte ranges.
+- Verified the complete 4,098,539,912-byte archive against MD5 `0b7505b7f0731ca037ee889ca2a520ce` before extraction.
+- Extracted four shared channels: `channel_18`, `channel_20`, `channel_9`, and `channel_13`.
+- Produced non-overlapping attributed packs with 686 event-609 samples and 288 event-618 samples.
+- Confirmed event 609 contains priority-3 `telecommand_6` and overlapping `event_14`; event 618 contains neither.
+- Published only the two attributed extracts under `public/data/source-evaluation/`; the raw archive and working data remain Git-ignored.
+
+**Evaluation design and outcome:**
+
+- Fit on 87 nominal event-609-window samples; calibrated scores on 38 separate nominal samples.
+- Selected weights on event 609 using event-level F1, false-alert episodes, and delay.
+- Held event 618 out of fitting, calibration, and weight selection.
+- Selected staged weights: `0.60 MAD / 0.00 Isolation Forest / 0.40 autoencoder`.
+- Event 609: detected, event F1 `1.00`, zero false-alert episodes, `54 s` delay.
+- Held-out event 618: detected, event F1 `0.50`, two false-alert episodes, `1.6736/hour`, `198 s` delay.
+- Paired total: 2/2 events detected, event F1 `0.67`, `0.4938` false alerts/hour, `126 s` mean delay.
+- Rolling MAD alone scored event F1 `0.67` on held-out event 618, above the ensemble's `0.50`; the source candidate was not promoted.
+
+**Safety and presentation changes:**
+
+- `train_ensemble.py` now stages outputs by default; writes under `public/` require `--promote-web`.
+- Three-of-five persistence resets at scenario boundaries.
+- The public context copy now uses only anonymized source identifiers and removes unsupported “calibration” and “mode-switch” claims.
+- Technical Proof now shows source provenance, held-out ablation, direct extract links, and the `RETAIN BUNDLED DEMO` decision.
+- Evidence screenshot: `reports/flightsentry-source-proof.png`.
+- Full metric record: `docs/source-evaluation.md` and `src/data/source-evaluation.json`.
+
+**Final command results:**
+
+```text
+npm run verify: Pass
+  ESLint: zero warnings
+  TypeScript: pass
+  Vitest: 88/88
+  Next.js production build: pass
+
+npm run test:e2e: 4/4 Chromium scenarios passed
+Python pipeline tests: 38/38 passed via uv run --with-requirements requirements-ml.txt
+npm audit --audit-level=high: zero vulnerabilities
+Source candidate ONNX: onnx.checker.check_model PASS
+```
+
+No production deployment, commit, or push was performed in Session 5. IBM Bob was not used for this session.

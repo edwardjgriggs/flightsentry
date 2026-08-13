@@ -1,0 +1,3257 @@
+{
+  "schemaVersion": 1,
+  "eventId": 618,
+  "classification": "ANOMALY",
+  "source": "https://doi.org/10.5281/zenodo.12528696",
+  "license": "CC BY 3.0 IGO",
+  "attribution": "European Space Agency Anomaly Dataset",
+  "extractedWindow": {
+    "start": "2000-04-16T08:04:43.629000+00:00",
+    "eventStart": "2000-04-16T08:34:43.629000+00:00",
+    "eventEnd": "2000-04-16T09:15:11.385000+00:00",
+    "end": "2000-04-16T09:16:51.510000+00:00"
+  },
+  "perChannelIntervals": [
+    {
+      "channelId": "channel_9",
+      "start": "2000-04-16T08:38:19.629000+00:00",
+      "end": "2000-04-16T09:14:19.635000+00:00"
+    },
+    {
+      "channelId": "channel_13",
+      "start": "2000-04-16T08:38:19.629000+00:00",
+      "end": "2000-04-16T09:14:01.635000+00:00"
+    },
+    {
+      "channelId": "channel_14",
+      "start": "2000-04-16T08:38:19.629000+00:00",
+      "end": "2000-04-16T09:14:01.635000+00:00"
+    },
+    {
+      "channelId": "channel_18",
+      "start": "2000-04-16T08:37:25.629000+00:00",
+      "end": "2000-04-16T09:15:11.385000+00:00"
+    },
+    {
+      "channelId": "channel_20",
+      "start": "2000-04-16T08:34:43.629000+00:00",
+      "end": "2000-04-16T09:14:55.635000+00:00"
+    }
+  ],
+  "channels": [
+    {
+      "id": "channel_18",
+      "metadata": {
+        "Channel": "channel_18",
+        "Subsystem": "subsystem_1",
+        "Physical Unit": null,
+        "Group": 5,
+        "Target": "YES"
+      }
+    },
+    {
+      "id": "channel_20",
+      "metadata": {
+        "Channel": "channel_20",
+        "Subsystem": "subsystem_1",
+        "Physical Unit": null,
+        "Group": 5,
+        "Target": "YES"
+      }
+    },
+    {
+      "id": "channel_9",
+      "metadata": {
+        "Channel": "channel_9",
+        "Subsystem": "subsystem_1",
+        "Physical Unit": null,
+        "Group": 10,
+        "Target": "YES"
+      }
+    },
+    {
+      "id": "channel_13",
+      "metadata": {
+        "Channel": "channel_13",
+        "Subsystem": "subsystem_1",
+        "Physical Unit": null,
+        "Group": 9,
+        "Target": "YES"
+      }
+    }
+  ],
+  "operationalContext": {
+    "telecommands": [],
+    "operationalEvents": []
+  },
+  "telemetry": [
+    {
+      "timestamp": 0,
+      "sourceTimestamp": "2000-04-16T08:05:01.626000+00:00",
+      "values": {
+        "channel_18": 0.4559262990951538,
+        "channel_20": 0.4562779366970062,
+        "channel_9": 0.48469817638397217,
+        "channel_13": 0.5065745115280151
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 18,
+      "sourceTimestamp": "2000-04-16T08:05:19.626000+00:00",
+      "values": {
+        "channel_18": 0.4560244083404541,
+        "channel_20": 0.4561344385147095,
+        "channel_9": 0.48440539836883545,
+        "channel_13": 0.5065581798553467
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 36,
+      "sourceTimestamp": "2000-04-16T08:05:37.626000+00:00",
+      "values": {
+        "channel_18": 0.45605456829071045,
+        "channel_20": 0.45611703395843506,
+        "channel_9": 0.48440539836883545,
+        "channel_13": 0.5065581798553467
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 54,
+      "sourceTimestamp": "2000-04-16T08:05:55.626000+00:00",
+      "values": {
+        "channel_18": 0.4560093879699707,
+        "channel_20": 0.4559951722621918,
+        "channel_9": 0.48440539836883545,
+        "channel_13": 0.5065581798553467
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 69,
+      "sourceTimestamp": "2000-04-16T08:06:11.379000+00:00",
+      "values": {
+        "channel_18": 0.4560093879699707,
+        "channel_20": 0.4559951722621918,
+        "channel_9": 0.48440539836883545,
+        "channel_13": 0.5065581798553467
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 72,
+      "sourceTimestamp": "2000-04-16T08:06:13.626000+00:00",
+      "values": {
+        "channel_18": 0.4560621678829193,
+        "channel_20": 0.4559995234012604,
+        "channel_9": 0.48440539836883545,
+        "channel_13": 0.5065581798553467
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 90,
+      "sourceTimestamp": "2000-04-16T08:06:31.626000+00:00",
+      "values": {
+        "channel_18": 0.45606958866119385,
+        "channel_20": 0.45609086751937866,
+        "channel_9": 0.48440539836883545,
+        "channel_13": 0.5065581798553467
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 108,
+      "sourceTimestamp": "2000-04-16T08:06:49.626000+00:00",
+      "values": {
+        "channel_18": 0.45604684948921204,
+        "channel_20": 0.45619088411331177,
+        "channel_9": 0.4846576452255249,
+        "channel_13": 0.5066021084785461
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 126,
+      "sourceTimestamp": "2000-04-16T08:07:07.626000+00:00",
+      "values": {
+        "channel_18": 0.45602431893348694,
+        "channel_20": 0.45619529485702515,
+        "channel_9": 0.4846576452255249,
+        "channel_13": 0.5066021084785461
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 144,
+      "sourceTimestamp": "2000-04-16T08:07:25.626000+00:00",
+      "values": {
+        "channel_18": 0.4560244083404541,
+        "channel_20": 0.4562040865421295,
+        "channel_9": 0.4846576452255249,
+        "channel_13": 0.5066021084785461
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 159,
+      "sourceTimestamp": "2000-04-16T08:07:41.379000+00:00",
+      "values": {
+        "channel_18": 0.4560244083404541,
+        "channel_20": 0.4562040865421295,
+        "channel_9": 0.4846576452255249,
+        "channel_13": 0.5066021084785461
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 162,
+      "sourceTimestamp": "2000-04-16T08:07:43.626000+00:00",
+      "values": {
+        "channel_18": 0.4559263288974762,
+        "channel_20": 0.4561212658882141,
+        "channel_9": 0.4846576452255249,
+        "channel_13": 0.5066021084785461
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 180,
+      "sourceTimestamp": "2000-04-16T08:08:01.626000+00:00",
+      "values": {
+        "channel_18": 0.4559640884399414,
+        "channel_20": 0.4560037851333618,
+        "channel_9": 0.4846576452255249,
+        "channel_13": 0.5066021084785461
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 198,
+      "sourceTimestamp": "2000-04-16T08:08:19.626000+00:00",
+      "values": {
+        "channel_18": 0.4560018479824066,
+        "channel_20": 0.45597338676452637,
+        "channel_9": 0.48461663722991943,
+        "channel_13": 0.506585419178009
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 216,
+      "sourceTimestamp": "2000-04-16T08:08:37.626000+00:00",
+      "values": {
+        "channel_18": 0.45597153902053833,
+        "channel_20": 0.45616474747657776,
+        "channel_9": 0.48461663722991943,
+        "channel_13": 0.506585419178009
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 234,
+      "sourceTimestamp": "2000-04-16T08:08:55.626000+00:00",
+      "values": {
+        "channel_18": 0.4560694992542267,
+        "channel_20": 0.4562649130821228,
+        "channel_9": 0.48461663722991943,
+        "channel_13": 0.506585419178009
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 249,
+      "sourceTimestamp": "2000-04-16T08:09:11.379000+00:00",
+      "values": {
+        "channel_18": 0.4560694992542267,
+        "channel_20": 0.4562649130821228,
+        "channel_9": 0.48461663722991943,
+        "channel_13": 0.506585419178009
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 252,
+      "sourceTimestamp": "2000-04-16T08:09:13.626000+00:00",
+      "values": {
+        "channel_18": 0.4560243487358093,
+        "channel_20": 0.4561430811882019,
+        "channel_9": 0.48461663722991943,
+        "channel_13": 0.506585419178009
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 270,
+      "sourceTimestamp": "2000-04-16T08:09:31.626000+00:00",
+      "values": {
+        "channel_18": 0.4560847878456116,
+        "channel_20": 0.456056147813797,
+        "channel_9": 0.48461663722991943,
+        "channel_13": 0.506585419178009
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 288,
+      "sourceTimestamp": "2000-04-16T08:09:49.626000+00:00",
+      "values": {
+        "channel_18": 0.45615261793136597,
+        "channel_20": 0.4561040699481964,
+        "channel_9": 0.48479345440864563,
+        "channel_13": 0.5066367387771606
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 306,
+      "sourceTimestamp": "2000-04-16T08:10:07.626000+00:00",
+      "values": {
+        "channel_18": 0.4561825394630432,
+        "channel_20": 0.4561561346054077,
+        "channel_9": 0.48479345440864563,
+        "channel_13": 0.5066367387771606
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 324,
+      "sourceTimestamp": "2000-04-16T08:10:25.626000+00:00",
+      "values": {
+        "channel_18": 0.4561372697353363,
+        "channel_20": 0.4561386704444885,
+        "channel_9": 0.48479345440864563,
+        "channel_13": 0.5066367387771606
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 339,
+      "sourceTimestamp": "2000-04-16T08:10:41.379000+00:00",
+      "values": {
+        "channel_18": 0.4561372697353363,
+        "channel_20": 0.4561386704444885,
+        "channel_9": 0.48479345440864563,
+        "channel_13": 0.5066367387771606
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 342,
+      "sourceTimestamp": "2000-04-16T08:10:43.626000+00:00",
+      "values": {
+        "channel_18": 0.45606207847595215,
+        "channel_20": 0.45606040954589844,
+        "channel_9": 0.48479345440864563,
+        "channel_13": 0.5066367387771606
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 360,
+      "sourceTimestamp": "2000-04-16T08:11:01.626000+00:00",
+      "values": {
+        "channel_18": 0.4561225473880768,
+        "channel_20": 0.4559648334980011,
+        "channel_9": 0.48479345440864563,
+        "channel_13": 0.5066367387771606
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 378,
+      "sourceTimestamp": "2000-04-16T08:11:19.626000+00:00",
+      "values": {
+        "channel_18": 0.4560093283653259,
+        "channel_20": 0.45610833168029785,
+        "channel_9": 0.48452991247177124,
+        "channel_13": 0.5065922737121582
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 396,
+      "sourceTimestamp": "2000-04-16T08:11:37.626000+00:00",
+      "values": {
+        "channel_18": 0.4560016989707947,
+        "channel_20": 0.4562692642211914,
+        "channel_9": 0.48452991247177124,
+        "channel_13": 0.5065922737121582
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 414,
+      "sourceTimestamp": "2000-04-16T08:11:55.626000+00:00",
+      "values": {
+        "channel_18": 0.45585811138153076,
+        "channel_20": 0.45639511942863464,
+        "channel_9": 0.48452991247177124,
+        "channel_13": 0.5065922737121582
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 429,
+      "sourceTimestamp": "2000-04-16T08:12:11.379000+00:00",
+      "values": {
+        "channel_18": 0.45585811138153076,
+        "channel_20": 0.45639511942863464,
+        "channel_9": 0.48452991247177124,
+        "channel_13": 0.5065922737121582
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 432,
+      "sourceTimestamp": "2000-04-16T08:12:13.626000+00:00",
+      "values": {
+        "channel_18": 0.45586568117141724,
+        "channel_20": 0.4563733637332916,
+        "channel_9": 0.48452991247177124,
+        "channel_13": 0.5065922737121582
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 450,
+      "sourceTimestamp": "2000-04-16T08:12:31.626000+00:00",
+      "values": {
+        "channel_18": 0.4559263288974762,
+        "channel_20": 0.45619088411331177,
+        "channel_9": 0.48452991247177124,
+        "channel_13": 0.5065922737121582
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 468,
+      "sourceTimestamp": "2000-04-16T08:12:49.626000+00:00",
+      "values": {
+        "channel_18": 0.45604708790779114,
+        "channel_20": 0.4560866057872772,
+        "channel_9": 0.4845010042190552,
+        "channel_13": 0.5065975189208984
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 486,
+      "sourceTimestamp": "2000-04-16T08:13:07.626000+00:00",
+      "values": {
+        "channel_18": 0.45613765716552734,
+        "channel_20": 0.45592135190963745,
+        "channel_9": 0.4845010042190552,
+        "channel_13": 0.5065975189208984
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 504,
+      "sourceTimestamp": "2000-04-16T08:13:25.629000+00:00",
+      "values": {
+        "channel_18": 0.4561149775981903,
+        "channel_20": 0.4559778571128845,
+        "channel_9": 0.4845010042190552,
+        "channel_13": 0.5065975189208984
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 519,
+      "sourceTimestamp": "2000-04-16T08:13:41.379000+00:00",
+      "values": {
+        "channel_18": 0.4561149775981903,
+        "channel_20": 0.4559778571128845,
+        "channel_9": 0.4845010042190552,
+        "channel_13": 0.5065975189208984
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 522,
+      "sourceTimestamp": "2000-04-16T08:13:43.629000+00:00",
+      "values": {
+        "channel_18": 0.45618271827697754,
+        "channel_20": 0.4560779333114624,
+        "channel_9": 0.4845010042190552,
+        "channel_13": 0.5065975189208984
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 540,
+      "sourceTimestamp": "2000-04-16T08:14:01.629000+00:00",
+      "values": {
+        "channel_18": 0.4560922682285309,
+        "channel_20": 0.45617368817329407,
+        "channel_9": 0.4845010042190552,
+        "channel_13": 0.5065975189208984
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 558,
+      "sourceTimestamp": "2000-04-16T08:14:19.629000+00:00",
+      "values": {
+        "channel_18": 0.45606204867362976,
+        "channel_20": 0.45620840787887573,
+        "channel_9": 0.48456475138664246,
+        "channel_13": 0.5066181421279907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 576,
+      "sourceTimestamp": "2000-04-16T08:14:37.629000+00:00",
+      "values": {
+        "channel_18": 0.4559413492679596,
+        "channel_20": 0.45617344975471497,
+        "channel_9": 0.48456475138664246,
+        "channel_13": 0.5066181421279907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 594,
+      "sourceTimestamp": "2000-04-16T08:14:55.629000+00:00",
+      "values": {
+        "channel_18": 0.4559035897254944,
+        "channel_20": 0.456160306930542,
+        "channel_9": 0.48456475138664246,
+        "channel_13": 0.5066181421279907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 609,
+      "sourceTimestamp": "2000-04-16T08:15:11.379000+00:00",
+      "values": {
+        "channel_18": 0.4559035897254944,
+        "channel_20": 0.456160306930542,
+        "channel_9": 0.48456475138664246,
+        "channel_13": 0.5066181421279907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 612,
+      "sourceTimestamp": "2000-04-16T08:15:13.629000+00:00",
+      "values": {
+        "channel_18": 0.4559865891933441,
+        "channel_20": 0.4560602903366089,
+        "channel_9": 0.48456475138664246,
+        "channel_13": 0.5066181421279907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 630,
+      "sourceTimestamp": "2000-04-16T08:15:31.629000+00:00",
+      "values": {
+        "channel_18": 0.4559490382671356,
+        "channel_20": 0.4559776782989502,
+        "channel_9": 0.48456475138664246,
+        "channel_13": 0.5066181421279907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 648,
+      "sourceTimestamp": "2000-04-16T08:15:49.629000+00:00",
+      "values": {
+        "channel_18": 0.4560244083404541,
+        "channel_20": 0.45609962940216064,
+        "channel_9": 0.4842790365219116,
+        "channel_13": 0.5065608620643616
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 666,
+      "sourceTimestamp": "2000-04-16T08:16:07.629000+00:00",
+      "values": {
+        "channel_18": 0.45600178837776184,
+        "channel_20": 0.4561997056007385,
+        "channel_9": 0.4842790365219116,
+        "channel_13": 0.5065608620643616
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 684,
+      "sourceTimestamp": "2000-04-16T08:16:25.629000+00:00",
+      "values": {
+        "channel_18": 0.4560016691684723,
+        "channel_20": 0.45615604519844055,
+        "channel_9": 0.4842790365219116,
+        "channel_13": 0.5065608620643616
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 699,
+      "sourceTimestamp": "2000-04-16T08:16:41.379000+00:00",
+      "values": {
+        "channel_18": 0.4560016691684723,
+        "channel_20": 0.45615604519844055,
+        "channel_9": 0.4842790365219116,
+        "channel_13": 0.5065608620643616
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 702,
+      "sourceTimestamp": "2000-04-16T08:16:43.629000+00:00",
+      "values": {
+        "channel_18": 0.456061989068985,
+        "channel_20": 0.4560777544975281,
+        "channel_9": 0.4842790365219116,
+        "channel_13": 0.5065608620643616
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 720,
+      "sourceTimestamp": "2000-04-16T08:17:01.629000+00:00",
+      "values": {
+        "channel_18": 0.4560166895389557,
+        "channel_20": 0.45627790689468384,
+        "channel_9": 0.4842790365219116,
+        "channel_13": 0.5065608620643616
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 738,
+      "sourceTimestamp": "2000-04-16T08:17:19.629000+00:00",
+      "values": {
+        "channel_18": 0.45597895979881287,
+        "channel_20": 0.4563344419002533,
+        "channel_9": 0.4843924045562744,
+        "channel_13": 0.5065684914588928
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 756,
+      "sourceTimestamp": "2000-04-16T08:17:37.629000+00:00",
+      "values": {
+        "channel_18": 0.4559941589832306,
+        "channel_20": 0.45620396733283997,
+        "channel_9": 0.4843924045562744,
+        "channel_13": 0.5065684914588928
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 774,
+      "sourceTimestamp": "2000-04-16T08:17:55.629000+00:00",
+      "values": {
+        "channel_18": 0.4560847878456116,
+        "channel_20": 0.45600393414497375,
+        "channel_9": 0.4843924045562744,
+        "channel_13": 0.5065684914588928
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 789,
+      "sourceTimestamp": "2000-04-16T08:18:11.379000+00:00",
+      "values": {
+        "channel_18": 0.4560847878456116,
+        "channel_20": 0.45600393414497375,
+        "channel_9": 0.4843924045562744,
+        "channel_13": 0.5065684914588928
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 792,
+      "sourceTimestamp": "2000-04-16T08:18:13.629000+00:00",
+      "values": {
+        "channel_18": 0.4560772776603699,
+        "channel_20": 0.4559561014175415,
+        "channel_9": 0.4843924045562744,
+        "channel_13": 0.5065684914588928
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 810,
+      "sourceTimestamp": "2000-04-16T08:18:31.629000+00:00",
+      "values": {
+        "channel_18": 0.4560621976852417,
+        "channel_20": 0.45595604181289673,
+        "channel_9": 0.4843924045562744,
+        "channel_13": 0.5065684914588928
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 828,
+      "sourceTimestamp": "2000-04-16T08:18:49.629000+00:00",
+      "values": {
+        "channel_18": 0.45594149827957153,
+        "channel_20": 0.45603427290916443,
+        "channel_9": 0.48457157611846924,
+        "channel_13": 0.5065842866897583
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 846,
+      "sourceTimestamp": "2000-04-16T08:19:07.629000+00:00",
+      "values": {
+        "channel_18": 0.45596399903297424,
+        "channel_20": 0.45617783069610596,
+        "channel_9": 0.48457157611846924,
+        "channel_13": 0.5065842866897583
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 864,
+      "sourceTimestamp": "2000-04-16T08:19:25.629000+00:00",
+      "values": {
+        "channel_18": 0.4559487998485565,
+        "channel_20": 0.45628219842910767,
+        "channel_9": 0.48441246151924133,
+        "channel_13": 0.5065715312957764
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 879,
+      "sourceTimestamp": "2000-04-16T08:19:41.379000+00:00",
+      "values": {
+        "channel_18": 0.4559487998485565,
+        "channel_20": 0.45628219842910767,
+        "channel_9": 0.48441246151924133,
+        "channel_13": 0.5065715312957764
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 882,
+      "sourceTimestamp": "2000-04-16T08:19:43.629000+00:00",
+      "values": {
+        "channel_18": 0.4559563398361206,
+        "channel_20": 0.45626044273376465,
+        "channel_9": 0.48441246151924133,
+        "channel_13": 0.5065715312957764
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 900,
+      "sourceTimestamp": "2000-04-16T08:20:01.629000+00:00",
+      "values": {
+        "channel_18": 0.456031858921051,
+        "channel_20": 0.4562518894672394,
+        "channel_9": 0.48441246151924133,
+        "channel_13": 0.5065715312957764
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 918,
+      "sourceTimestamp": "2000-04-16T08:20:19.629000+00:00",
+      "values": {
+        "channel_18": 0.45612233877182007,
+        "channel_20": 0.4561823308467865,
+        "channel_9": 0.48459872603416443,
+        "channel_13": 0.5066177248954773
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 936,
+      "sourceTimestamp": "2000-04-16T08:20:37.629000+00:00",
+      "values": {
+        "channel_18": 0.4561072587966919,
+        "channel_20": 0.45607784390449524,
+        "channel_9": 0.48459872603416443,
+        "channel_13": 0.5066177248954773
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 954,
+      "sourceTimestamp": "2000-04-16T08:20:55.629000+00:00",
+      "values": {
+        "channel_18": 0.45612242817878723,
+        "channel_20": 0.4560256600379944,
+        "channel_9": 0.48459872603416443,
+        "channel_13": 0.5066177248954773
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 969,
+      "sourceTimestamp": "2000-04-16T08:21:11.379000+00:00",
+      "values": {
+        "channel_18": 0.45612242817878723,
+        "channel_20": 0.4560256600379944,
+        "channel_9": 0.48459872603416443,
+        "channel_13": 0.5066177248954773
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 972,
+      "sourceTimestamp": "2000-04-16T08:21:13.629000+00:00",
+      "values": {
+        "channel_18": 0.45606958866119385,
+        "channel_20": 0.45609959959983826,
+        "channel_9": 0.48459872603416443,
+        "channel_13": 0.5066177248954773
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 990,
+      "sourceTimestamp": "2000-04-16T08:21:31.629000+00:00",
+      "values": {
+        "channel_18": 0.4560997784137726,
+        "channel_20": 0.4561954140663147,
+        "channel_9": 0.48459872603416443,
+        "channel_13": 0.5066177248954773
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1008,
+      "sourceTimestamp": "2000-04-16T08:21:49.629000+00:00",
+      "values": {
+        "channel_18": 0.4561072885990143,
+        "channel_20": 0.4561562240123749,
+        "channel_9": 0.48441120982170105,
+        "channel_13": 0.5065995454788208
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1026,
+      "sourceTimestamp": "2000-04-16T08:22:07.629000+00:00",
+      "values": {
+        "channel_18": 0.45606204867362976,
+        "channel_20": 0.4561300575733185,
+        "channel_9": 0.48441120982170105,
+        "channel_13": 0.5065995454788208
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1044,
+      "sourceTimestamp": "2000-04-16T08:22:25.629000+00:00",
+      "values": {
+        "channel_18": 0.45595642924308777,
+        "channel_20": 0.4561212360858917,
+        "channel_9": 0.48441120982170105,
+        "channel_13": 0.5065995454788208
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1059,
+      "sourceTimestamp": "2000-04-16T08:22:41.379000+00:00",
+      "values": {
+        "channel_18": 0.45595642924308777,
+        "channel_20": 0.4561212360858917,
+        "channel_9": 0.48441120982170105,
+        "channel_13": 0.5065995454788208
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1062,
+      "sourceTimestamp": "2000-04-16T08:22:43.629000+00:00",
+      "values": {
+        "channel_18": 0.45596402883529663,
+        "channel_20": 0.4560734033584595,
+        "channel_9": 0.48441120982170105,
+        "channel_13": 0.5065995454788208
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1080,
+      "sourceTimestamp": "2000-04-16T08:23:01.629000+00:00",
+      "values": {
+        "channel_18": 0.45595651865005493,
+        "channel_20": 0.4561387300491333,
+        "channel_9": 0.48441120982170105,
+        "channel_13": 0.5065995454788208
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1098,
+      "sourceTimestamp": "2000-04-16T08:23:19.629000+00:00",
+      "values": {
+        "channel_18": 0.4559715688228607,
+        "channel_20": 0.45619094371795654,
+        "channel_9": 0.48440098762512207,
+        "channel_13": 0.5065667033195496
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1116,
+      "sourceTimestamp": "2000-04-16T08:23:37.629000+00:00",
+      "values": {
+        "channel_18": 0.4560469388961792,
+        "channel_20": 0.4561648666858673,
+        "channel_9": 0.48440098762512207,
+        "channel_13": 0.5065667033195496
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1134,
+      "sourceTimestamp": "2000-04-16T08:23:55.629000+00:00",
+      "values": {
+        "channel_18": 0.45602431893348694,
+        "channel_20": 0.4561430513858795,
+        "channel_9": 0.48440098762512207,
+        "channel_13": 0.5065667033195496
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1149,
+      "sourceTimestamp": "2000-04-16T08:24:11.379000+00:00",
+      "values": {
+        "channel_18": 0.45602431893348694,
+        "channel_20": 0.4561430513858795,
+        "channel_9": 0.48440098762512207,
+        "channel_13": 0.5065667033195496
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1152,
+      "sourceTimestamp": "2000-04-16T08:24:13.629000+00:00",
+      "values": {
+        "channel_18": 0.4559413492679596,
+        "channel_20": 0.45616471767425537,
+        "channel_9": 0.48440098762512207,
+        "channel_13": 0.5065667033195496
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1170,
+      "sourceTimestamp": "2000-04-16T08:24:31.629000+00:00",
+      "values": {
+        "channel_18": 0.456031858921051,
+        "channel_20": 0.45617353916168213,
+        "channel_9": 0.48440098762512207,
+        "channel_13": 0.5065667033195496
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1188,
+      "sourceTimestamp": "2000-04-16T08:24:49.629000+00:00",
+      "values": {
+        "channel_18": 0.4560394585132599,
+        "channel_20": 0.4561692178249359,
+        "channel_9": 0.48461979627609253,
+        "channel_13": 0.5065832734107971
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1206,
+      "sourceTimestamp": "2000-04-16T08:25:07.629000+00:00",
+      "values": {
+        "channel_18": 0.45607712864875793,
+        "channel_20": 0.45609521865844727,
+        "channel_9": 0.48461979627609253,
+        "channel_13": 0.5065832734107971
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1224,
+      "sourceTimestamp": "2000-04-16T08:25:25.629000+00:00",
+      "values": {
+        "channel_18": 0.45612987875938416,
+        "channel_20": 0.45611703395843506,
+        "channel_9": 0.48461979627609253,
+        "channel_13": 0.5065832734107971
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1239,
+      "sourceTimestamp": "2000-04-16T08:25:41.379000+00:00",
+      "values": {
+        "channel_18": 0.45612987875938416,
+        "channel_20": 0.45611703395843506,
+        "channel_9": 0.48461979627609253,
+        "channel_13": 0.5065832734107971
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1242,
+      "sourceTimestamp": "2000-04-16T08:25:43.629000+00:00",
+      "values": {
+        "channel_18": 0.45607712864875793,
+        "channel_20": 0.45625197887420654,
+        "channel_9": 0.48461979627609253,
+        "channel_13": 0.5065832734107971
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1260,
+      "sourceTimestamp": "2000-04-16T08:26:01.629000+00:00",
+      "values": {
+        "channel_18": 0.45597150921821594,
+        "channel_20": 0.45618221163749695,
+        "channel_9": 0.48461979627609253,
+        "channel_13": 0.5065832734107971
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1278,
+      "sourceTimestamp": "2000-04-16T08:26:19.629000+00:00",
+      "values": {
+        "channel_18": 0.4559185802936554,
+        "channel_20": 0.45618635416030884,
+        "channel_9": 0.48417946696281433,
+        "channel_13": 0.5065566897392273
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1296,
+      "sourceTimestamp": "2000-04-16T08:26:37.629000+00:00",
+      "values": {
+        "channel_18": 0.4559488892555237,
+        "channel_20": 0.45612555742263794,
+        "channel_9": 0.48417946696281433,
+        "channel_13": 0.5065566897392273
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1314,
+      "sourceTimestamp": "2000-04-16T08:26:55.629000+00:00",
+      "values": {
+        "channel_18": 0.4559565782546997,
+        "channel_20": 0.4560256004333496,
+        "channel_9": 0.48417946696281433,
+        "channel_13": 0.5065566897392273
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1329,
+      "sourceTimestamp": "2000-04-16T08:27:11.379000+00:00",
+      "values": {
+        "channel_18": 0.4559565782546997,
+        "channel_20": 0.4560256004333496,
+        "channel_9": 0.48417946696281433,
+        "channel_13": 0.5065566897392273
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1332,
+      "sourceTimestamp": "2000-04-16T08:27:13.629000+00:00",
+      "values": {
+        "channel_18": 0.45600929856300354,
+        "channel_20": 0.4561169743537903,
+        "channel_9": 0.48417946696281433,
+        "channel_13": 0.5065566897392273
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1350,
+      "sourceTimestamp": "2000-04-16T08:27:31.629000+00:00",
+      "values": {
+        "channel_18": 0.4560394585132599,
+        "channel_20": 0.45611703395843506,
+        "channel_9": 0.48417946696281433,
+        "channel_13": 0.5065566897392273
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1368,
+      "sourceTimestamp": "2000-04-16T08:27:49.629000+00:00",
+      "values": {
+        "channel_18": 0.4559941589832306,
+        "channel_20": 0.45619526505470276,
+        "channel_9": 0.48448821902275085,
+        "channel_13": 0.5066401362419128
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1386,
+      "sourceTimestamp": "2000-04-16T08:28:07.629000+00:00",
+      "values": {
+        "channel_18": 0.4560694992542267,
+        "channel_20": 0.456230103969574,
+        "channel_9": 0.48448821902275085,
+        "channel_13": 0.5066401362419128
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1404,
+      "sourceTimestamp": "2000-04-16T08:28:25.629000+00:00",
+      "values": {
+        "channel_18": 0.4561524987220764,
+        "channel_20": 0.45623457431793213,
+        "channel_9": 0.48448821902275085,
+        "channel_13": 0.5066401362419128
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1419,
+      "sourceTimestamp": "2000-04-16T08:28:41.379000+00:00",
+      "values": {
+        "channel_18": 0.4561524987220764,
+        "channel_20": 0.45623457431793213,
+        "channel_9": 0.48448821902275085,
+        "channel_13": 0.5066401362419128
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1422,
+      "sourceTimestamp": "2000-04-16T08:28:43.629000+00:00",
+      "values": {
+        "channel_18": 0.45613735914230347,
+        "channel_20": 0.4561735689640045,
+        "channel_9": 0.48448821902275085,
+        "channel_13": 0.5066401362419128
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1440,
+      "sourceTimestamp": "2000-04-16T08:29:01.629000+00:00",
+      "values": {
+        "channel_18": 0.45597153902053833,
+        "channel_20": 0.4561299681663513,
+        "channel_9": 0.48448821902275085,
+        "channel_13": 0.5066401362419128
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1458,
+      "sourceTimestamp": "2000-04-16T08:29:19.629000+00:00",
+      "values": {
+        "channel_18": 0.45594900846481323,
+        "channel_20": 0.45604729652404785,
+        "channel_9": 0.48446837067604065,
+        "channel_13": 0.5065329670906067
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1476,
+      "sourceTimestamp": "2000-04-16T08:29:37.629000+00:00",
+      "values": {
+        "channel_18": 0.455949068069458,
+        "channel_20": 0.4560299515724182,
+        "channel_9": 0.48446837067604065,
+        "channel_13": 0.5065329670906067
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1494,
+      "sourceTimestamp": "2000-04-16T08:29:55.629000+00:00",
+      "values": {
+        "channel_18": 0.4559188783168793,
+        "channel_20": 0.45607343316078186,
+        "channel_9": 0.48446837067604065,
+        "channel_13": 0.5065329670906067
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1509,
+      "sourceTimestamp": "2000-04-16T08:30:11.382000+00:00",
+      "values": {
+        "channel_18": 0.4559188783168793,
+        "channel_20": 0.45607343316078186,
+        "channel_9": 0.48446837067604065,
+        "channel_13": 0.5065329670906067
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1512,
+      "sourceTimestamp": "2000-04-16T08:30:13.629000+00:00",
+      "values": {
+        "channel_18": 0.4559791088104248,
+        "channel_20": 0.4561430811882019,
+        "channel_9": 0.48446837067604065,
+        "channel_13": 0.5065329670906067
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1530,
+      "sourceTimestamp": "2000-04-16T08:30:31.629000+00:00",
+      "values": {
+        "channel_18": 0.4559791386127472,
+        "channel_20": 0.45622146129608154,
+        "channel_9": 0.48446837067604065,
+        "channel_13": 0.5065329670906067
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1548,
+      "sourceTimestamp": "2000-04-16T08:30:49.629000+00:00",
+      "values": {
+        "channel_18": 0.4560619592666626,
+        "channel_20": 0.45608648657798767,
+        "channel_9": 0.4842991530895233,
+        "channel_13": 0.5065836310386658
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1566,
+      "sourceTimestamp": "2000-04-16T08:31:07.629000+00:00",
+      "values": {
+        "channel_18": 0.45609214901924133,
+        "channel_20": 0.45606037974357605,
+        "channel_9": 0.4842991530895233,
+        "channel_13": 0.5065836310386658
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1584,
+      "sourceTimestamp": "2000-04-16T08:31:25.629000+00:00",
+      "values": {
+        "channel_18": 0.45608460903167725,
+        "channel_20": 0.4561082720756531,
+        "channel_9": 0.4842991530895233,
+        "channel_13": 0.5065836310386658
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1599,
+      "sourceTimestamp": "2000-04-16T08:31:41.382000+00:00",
+      "values": {
+        "channel_18": 0.45608460903167725,
+        "channel_20": 0.4561082720756531,
+        "channel_9": 0.4842991530895233,
+        "channel_13": 0.5065836310386658
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1602,
+      "sourceTimestamp": "2000-04-16T08:31:43.629000+00:00",
+      "values": {
+        "channel_18": 0.4560544490814209,
+        "channel_20": 0.45621269941329956,
+        "channel_9": 0.4842991530895233,
+        "channel_13": 0.5065836310386658
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1620,
+      "sourceTimestamp": "2000-04-16T08:32:01.629000+00:00",
+      "values": {
+        "channel_18": 0.45605435967445374,
+        "channel_20": 0.4562648832798004,
+        "channel_9": 0.4842991530895233,
+        "channel_13": 0.5065836310386658
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1638,
+      "sourceTimestamp": "2000-04-16T08:32:19.629000+00:00",
+      "values": {
+        "channel_18": 0.45608457922935486,
+        "channel_20": 0.4561430811882019,
+        "channel_9": 0.48450207710266113,
+        "channel_13": 0.5065845251083374
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1656,
+      "sourceTimestamp": "2000-04-16T08:32:37.629000+00:00",
+      "values": {
+        "channel_18": 0.4560244083404541,
+        "channel_20": 0.45612573623657227,
+        "channel_9": 0.48450207710266113,
+        "channel_13": 0.5065845251083374
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1674,
+      "sourceTimestamp": "2000-04-16T08:32:55.629000+00:00",
+      "values": {
+        "channel_18": 0.45605456829071045,
+        "channel_20": 0.45612576603889465,
+        "channel_9": 0.48450207710266113,
+        "channel_13": 0.5065845251083374
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1689,
+      "sourceTimestamp": "2000-04-16T08:33:11.382000+00:00",
+      "values": {
+        "channel_18": 0.45605456829071045,
+        "channel_20": 0.45612576603889465,
+        "channel_9": 0.48450207710266113,
+        "channel_13": 0.5065845251083374
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1692,
+      "sourceTimestamp": "2000-04-16T08:33:13.629000+00:00",
+      "values": {
+        "channel_18": 0.45601674914360046,
+        "channel_20": 0.4560777544975281,
+        "channel_9": 0.48450207710266113,
+        "channel_13": 0.5065845251083374
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1710,
+      "sourceTimestamp": "2000-04-16T08:33:31.629000+00:00",
+      "values": {
+        "channel_18": 0.4559791386127472,
+        "channel_20": 0.45603862404823303,
+        "channel_9": 0.48450207710266113,
+        "channel_13": 0.5065845251083374
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1728,
+      "sourceTimestamp": "2000-04-16T08:33:49.629000+00:00",
+      "values": {
+        "channel_18": 0.45600929856300354,
+        "channel_20": 0.4559950828552246,
+        "channel_9": 0.4845024049282074,
+        "channel_13": 0.5065801739692688
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1746,
+      "sourceTimestamp": "2000-04-16T08:34:07.629000+00:00",
+      "values": {
+        "channel_18": 0.45599424839019775,
+        "channel_20": 0.4560125470161438,
+        "channel_9": 0.4845024049282074,
+        "channel_13": 0.5065801739692688
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1764,
+      "sourceTimestamp": "2000-04-16T08:34:25.629000+00:00",
+      "values": {
+        "channel_18": 0.45603200793266296,
+        "channel_20": 0.45599085092544556,
+        "channel_9": 0.48454412817955017,
+        "channel_13": 0.5066055059432983
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1779,
+      "sourceTimestamp": "2000-04-16T08:34:41.382000+00:00",
+      "values": {
+        "channel_18": 0.45603200793266296,
+        "channel_20": 0.45599085092544556,
+        "channel_9": 0.48454412817955017,
+        "channel_13": 0.5066055059432983
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 1782,
+      "sourceTimestamp": "2000-04-16T08:34:43.629000+00:00",
+      "values": {
+        "channel_18": 0.4560318887233734,
+        "channel_20": 0.45611265301704407,
+        "channel_9": 0.48454412817955017,
+        "channel_13": 0.5066055059432983
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1800,
+      "sourceTimestamp": "2000-04-16T08:35:01.629000+00:00",
+      "values": {
+        "channel_18": 0.4560391902923584,
+        "channel_20": 0.4562996029853821,
+        "channel_9": 0.48454412817955017,
+        "channel_13": 0.5066055059432983
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1818,
+      "sourceTimestamp": "2000-04-16T08:35:19.629000+00:00",
+      "values": {
+        "channel_18": 0.4559485614299774,
+        "channel_20": 0.45644745230674744,
+        "channel_9": 0.4844041168689728,
+        "channel_13": 0.5065963864326477
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1836,
+      "sourceTimestamp": "2000-04-16T08:35:37.629000+00:00",
+      "values": {
+        "channel_18": 0.45602405071258545,
+        "channel_20": 0.456473708152771,
+        "channel_9": 0.4844041168689728,
+        "channel_13": 0.5065963864326477
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1854,
+      "sourceTimestamp": "2000-04-16T08:35:55.629000+00:00",
+      "values": {
+        "channel_18": 0.4560544192790985,
+        "channel_20": 0.45616912841796875,
+        "channel_9": 0.4844041168689728,
+        "channel_13": 0.5065963864326477
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1869,
+      "sourceTimestamp": "2000-04-16T08:36:11.382000+00:00",
+      "values": {
+        "channel_18": 0.4560544192790985,
+        "channel_20": 0.45616912841796875,
+        "channel_9": 0.4844041168689728,
+        "channel_13": 0.5065963864326477
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1872,
+      "sourceTimestamp": "2000-04-16T08:36:13.629000+00:00",
+      "values": {
+        "channel_18": 0.4560997486114502,
+        "channel_20": 0.4559864103794098,
+        "channel_9": 0.4844041168689728,
+        "channel_13": 0.5065963864326477
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1890,
+      "sourceTimestamp": "2000-04-16T08:36:31.629000+00:00",
+      "values": {
+        "channel_18": 0.456107497215271,
+        "channel_20": 0.4558691084384918,
+        "channel_9": 0.4844041168689728,
+        "channel_13": 0.5065963864326477
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1908,
+      "sourceTimestamp": "2000-04-16T08:36:49.629000+00:00",
+      "values": {
+        "channel_18": 0.45600181818008423,
+        "channel_20": 0.4560604691505432,
+        "channel_9": 0.4845868647098541,
+        "channel_13": 0.506615161895752
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1926,
+      "sourceTimestamp": "2000-04-16T08:37:07.629000+00:00",
+      "values": {
+        "channel_18": 0.4559187889099121,
+        "channel_20": 0.4561169147491455,
+        "channel_9": 0.4845868647098541,
+        "channel_13": 0.506615161895752
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1944,
+      "sourceTimestamp": "2000-04-16T08:37:25.629000+00:00",
+      "values": {
+        "channel_18": 0.4572385251522064,
+        "channel_20": 0.45540857315063477,
+        "channel_9": 0.4845868647098541,
+        "channel_13": 0.506615161895752
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1959,
+      "sourceTimestamp": "2000-04-16T08:37:41.382000+00:00",
+      "values": {
+        "channel_18": 0.4572385251522064,
+        "channel_20": 0.45540857315063477,
+        "channel_9": 0.4845868647098541,
+        "channel_13": 0.506615161895752
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1962,
+      "sourceTimestamp": "2000-04-16T08:37:43.629000+00:00",
+      "values": {
+        "channel_18": 0.45555663108825684,
+        "channel_20": 0.45649081468582153,
+        "channel_9": 0.4845868647098541,
+        "channel_13": 0.506615161895752
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1980,
+      "sourceTimestamp": "2000-04-16T08:38:01.629000+00:00",
+      "values": {
+        "channel_18": 0.4553683400154114,
+        "channel_20": 0.4563472270965576,
+        "channel_9": 0.4845868647098541,
+        "channel_13": 0.506615161895752
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 1998,
+      "sourceTimestamp": "2000-04-16T08:38:19.629000+00:00",
+      "values": {
+        "channel_18": 0.4571555256843567,
+        "channel_20": 0.45558691024780273,
+        "channel_9": 0.4852960705757141,
+        "channel_13": 0.5068385004997253
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2016,
+      "sourceTimestamp": "2000-04-16T08:38:37.629000+00:00",
+      "values": {
+        "channel_18": 0.45593374967575073,
+        "channel_20": 0.45629966259002686,
+        "channel_9": 0.4852960705757141,
+        "channel_13": 0.5068385004997253
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2034,
+      "sourceTimestamp": "2000-04-16T08:38:55.629000+00:00",
+      "values": {
+        "channel_18": 0.455850750207901,
+        "channel_20": 0.45637354254722595,
+        "channel_9": 0.4852960705757141,
+        "channel_13": 0.5068385004997253
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2049,
+      "sourceTimestamp": "2000-04-16T08:39:11.382000+00:00",
+      "values": {
+        "channel_18": 0.455850750207901,
+        "channel_20": 0.45637354254722595,
+        "channel_9": 0.4852960705757141,
+        "channel_13": 0.5068385004997253
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2052,
+      "sourceTimestamp": "2000-04-16T08:39:13.629000+00:00",
+      "values": {
+        "channel_18": 0.4559565484523773,
+        "channel_20": 0.45611265301704407,
+        "channel_9": 0.4852960705757141,
+        "channel_13": 0.5068385004997253
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2070,
+      "sourceTimestamp": "2000-04-16T08:39:31.629000+00:00",
+      "values": {
+        "channel_18": 0.4567936062812805,
+        "channel_20": 0.4556475877761841,
+        "channel_9": 0.4852960705757141,
+        "channel_13": 0.5068385004997253
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2088,
+      "sourceTimestamp": "2000-04-16T08:39:49.629000+00:00",
+      "values": {
+        "channel_18": 0.45488566160202026,
+        "channel_20": 0.456590473651886,
+        "channel_9": 0.4838719367980957,
+        "channel_13": 0.5063762664794922
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2106,
+      "sourceTimestamp": "2000-04-16T08:40:07.629000+00:00",
+      "values": {
+        "channel_18": 0.4560243487358093,
+        "channel_20": 0.4561692178249359,
+        "channel_9": 0.4838719367980957,
+        "channel_13": 0.5063762664794922
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2124,
+      "sourceTimestamp": "2000-04-16T08:40:25.629000+00:00",
+      "values": {
+        "channel_18": 0.4568311274051666,
+        "channel_20": 0.45586079359054565,
+        "channel_9": 0.4838719367980957,
+        "channel_13": 0.5063762664794922
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2139,
+      "sourceTimestamp": "2000-04-16T08:40:41.382000+00:00",
+      "values": {
+        "channel_18": 0.4568311274051666,
+        "channel_20": 0.45586079359054565,
+        "channel_9": 0.4838719367980957,
+        "channel_13": 0.5063762664794922
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2142,
+      "sourceTimestamp": "2000-04-16T08:40:43.629000+00:00",
+      "values": {
+        "channel_18": 0.45510414242744446,
+        "channel_20": 0.456664502620697,
+        "channel_9": 0.4838719367980957,
+        "channel_13": 0.5063762664794922
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2160,
+      "sourceTimestamp": "2000-04-16T08:41:01.629000+00:00",
+      "values": {
+        "channel_18": 0.45645418763160706,
+        "channel_20": 0.45581701397895813,
+        "channel_9": 0.4838719367980957,
+        "channel_13": 0.5063762664794922
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2178,
+      "sourceTimestamp": "2000-04-16T08:41:19.629000+00:00",
+      "values": {
+        "channel_18": 0.4561525583267212,
+        "channel_20": 0.45597344636917114,
+        "channel_9": 0.48529067635536194,
+        "channel_13": 0.5069892406463623
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2196,
+      "sourceTimestamp": "2000-04-16T08:41:37.629000+00:00",
+      "values": {
+        "channel_18": 0.45576807856559753,
+        "channel_20": 0.4560994803905487,
+        "channel_9": 0.48529067635536194,
+        "channel_13": 0.5069892406463623
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2214,
+      "sourceTimestamp": "2000-04-16T08:41:55.629000+00:00",
+      "values": {
+        "channel_18": 0.4552324414253235,
+        "channel_20": 0.4565820097923279,
+        "channel_9": 0.48529067635536194,
+        "channel_13": 0.5069892406463623
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2229,
+      "sourceTimestamp": "2000-04-16T08:42:11.382000+00:00",
+      "values": {
+        "channel_18": 0.4552324414253235,
+        "channel_20": 0.4565820097923279,
+        "channel_9": 0.48529067635536194,
+        "channel_13": 0.5069892406463623
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2232,
+      "sourceTimestamp": "2000-04-16T08:42:13.629000+00:00",
+      "values": {
+        "channel_18": 0.456635057926178,
+        "channel_20": 0.4559389650821686,
+        "channel_9": 0.48529067635536194,
+        "channel_13": 0.5069892406463623
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2250,
+      "sourceTimestamp": "2000-04-16T08:42:31.629000+00:00",
+      "values": {
+        "channel_18": 0.45623549818992615,
+        "channel_20": 0.45606496930122375,
+        "channel_9": 0.48529067635536194,
+        "channel_13": 0.5069892406463623
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2268,
+      "sourceTimestamp": "2000-04-16T08:42:49.629000+00:00",
+      "values": {
+        "channel_18": 0.4555038511753082,
+        "channel_20": 0.4565299451351166,
+        "channel_9": 0.484524130821228,
+        "channel_13": 0.5066312551498413
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2286,
+      "sourceTimestamp": "2000-04-16T08:43:07.629000+00:00",
+      "values": {
+        "channel_18": 0.4572080671787262,
+        "channel_20": 0.455573707818985,
+        "channel_9": 0.484524130821228,
+        "channel_13": 0.5066312551498413
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2304,
+      "sourceTimestamp": "2000-04-16T08:43:25.632000+00:00",
+      "values": {
+        "channel_18": 0.4556848108768463,
+        "channel_20": 0.4563733637332916,
+        "channel_9": 0.484524130821228,
+        "channel_13": 0.5066312551498413
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2319,
+      "sourceTimestamp": "2000-04-16T08:43:41.382000+00:00",
+      "values": {
+        "channel_18": 0.4556848108768463,
+        "channel_20": 0.4563733637332916,
+        "channel_9": 0.484524130821228,
+        "channel_13": 0.5066312551498413
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2322,
+      "sourceTimestamp": "2000-04-16T08:43:43.632000+00:00",
+      "values": {
+        "channel_18": 0.4556547701358795,
+        "channel_20": 0.45629507303237915,
+        "channel_9": 0.484524130821228,
+        "channel_13": 0.5066312551498413
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2340,
+      "sourceTimestamp": "2000-04-16T08:44:01.632000+00:00",
+      "values": {
+        "channel_18": 0.4560016095638275,
+        "channel_20": 0.45614734292030334,
+        "channel_9": 0.484524130821228,
+        "channel_13": 0.5066312551498413
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2358,
+      "sourceTimestamp": "2000-04-16T08:44:19.632000+00:00",
+      "values": {
+        "channel_18": 0.45635613799095154,
+        "channel_20": 0.45593443512916565,
+        "channel_9": 0.48433399200439453,
+        "channel_13": 0.5066103935241699
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2376,
+      "sourceTimestamp": "2000-04-16T08:44:37.632000+00:00",
+      "values": {
+        "channel_18": 0.4557076692581177,
+        "channel_20": 0.45622995495796204,
+        "channel_9": 0.48433399200439453,
+        "channel_13": 0.5066103935241699
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2394,
+      "sourceTimestamp": "2000-04-16T08:44:55.632000+00:00",
+      "values": {
+        "channel_18": 0.45606210827827454,
+        "channel_20": 0.4560953378677368,
+        "channel_9": 0.48433399200439453,
+        "channel_13": 0.5066103935241699
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2409,
+      "sourceTimestamp": "2000-04-16T08:45:11.382000+00:00",
+      "values": {
+        "channel_18": 0.45606210827827454,
+        "channel_20": 0.4560953378677368,
+        "channel_9": 0.48433399200439453,
+        "channel_13": 0.5066103935241699
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2412,
+      "sourceTimestamp": "2000-04-16T08:45:13.632000+00:00",
+      "values": {
+        "channel_18": 0.4568765163421631,
+        "channel_20": 0.4557216763496399,
+        "channel_9": 0.48433399200439453,
+        "channel_13": 0.5066103935241699
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2430,
+      "sourceTimestamp": "2000-04-16T08:45:31.632000+00:00",
+      "values": {
+        "channel_18": 0.4549006223678589,
+        "channel_20": 0.4567123353481293,
+        "channel_9": 0.48433399200439453,
+        "channel_13": 0.5066103935241699
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2448,
+      "sourceTimestamp": "2000-04-16T08:45:49.632000+00:00",
+      "values": {
+        "channel_18": 0.45628809928894043,
+        "channel_20": 0.4560692012310028,
+        "channel_9": 0.48381394147872925,
+        "channel_13": 0.5063633918762207
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2466,
+      "sourceTimestamp": "2000-04-16T08:46:07.632000+00:00",
+      "values": {
+        "channel_18": 0.45627301931381226,
+        "channel_20": 0.4560169577598572,
+        "channel_9": 0.48381394147872925,
+        "channel_13": 0.5063633918762207
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2484,
+      "sourceTimestamp": "2000-04-16T08:46:25.632000+00:00",
+      "values": {
+        "channel_18": 0.45575276017189026,
+        "channel_20": 0.45631691813468933,
+        "channel_9": 0.48381394147872925,
+        "channel_13": 0.5063633918762207
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2499,
+      "sourceTimestamp": "2000-04-16T08:46:41.382000+00:00",
+      "values": {
+        "channel_18": 0.45575276017189026,
+        "channel_20": 0.45631691813468933,
+        "channel_9": 0.48381394147872925,
+        "channel_13": 0.5063633918762207
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2502,
+      "sourceTimestamp": "2000-04-16T08:46:43.632000+00:00",
+      "values": {
+        "channel_18": 0.45606961846351624,
+        "channel_20": 0.4560648500919342,
+        "channel_9": 0.48381394147872925,
+        "channel_13": 0.5063633918762207
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2520,
+      "sourceTimestamp": "2000-04-16T08:47:01.632000+00:00",
+      "values": {
+        "channel_18": 0.45634856820106506,
+        "channel_20": 0.4560345709323883,
+        "channel_9": 0.48381394147872925,
+        "channel_13": 0.5063633918762207
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2538,
+      "sourceTimestamp": "2000-04-16T08:47:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4561600685119629,
+        "channel_20": 0.45614323019981384,
+        "channel_9": 0.4839761555194855,
+        "channel_13": 0.5064010620117188
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2556,
+      "sourceTimestamp": "2000-04-16T08:47:37.632000+00:00",
+      "values": {
+        "channel_18": 0.4551945924758911,
+        "channel_20": 0.4566297233104706,
+        "channel_9": 0.4839761555194855,
+        "channel_13": 0.5064010620117188
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2574,
+      "sourceTimestamp": "2000-04-16T08:47:55.632000+00:00",
+      "values": {
+        "channel_18": 0.45692920684814453,
+        "channel_20": 0.4557172656059265,
+        "channel_9": 0.4839761555194855,
+        "channel_13": 0.5064010620117188
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2589,
+      "sourceTimestamp": "2000-04-16T08:48:11.382000+00:00",
+      "values": {
+        "channel_18": 0.45692920684814453,
+        "channel_20": 0.4557172656059265,
+        "channel_9": 0.4839761555194855,
+        "channel_13": 0.5064010620117188
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2592,
+      "sourceTimestamp": "2000-04-16T08:48:13.632000+00:00",
+      "values": {
+        "channel_18": 0.455700159072876,
+        "channel_20": 0.45610374212265015,
+        "channel_9": 0.4839761555194855,
+        "channel_13": 0.5064010620117188
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2610,
+      "sourceTimestamp": "2000-04-16T08:48:31.632000+00:00",
+      "values": {
+        "channel_18": 0.4555116295814514,
+        "channel_20": 0.4562646448612213,
+        "channel_9": 0.4839761555194855,
+        "channel_13": 0.5064010620117188
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2628,
+      "sourceTimestamp": "2000-04-16T08:48:49.632000+00:00",
+      "values": {
+        "channel_18": 0.45636364817619324,
+        "channel_20": 0.4560084640979767,
+        "channel_9": 0.48491182923316956,
+        "channel_13": 0.506685197353363
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2646,
+      "sourceTimestamp": "2000-04-16T08:49:07.632000+00:00",
+      "values": {
+        "channel_18": 0.4558960497379303,
+        "channel_20": 0.456190824508667,
+        "channel_9": 0.48491182923316956,
+        "channel_13": 0.506685197353363
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2664,
+      "sourceTimestamp": "2000-04-16T08:49:25.632000+00:00",
+      "values": {
+        "channel_18": 0.45591118931770325,
+        "channel_20": 0.45614734292030334,
+        "channel_9": 0.48378387093544006,
+        "channel_13": 0.5063459277153015
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2679,
+      "sourceTimestamp": "2000-04-16T08:49:41.382000+00:00",
+      "values": {
+        "channel_18": 0.45591118931770325,
+        "channel_20": 0.45614734292030334,
+        "channel_9": 0.48378387093544006,
+        "channel_13": 0.5063459277153015
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2682,
+      "sourceTimestamp": "2000-04-16T08:49:43.632000+00:00",
+      "values": {
+        "channel_18": 0.45598655939102173,
+        "channel_20": 0.4560951590538025,
+        "channel_9": 0.48378387093544006,
+        "channel_13": 0.5063459277153015
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2700,
+      "sourceTimestamp": "2000-04-16T08:50:01.632000+00:00",
+      "values": {
+        "channel_18": 0.4568462669849396,
+        "channel_20": 0.4556954503059387,
+        "channel_9": 0.48378387093544006,
+        "channel_13": 0.5063459277153015
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2718,
+      "sourceTimestamp": "2000-04-16T08:50:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4553002119064331,
+        "channel_20": 0.4566124975681305,
+        "channel_9": 0.48427101969718933,
+        "channel_13": 0.5065338015556335
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2736,
+      "sourceTimestamp": "2000-04-16T08:50:37.632000+00:00",
+      "values": {
+        "channel_18": 0.4560392498970032,
+        "channel_20": 0.456221342086792,
+        "channel_9": 0.48427101969718933,
+        "channel_13": 0.5065338015556335
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2754,
+      "sourceTimestamp": "2000-04-16T08:50:55.632000+00:00",
+      "values": {
+        "channel_18": 0.4565447270870209,
+        "channel_20": 0.4558955132961273,
+        "channel_9": 0.48427101969718933,
+        "channel_13": 0.5065338015556335
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2769,
+      "sourceTimestamp": "2000-04-16T08:51:11.382000+00:00",
+      "values": {
+        "channel_18": 0.4565447270870209,
+        "channel_20": 0.4558955132961273,
+        "channel_9": 0.48427101969718933,
+        "channel_13": 0.5065338015556335
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2772,
+      "sourceTimestamp": "2000-04-16T08:51:13.632000+00:00",
+      "values": {
+        "channel_18": 0.4554736614227295,
+        "channel_20": 0.456495076417923,
+        "channel_9": 0.48427101969718933,
+        "channel_13": 0.5065338015556335
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2790,
+      "sourceTimestamp": "2000-04-16T08:51:31.632000+00:00",
+      "values": {
+        "channel_18": 0.45622777938842773,
+        "channel_20": 0.456043004989624,
+        "channel_9": 0.48427101969718933,
+        "channel_13": 0.5065338015556335
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2808,
+      "sourceTimestamp": "2000-04-16T08:51:49.632000+00:00",
+      "values": {
+        "channel_18": 0.4561298191547394,
+        "channel_20": 0.45607349276542664,
+        "channel_9": 0.485213041305542,
+        "channel_13": 0.5069020986557007
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2826,
+      "sourceTimestamp": "2000-04-16T08:52:07.632000+00:00",
+      "values": {
+        "channel_18": 0.45612236857414246,
+        "channel_20": 0.4560430943965912,
+        "channel_9": 0.485213041305542,
+        "channel_13": 0.5069020986557007
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2844,
+      "sourceTimestamp": "2000-04-16T08:52:25.632000+00:00",
+      "values": {
+        "channel_18": 0.45527786016464233,
+        "channel_20": 0.4564342200756073,
+        "channel_9": 0.485213041305542,
+        "channel_13": 0.5069020986557007
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2859,
+      "sourceTimestamp": "2000-04-16T08:52:41.382000+00:00",
+      "values": {
+        "channel_18": 0.45527786016464233,
+        "channel_20": 0.4564342200756073,
+        "channel_9": 0.485213041305542,
+        "channel_13": 0.5069020986557007
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2862,
+      "sourceTimestamp": "2000-04-16T08:52:43.632000+00:00",
+      "values": {
+        "channel_18": 0.45646932721138,
+        "channel_20": 0.45591288805007935,
+        "channel_9": 0.485213041305542,
+        "channel_13": 0.5069020986557007
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2880,
+      "sourceTimestamp": "2000-04-16T08:53:01.632000+00:00",
+      "values": {
+        "channel_18": 0.4561147391796112,
+        "channel_20": 0.4561953842639923,
+        "channel_9": 0.485213041305542,
+        "channel_13": 0.5069020986557007
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2898,
+      "sourceTimestamp": "2000-04-16T08:53:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4555265009403229,
+        "channel_20": 0.45640379190444946,
+        "channel_9": 0.48437222838401794,
+        "channel_13": 0.5065343976020813
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2916,
+      "sourceTimestamp": "2000-04-16T08:53:37.632000+00:00",
+      "values": {
+        "channel_18": 0.45677074790000916,
+        "channel_20": 0.45580846071243286,
+        "channel_9": 0.48437222838401794,
+        "channel_13": 0.5065343976020813
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2934,
+      "sourceTimestamp": "2000-04-16T08:53:55.632000+00:00",
+      "values": {
+        "channel_18": 0.45581305027008057,
+        "channel_20": 0.4562995731830597,
+        "channel_9": 0.48437222838401794,
+        "channel_13": 0.5065343976020813
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2949,
+      "sourceTimestamp": "2000-04-16T08:54:11.382000+00:00",
+      "values": {
+        "channel_18": 0.45581305027008057,
+        "channel_20": 0.4562995731830597,
+        "channel_9": 0.48437222838401794,
+        "channel_13": 0.5065343976020813
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2952,
+      "sourceTimestamp": "2000-04-16T08:54:13.632000+00:00",
+      "values": {
+        "channel_18": 0.4558206796646118,
+        "channel_20": 0.45624303817749023,
+        "channel_9": 0.48437222838401794,
+        "channel_13": 0.5065343976020813
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2970,
+      "sourceTimestamp": "2000-04-16T08:54:31.632000+00:00",
+      "values": {
+        "channel_18": 0.4558509290218353,
+        "channel_20": 0.45615607500076294,
+        "channel_9": 0.48437222838401794,
+        "channel_13": 0.5065343976020813
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 2988,
+      "sourceTimestamp": "2000-04-16T08:54:49.632000+00:00",
+      "values": {
+        "channel_18": 0.4564240276813507,
+        "channel_20": 0.4558953642845154,
+        "channel_9": 0.4843776226043701,
+        "channel_13": 0.5065831542015076
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3006,
+      "sourceTimestamp": "2000-04-16T08:55:07.632000+00:00",
+      "values": {
+        "channel_18": 0.4557150900363922,
+        "channel_20": 0.4562777578830719,
+        "channel_9": 0.4843776226043701,
+        "channel_13": 0.5065831542015076
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3024,
+      "sourceTimestamp": "2000-04-16T08:55:25.632000+00:00",
+      "values": {
+        "channel_18": 0.4559715986251831,
+        "channel_20": 0.45610395073890686,
+        "channel_9": 0.4843776226043701,
+        "channel_13": 0.5065831542015076
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3039,
+      "sourceTimestamp": "2000-04-16T08:55:41.382000+00:00",
+      "values": {
+        "channel_18": 0.4559715986251831,
+        "channel_20": 0.45610395073890686,
+        "channel_9": 0.4843776226043701,
+        "channel_13": 0.5065831542015076
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3042,
+      "sourceTimestamp": "2000-04-16T08:55:43.632000+00:00",
+      "values": {
+        "channel_18": 0.456748366355896,
+        "channel_20": 0.4556736946105957,
+        "channel_9": 0.4843776226043701,
+        "channel_13": 0.5065831542015076
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3060,
+      "sourceTimestamp": "2000-04-16T08:56:01.632000+00:00",
+      "values": {
+        "channel_18": 0.4553380310535431,
+        "channel_20": 0.45648640394210815,
+        "channel_9": 0.4843776226043701,
+        "channel_13": 0.5065831542015076
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3078,
+      "sourceTimestamp": "2000-04-16T08:56:19.632000+00:00",
+      "values": {
+        "channel_18": 0.45623549818992615,
+        "channel_20": 0.45608240365982056,
+        "channel_9": 0.4839165508747101,
+        "channel_13": 0.506431519985199
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3096,
+      "sourceTimestamp": "2000-04-16T08:56:37.632000+00:00",
+      "values": {
+        "channel_18": 0.4562504291534424,
+        "channel_20": 0.456082284450531,
+        "channel_9": 0.4839165508747101,
+        "channel_13": 0.506431519985199
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3114,
+      "sourceTimestamp": "2000-04-16T08:56:55.632000+00:00",
+      "values": {
+        "channel_18": 0.4559789299964905,
+        "channel_20": 0.456195205450058,
+        "channel_9": 0.4839165508747101,
+        "channel_13": 0.506431519985199
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3129,
+      "sourceTimestamp": "2000-04-16T08:57:11.382000+00:00",
+      "values": {
+        "channel_18": 0.4559789299964905,
+        "channel_20": 0.456195205450058,
+        "channel_9": 0.4839165508747101,
+        "channel_13": 0.506431519985199
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3132,
+      "sourceTimestamp": "2000-04-16T08:57:13.632000+00:00",
+      "values": {
+        "channel_18": 0.455888569355011,
+        "channel_20": 0.45618653297424316,
+        "channel_9": 0.4839165508747101,
+        "channel_13": 0.506431519985199
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3150,
+      "sourceTimestamp": "2000-04-16T08:57:31.632000+00:00",
+      "values": {
+        "channel_18": 0.4562279284000397,
+        "channel_20": 0.4559909403324127,
+        "channel_9": 0.4839165508747101,
+        "channel_13": 0.506431519985199
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3168,
+      "sourceTimestamp": "2000-04-16T08:57:49.632000+00:00",
+      "values": {
+        "channel_18": 0.45628079771995544,
+        "channel_20": 0.4559779763221741,
+        "channel_9": 0.4840511083602905,
+        "channel_13": 0.5065129995346069
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3186,
+      "sourceTimestamp": "2000-04-16T08:58:07.632000+00:00",
+      "values": {
+        "channel_18": 0.45542094111442566,
+        "channel_20": 0.45649945735931396,
+        "channel_9": 0.4840511083602905,
+        "channel_13": 0.5065129995346069
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3204,
+      "sourceTimestamp": "2000-04-16T08:58:25.632000+00:00",
+      "values": {
+        "channel_18": 0.45673316717147827,
+        "channel_20": 0.4557432532310486,
+        "channel_9": 0.4840511083602905,
+        "channel_13": 0.5065129995346069
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3219,
+      "sourceTimestamp": "2000-04-16T08:58:41.382000+00:00",
+      "values": {
+        "channel_18": 0.45673316717147827,
+        "channel_20": 0.4557432532310486,
+        "channel_9": 0.4840511083602905,
+        "channel_13": 0.5065129995346069
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3222,
+      "sourceTimestamp": "2000-04-16T08:58:43.632000+00:00",
+      "values": {
+        "channel_18": 0.4558583199977875,
+        "channel_20": 0.45622995495796204,
+        "channel_9": 0.4840511083602905,
+        "channel_13": 0.5065129995346069
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3240,
+      "sourceTimestamp": "2000-04-16T08:59:01.632000+00:00",
+      "values": {
+        "channel_18": 0.4556547701358795,
+        "channel_20": 0.4562777280807495,
+        "channel_9": 0.4840511083602905,
+        "channel_13": 0.5065129995346069
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3258,
+      "sourceTimestamp": "2000-04-16T08:59:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4561448395252228,
+        "channel_20": 0.45611700415611267,
+        "channel_9": 0.48475465178489685,
+        "channel_13": 0.5066378116607666
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3276,
+      "sourceTimestamp": "2000-04-16T08:59:37.632000+00:00",
+      "values": {
+        "channel_18": 0.4560317099094391,
+        "channel_20": 0.4562431275844574,
+        "channel_9": 0.48475465178489685,
+        "channel_13": 0.5066378116607666
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3294,
+      "sourceTimestamp": "2000-04-16T08:59:55.632000+00:00",
+      "values": {
+        "channel_18": 0.4559337794780731,
+        "channel_20": 0.4562649428844452,
+        "channel_9": 0.48475465178489685,
+        "channel_13": 0.5066378116607666
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3309,
+      "sourceTimestamp": "2000-04-16T09:00:11.385000+00:00",
+      "values": {
+        "channel_18": 0.4559337794780731,
+        "channel_20": 0.4562649428844452,
+        "channel_9": 0.48475465178489685,
+        "channel_13": 0.5066378116607666
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3312,
+      "sourceTimestamp": "2000-04-16T09:00:13.632000+00:00",
+      "values": {
+        "channel_18": 0.4560016989707947,
+        "channel_20": 0.4561910033226013,
+        "channel_9": 0.48475465178489685,
+        "channel_13": 0.5066378116607666
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3330,
+      "sourceTimestamp": "2000-04-16T09:00:31.632000+00:00",
+      "values": {
+        "channel_18": 0.45679351687431335,
+        "channel_20": 0.4556736648082733,
+        "channel_9": 0.48475465178489685,
+        "channel_13": 0.5066378116607666
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3348,
+      "sourceTimestamp": "2000-04-16T09:00:49.632000+00:00",
+      "values": {
+        "channel_18": 0.45546630024909973,
+        "channel_20": 0.4563429057598114,
+        "channel_9": 0.48439398407936096,
+        "channel_13": 0.5065635442733765
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3366,
+      "sourceTimestamp": "2000-04-16T09:01:07.632000+00:00",
+      "values": {
+        "channel_18": 0.4559865891933441,
+        "channel_20": 0.4561561048030853,
+        "channel_9": 0.48439398407936096,
+        "channel_13": 0.5065635442733765
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3384,
+      "sourceTimestamp": "2000-04-16T09:01:25.632000+00:00",
+      "values": {
+        "channel_18": 0.4562958776950836,
+        "channel_20": 0.45600414276123047,
+        "channel_9": 0.48439398407936096,
+        "channel_13": 0.5065635442733765
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3399,
+      "sourceTimestamp": "2000-04-16T09:01:41.385000+00:00",
+      "values": {
+        "channel_18": 0.4562958776950836,
+        "channel_20": 0.45600414276123047,
+        "channel_9": 0.48439398407936096,
+        "channel_13": 0.5065635442733765
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3402,
+      "sourceTimestamp": "2000-04-16T09:01:43.632000+00:00",
+      "values": {
+        "channel_18": 0.45565474033355713,
+        "channel_20": 0.45628637075424194,
+        "channel_9": 0.48439398407936096,
+        "channel_13": 0.5065635442733765
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3420,
+      "sourceTimestamp": "2000-04-16T09:02:01.632000+00:00",
+      "values": {
+        "channel_18": 0.45614486932754517,
+        "channel_20": 0.4560038447380066,
+        "channel_9": 0.48439398407936096,
+        "channel_13": 0.5065635442733765
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3438,
+      "sourceTimestamp": "2000-04-16T09:02:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4562655985355377,
+        "channel_20": 0.45603883266448975,
+        "channel_9": 0.4850935637950897,
+        "channel_13": 0.5068498253822327
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3456,
+      "sourceTimestamp": "2000-04-16T09:02:37.632000+00:00",
+      "values": {
+        "channel_18": 0.45616766810417175,
+        "channel_20": 0.4561128616333008,
+        "channel_9": 0.4850935637950897,
+        "channel_13": 0.5068498253822327
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3474,
+      "sourceTimestamp": "2000-04-16T09:02:55.632000+00:00",
+      "values": {
+        "channel_18": 0.45548132061958313,
+        "channel_20": 0.45638638734817505,
+        "channel_9": 0.4850935637950897,
+        "channel_13": 0.5068498253822327
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3489,
+      "sourceTimestamp": "2000-04-16T09:03:11.385000+00:00",
+      "values": {
+        "channel_18": 0.45548132061958313,
+        "channel_20": 0.45638638734817505,
+        "channel_9": 0.4850935637950897,
+        "channel_13": 0.5068498253822327
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3492,
+      "sourceTimestamp": "2000-04-16T09:03:13.632000+00:00",
+      "values": {
+        "channel_18": 0.45635607838630676,
+        "channel_20": 0.4558473825454712,
+        "channel_9": 0.4850935637950897,
+        "channel_13": 0.5068498253822327
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3510,
+      "sourceTimestamp": "2000-04-16T09:03:31.632000+00:00",
+      "values": {
+        "channel_18": 0.45602425932884216,
+        "channel_20": 0.45603862404823303,
+        "channel_9": 0.4850935637950897,
+        "channel_13": 0.5068498253822327
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3528,
+      "sourceTimestamp": "2000-04-16T09:03:49.632000+00:00",
+      "values": {
+        "channel_18": 0.4556396007537842,
+        "channel_20": 0.456399530172348,
+        "channel_9": 0.4841172993183136,
+        "channel_13": 0.50650554895401
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3546,
+      "sourceTimestamp": "2000-04-16T09:04:07.632000+00:00",
+      "values": {
+        "channel_18": 0.45654454827308655,
+        "channel_20": 0.45599114894866943,
+        "channel_9": 0.4841172993183136,
+        "channel_13": 0.50650554895401
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3564,
+      "sourceTimestamp": "2000-04-16T09:04:25.632000+00:00",
+      "values": {
+        "channel_18": 0.45603179931640625,
+        "channel_20": 0.45623451471328735,
+        "channel_9": 0.48448848724365234,
+        "channel_13": 0.5066120624542236
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3579,
+      "sourceTimestamp": "2000-04-16T09:04:41.385000+00:00",
+      "values": {
+        "channel_18": 0.45603179931640625,
+        "channel_20": 0.45623451471328735,
+        "channel_9": 0.48448848724365234,
+        "channel_13": 0.5066120624542236
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3582,
+      "sourceTimestamp": "2000-04-16T09:04:43.632000+00:00",
+      "values": {
+        "channel_18": 0.45590370893478394,
+        "channel_20": 0.45621269941329956,
+        "channel_9": 0.48448848724365234,
+        "channel_13": 0.5066120624542236
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3600,
+      "sourceTimestamp": "2000-04-16T09:05:01.632000+00:00",
+      "values": {
+        "channel_18": 0.45590341091156006,
+        "channel_20": 0.4563082158565521,
+        "channel_9": 0.48448848724365234,
+        "channel_13": 0.5066120624542236
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3618,
+      "sourceTimestamp": "2000-04-16T09:05:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4563107490539551,
+        "channel_20": 0.45598655939102173,
+        "channel_9": 0.48453405499458313,
+        "channel_13": 0.5066376328468323
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3636,
+      "sourceTimestamp": "2000-04-16T09:05:37.632000+00:00",
+      "values": {
+        "channel_18": 0.4556698203086853,
+        "channel_20": 0.45633864402770996,
+        "channel_9": 0.48453405499458313,
+        "channel_13": 0.5066376328468323
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3654,
+      "sourceTimestamp": "2000-04-16T09:05:55.632000+00:00",
+      "values": {
+        "channel_18": 0.45587357878685,
+        "channel_20": 0.4561256468296051,
+        "channel_9": 0.48453405499458313,
+        "channel_13": 0.5066376328468323
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3669,
+      "sourceTimestamp": "2000-04-16T09:06:11.385000+00:00",
+      "values": {
+        "channel_18": 0.45587357878685,
+        "channel_20": 0.4561256468296051,
+        "channel_9": 0.48453405499458313,
+        "channel_13": 0.5066376328468323
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3672,
+      "sourceTimestamp": "2000-04-16T09:06:13.632000+00:00",
+      "values": {
+        "channel_18": 0.45652204751968384,
+        "channel_20": 0.4558040201663971,
+        "channel_9": 0.48453405499458313,
+        "channel_13": 0.5066376328468323
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3690,
+      "sourceTimestamp": "2000-04-16T09:06:31.632000+00:00",
+      "values": {
+        "channel_18": 0.4555266201496124,
+        "channel_20": 0.4563429355621338,
+        "channel_9": 0.48453405499458313,
+        "channel_13": 0.5066376328468323
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3708,
+      "sourceTimestamp": "2000-04-16T09:06:49.632000+00:00",
+      "values": {
+        "channel_18": 0.4560996890068054,
+        "channel_20": 0.45614320039749146,
+        "channel_9": 0.48377716541290283,
+        "channel_13": 0.5064407587051392
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3726,
+      "sourceTimestamp": "2000-04-16T09:07:07.632000+00:00",
+      "values": {
+        "channel_18": 0.4561750590801239,
+        "channel_20": 0.4561867415904999,
+        "channel_9": 0.48377716541290283,
+        "channel_13": 0.5064407587051392
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3744,
+      "sourceTimestamp": "2000-04-16T09:07:25.632000+00:00",
+      "values": {
+        "channel_18": 0.45598652958869934,
+        "channel_20": 0.45619964599609375,
+        "channel_9": 0.48377716541290283,
+        "channel_13": 0.5064407587051392
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3759,
+      "sourceTimestamp": "2000-04-16T09:07:41.385000+00:00",
+      "values": {
+        "channel_18": 0.45598652958869934,
+        "channel_20": 0.45619964599609375,
+        "channel_9": 0.48377716541290283,
+        "channel_13": 0.5064407587051392
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3762,
+      "sourceTimestamp": "2000-04-16T09:07:43.632000+00:00",
+      "values": {
+        "channel_18": 0.4557754695415497,
+        "channel_20": 0.4562169313430786,
+        "channel_9": 0.48377716541290283,
+        "channel_13": 0.5064407587051392
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3780,
+      "sourceTimestamp": "2000-04-16T09:08:01.632000+00:00",
+      "values": {
+        "channel_18": 0.4562656581401825,
+        "channel_20": 0.45589959621429443,
+        "channel_9": 0.48377716541290283,
+        "channel_13": 0.5064407587051392
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3798,
+      "sourceTimestamp": "2000-04-16T09:08:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4561752676963806,
+        "channel_20": 0.4558647871017456,
+        "channel_9": 0.4842030704021454,
+        "channel_13": 0.5065414905548096
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3816,
+      "sourceTimestamp": "2000-04-16T09:08:37.632000+00:00",
+      "values": {
+        "channel_18": 0.4556547701358795,
+        "channel_20": 0.45628637075424194,
+        "channel_9": 0.4842030704021454,
+        "channel_13": 0.5065414905548096
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3834,
+      "sourceTimestamp": "2000-04-16T09:08:55.632000+00:00",
+      "values": {
+        "channel_18": 0.4566275179386139,
+        "channel_20": 0.45590850710868835,
+        "channel_9": 0.4842030704021454,
+        "channel_13": 0.5065414905548096
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3849,
+      "sourceTimestamp": "2000-04-16T09:09:11.385000+00:00",
+      "values": {
+        "channel_18": 0.4566275179386139,
+        "channel_20": 0.45590850710868835,
+        "channel_9": 0.4842030704021454,
+        "channel_13": 0.5065414905548096
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3852,
+      "sourceTimestamp": "2000-04-16T09:09:13.632000+00:00",
+      "values": {
+        "channel_18": 0.45601677894592285,
+        "channel_20": 0.4561735987663269,
+        "channel_9": 0.4842030704021454,
+        "channel_13": 0.5065414905548096
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3870,
+      "sourceTimestamp": "2000-04-16T09:09:31.632000+00:00",
+      "values": {
+        "channel_18": 0.4558810591697693,
+        "channel_20": 0.45616477727890015,
+        "channel_9": 0.4842030704021454,
+        "channel_13": 0.5065414905548096
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3888,
+      "sourceTimestamp": "2000-04-16T09:09:49.632000+00:00",
+      "values": {
+        "channel_18": 0.4561072885990143,
+        "channel_20": 0.4560169577598572,
+        "channel_9": 0.48447728157043457,
+        "channel_13": 0.5066730976104736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3906,
+      "sourceTimestamp": "2000-04-16T09:10:07.632000+00:00",
+      "values": {
+        "channel_18": 0.45614486932754517,
+        "channel_20": 0.45608222484588623,
+        "channel_9": 0.48447728157043457,
+        "channel_13": 0.5066730976104736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3924,
+      "sourceTimestamp": "2000-04-16T09:10:25.632000+00:00",
+      "values": {
+        "channel_18": 0.45584315061569214,
+        "channel_20": 0.45635175704956055,
+        "channel_9": 0.48447728157043457,
+        "channel_13": 0.5066730976104736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3939,
+      "sourceTimestamp": "2000-04-16T09:10:41.385000+00:00",
+      "values": {
+        "channel_18": 0.45584315061569214,
+        "channel_20": 0.45635175704956055,
+        "channel_9": 0.48447728157043457,
+        "channel_13": 0.5066730976104736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3942,
+      "sourceTimestamp": "2000-04-16T09:10:43.632000+00:00",
+      "values": {
+        "channel_18": 0.4558432698249817,
+        "channel_20": 0.45629096031188965,
+        "channel_9": 0.48447728157043457,
+        "channel_13": 0.5066730976104736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3960,
+      "sourceTimestamp": "2000-04-16T09:11:01.632000+00:00",
+      "values": {
+        "channel_18": 0.4564917981624603,
+        "channel_20": 0.45604774355888367,
+        "channel_9": 0.48447728157043457,
+        "channel_13": 0.5066730976104736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3978,
+      "sourceTimestamp": "2000-04-16T09:11:19.632000+00:00",
+      "values": {
+        "channel_18": 0.4556170105934143,
+        "channel_20": 0.4563429653644562,
+        "channel_9": 0.48418503999710083,
+        "channel_13": 0.5065510272979736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 3996,
+      "sourceTimestamp": "2000-04-16T09:11:37.632000+00:00",
+      "values": {
+        "channel_18": 0.45596402883529663,
+        "channel_20": 0.45609086751937866,
+        "channel_9": 0.48418503999710083,
+        "channel_13": 0.5065510272979736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4014,
+      "sourceTimestamp": "2000-04-16T09:11:55.632000+00:00",
+      "values": {
+        "channel_18": 0.45626571774482727,
+        "channel_20": 0.4558822512626648,
+        "channel_9": 0.48418503999710083,
+        "channel_13": 0.5065510272979736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4029,
+      "sourceTimestamp": "2000-04-16T09:12:11.385000+00:00",
+      "values": {
+        "channel_18": 0.45626571774482727,
+        "channel_20": 0.4558822512626648,
+        "channel_9": 0.48418503999710083,
+        "channel_13": 0.5065510272979736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4032,
+      "sourceTimestamp": "2000-04-16T09:12:13.632000+00:00",
+      "values": {
+        "channel_18": 0.4558282792568207,
+        "channel_20": 0.45611685514450073,
+        "channel_9": 0.48418503999710083,
+        "channel_13": 0.5065510272979736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4050,
+      "sourceTimestamp": "2000-04-16T09:12:31.632000+00:00",
+      "values": {
+        "channel_18": 0.45603930950164795,
+        "channel_20": 0.4561169445514679,
+        "channel_9": 0.48418503999710083,
+        "channel_13": 0.5065510272979736
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4068,
+      "sourceTimestamp": "2000-04-16T09:12:49.632000+00:00",
+      "values": {
+        "channel_18": 0.4562203586101532,
+        "channel_20": 0.4560910165309906,
+        "channel_9": 0.4847591519355774,
+        "channel_13": 0.5067809820175171
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4086,
+      "sourceTimestamp": "2000-04-16T09:13:07.632000+00:00",
+      "values": {
+        "channel_18": 0.4562280774116516,
+        "channel_20": 0.45599105954170227,
+        "channel_9": 0.4847591519355774,
+        "channel_13": 0.5067809820175171
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4104,
+      "sourceTimestamp": "2000-04-16T09:13:25.635000+00:00",
+      "values": {
+        "channel_18": 0.4555567502975464,
+        "channel_20": 0.4563690423965454,
+        "channel_9": 0.4847591519355774,
+        "channel_13": 0.5067809820175171
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4119,
+      "sourceTimestamp": "2000-04-16T09:13:41.385000+00:00",
+      "values": {
+        "channel_18": 0.4555567502975464,
+        "channel_20": 0.4563690423965454,
+        "channel_9": 0.4847591519355774,
+        "channel_13": 0.5067809820175171
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4122,
+      "sourceTimestamp": "2000-04-16T09:13:43.635000+00:00",
+      "values": {
+        "channel_18": 0.45629560947418213,
+        "channel_20": 0.4560822546482086,
+        "channel_9": 0.4847591519355774,
+        "channel_13": 0.5067809820175171
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4140,
+      "sourceTimestamp": "2000-04-16T09:14:01.635000+00:00",
+      "values": {
+        "channel_18": 0.45599400997161865,
+        "channel_20": 0.45629099011421204,
+        "channel_9": 0.4847591519355774,
+        "channel_13": 0.5067809820175171
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4158,
+      "sourceTimestamp": "2000-04-16T09:14:19.635000+00:00",
+      "values": {
+        "channel_18": 0.45570746064186096,
+        "channel_20": 0.45649972558021545,
+        "channel_9": 0.4842967092990875,
+        "channel_13": 0.5065000653266907
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4176,
+      "sourceTimestamp": "2000-04-16T09:14:37.635000+00:00",
+      "values": {
+        "channel_18": 0.456356018781662,
+        "channel_20": 0.4560301899909973,
+        "channel_9": 0.4842967092990875,
+        "channel_13": 0.5065000653266907
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4194,
+      "sourceTimestamp": "2000-04-16T09:14:55.635000+00:00",
+      "values": {
+        "channel_18": 0.45609211921691895,
+        "channel_20": 0.4561736285686493,
+        "channel_9": 0.4842967092990875,
+        "channel_13": 0.5065000653266907
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4209,
+      "sourceTimestamp": "2000-04-16T09:15:11.385000+00:00",
+      "values": {
+        "channel_18": 0.45609211921691895,
+        "channel_20": 0.4561736285686493,
+        "channel_9": 0.4842967092990875,
+        "channel_13": 0.5065000653266907
+      },
+      "eventActive": true
+    },
+    {
+      "timestamp": 4212,
+      "sourceTimestamp": "2000-04-16T09:15:13.635000+00:00",
+      "values": {
+        "channel_18": 0.4559262990951538,
+        "channel_20": 0.4561648368835449,
+        "channel_9": 0.4842967092990875,
+        "channel_13": 0.5065000653266907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 4230,
+      "sourceTimestamp": "2000-04-16T09:15:31.635000+00:00",
+      "values": {
+        "channel_18": 0.4559263288974762,
+        "channel_20": 0.45608651638031006,
+        "channel_9": 0.4842967092990875,
+        "channel_13": 0.5065000653266907
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 4248,
+      "sourceTimestamp": "2000-04-16T09:15:49.635000+00:00",
+      "values": {
+        "channel_18": 0.45638635754585266,
+        "channel_20": 0.455899715423584,
+        "channel_9": 0.4845395088195801,
+        "channel_13": 0.5066008567810059
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 4266,
+      "sourceTimestamp": "2000-04-16T09:16:07.635000+00:00",
+      "values": {
+        "channel_18": 0.455820769071579,
+        "channel_20": 0.4562431275844574,
+        "channel_9": 0.4845395088195801,
+        "channel_13": 0.5066008567810059
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 4284,
+      "sourceTimestamp": "2000-04-16T09:16:25.635000+00:00",
+      "values": {
+        "channel_18": 0.4559941291809082,
+        "channel_20": 0.4561953544616699,
+        "channel_9": 0.4845395088195801,
+        "channel_13": 0.5066008567810059
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 4299,
+      "sourceTimestamp": "2000-04-16T09:16:41.385000+00:00",
+      "values": {
+        "channel_18": 0.4559941291809082,
+        "channel_20": 0.4561953544616699,
+        "channel_9": 0.4845395088195801,
+        "channel_13": 0.5066008567810059
+      },
+      "eventActive": false
+    },
+    {
+      "timestamp": 4302,
+      "sourceTimestamp": "2000-04-16T09:16:43.635000+00:00",
+      "values": {
+        "channel_18": 0.45628827810287476,
+        "channel_20": 0.45596492290496826,
+        "channel_9": 0.4845395088195801,
+        "channel_13": 0.5066008567810059
+      },
+      "eventActive": false
+    }
+  ]
+}

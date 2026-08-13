@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1",
+  "runDate": "2026-08-13",
+  "scope": "FlightSentry paired-case evaluation on attributed ESA Mission 2 extracts; not official ESA-ADB benchmark results.",
+  "source": {
+    "dataset": "ESA Anomaly Dataset / Mission 2",
+    "record": "https://doi.org/10.5281/zenodo.12528696",
+    "license": "CC BY 3.0 IGO",
+    "archiveMd5": "0b7505b7f0731ca037ee889ca2a520ce",
+    "channels": ["channel_18", "channel_20", "channel_9", "channel_13"],
+    "samples": 974,
+    "extracts": [
+      {
+        "eventId": 609,
+        "classification": "RARE_NOMINAL",
+        "samples": 686,
+        "sha256": "d9a4eb12dccdde4b95a7689b5d78a919c36b76280c0e2af29cdb2bacccbea059",
+        "telecommands": ["telecommand_6"],
+        "operationalEvents": ["event_14"]
+      },
+      {
+        "eventId": 618,
+        "classification": "ANOMALY",
+        "samples": 288,
+        "sha256": "67f922b8d320e6078e14244abcf0c5e79f9d50db95e3f5a9568df5091021ca58",
+        "telecommands": [],
+        "operationalEvents": []
+      }
+    ]
+  },
+  "evaluationDesign": {
+    "modelFit": "87 nominal samples from the event 609 replay window",
+    "scoreCalibration": "38 separate nominal samples from the event 609 replay window",
+    "weightSelection": "Event-level F1 on event 609, then false-alert episodes and detection delay",
+    "heldOutEvaluation": "Event 618 excluded from fitting, calibration, and weight selection",
+    "limitation": "One validation event and one held-out event; paired-case proof only"
+  },
+  "candidate": {
+    "weights": {
+      "mad": 0.6,
+      "isolationForest": 0.0,
+      "autoencoder": 0.4
+    },
+    "threshold": 0.78,
+    "persistence": "3 of 5 windows",
+    "onnxValidation": "PASS"
+  },
+  "results": {
+    "validation609": {
+      "detected": true,
+      "eventF1": 1.0,
+      "falseAlertEpisodes": 0,
+      "detectionDelaySeconds": 54
+    },
+    "heldOut618": {
+      "detected": true,
+      "eventPrecision": 0.3333,
+      "eventRecall": 1.0,
+      "eventF1": 0.5,
+      "falseAlertEpisodes": 2,
+      "falseAlertsPerReplayHour": 1.6736,
+      "detectionDelaySeconds": 198
+    },
+    "paired": {
+      "detectedEvents": 2,
+      "totalEvents": 2,
+      "eventPrecision": 0.5,
+      "eventRecall": 1.0,
+      "eventF1": 0.6667,
+      "falseAlertEpisodes": 2,
+      "falseAlertsPerReplayHour": 0.4938,
+      "meanDetectionDelaySeconds": 126
+    },
+    "heldOutAblation": {
+      "rollingMad": {
+        "detected": true,
+        "eventF1": 0.6667,
+        "falseAlertEpisodes": 1,
+        "detectionDelaySeconds": 198
+      },
+      "isolationForest": {
+        "detected": false,
+        "eventF1": 0.0,
+        "falseAlertEpisodes": 0,
+        "detectionDelaySeconds": null
+      },
+      "autoencoder": {
+        "detected": true,
+        "eventF1": 0.2222,
+        "falseAlertEpisodes": 7,
+        "detectionDelaySeconds": 0
+      },
+      "weightedEnsemble": {
+        "detected": true,
+        "eventF1": 0.5,
+        "falseAlertEpisodes": 2,
+        "detectionDelaySeconds": 198
+      }
+    }
+  },
+  "deploymentDecision": {
+    "status": "RETAIN_BUNDLED_DEMO",
+    "reason": "The source-trained candidate detected both events, but did not beat Rolling MAD on held-out event 618 and is not browser-parity validated. It remains staged for further calibration."
+  }
+}

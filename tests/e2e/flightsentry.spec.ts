@@ -25,7 +25,9 @@ test("technical proof is keyboard reachable and labels evaluation scope", async 
   await page.getByRole("button", { name: "Technical proof" }).focus();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("heading", { name: /signals first/i })).toBeVisible();
-  await expect(page.getByText(/not official ESA-ADB benchmark results/i)).toBeVisible();
+  await expect(page.getByText(/not official ESA-ADB benchmark results/i).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: /authentic data. staged deployment/i })).toBeVisible();
+  await expect(page.getByText(/retain bundled demo/i)).toBeVisible();
 });
 
 test("has no serious or critical axe violations", async ({ page }) => {

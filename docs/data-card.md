@@ -12,16 +12,27 @@
 
 FlightSentry focuses on Mission 2 event 609, a commanded rare nominal event, and event 618, a non-commanded anomaly. The ESA paper notes their similar telemetry behavior and different command context.
 
-The repository ships with a deterministic, four-channel demonstration fixture modeled on that contrast. It is not raw ESA telemetry. This keeps the public prototype small and reviewable while the pipeline supplies a reproducible path to source-derived scenario packs.
+The browser replay ships with a deterministic, four-channel demonstration fixture modeled on that contrast. It is not raw ESA telemetry. The repository also publishes two small, attributed Mission 2 extracts under `public/data/source-evaluation/` so reviewers can inspect the source evidence without downloading the archive.
 
 ## Processing
 
 1. Download from the Zenodo record and verify checksum.
 2. Validate every ZIP destination before extraction.
 3. Read `labels.csv`, channel metadata, and affected channel files.
-4. Extract padded windows around events 609 and 618.
-5. Preserve source timestamps, attribution, event classification, and channel metadata.
-6. Keep raw archives and working data outside Git.
+4. Select four shared channels, prioritizing channels 18 and 20 highlighted in the paper.
+5. Extract padded, non-overlapping windows around adjacent events 618 and 609.
+6. Preserve source timestamps, per-channel intervals, attribution, classification, and anonymized metadata.
+7. Correlate priority-3 telecommands and overlapping records from `events.csv`.
+8. Keep the raw archive and working data outside Git; publish only attributed extracts and hashes.
+
+## Verified paired context
+
+| Event | Source category | Priority-3 telecommand | Overlapping event record |
+| --- | --- | --- | --- |
+| 609 | Rare Event | `telecommand_6` at onset | `event_14` |
+| 618 | Anomaly | None | None |
+
+This establishes temporal context, not physical causation. The dataset identifiers are anonymized, so FlightSentry does not assign unsupported command or subsystem names.
 
 ## Limitations
 

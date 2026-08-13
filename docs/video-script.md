@@ -14,7 +14,7 @@ Start **Run paired incident replay**.
 
 At context reveal:
 
-“Event 609 overlaps an accepted telecommand and planned calibration. Event 618 has no trusted operational explanation.”
+“Event 609 overlaps a recorded priority-three telecommand and an operational event. Event 618 has no matching command or event context.”
 
 At incident briefs:
 

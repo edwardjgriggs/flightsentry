@@ -18,7 +18,7 @@ FlightSentry provides human-in-the-loop anomaly triage for a challenge prototype
 
 The **bundled browser demo model** (`public/models/flightsentry-autoencoder.onnx`) is a rank-2 linear ONNX autoencoder produced by `scripts/data_pipeline/build_demo_model.py`. It uses two `MatMul` operations (encoder and decoder) with an orthonormal basis learned from the correlated shape of the bundled fixture. It is intentionally simple and transparent for browser-local evaluation.
 
-The **source-data training pipeline** (`scripts/data_pipeline/train_ensemble.py`) trains a nonlinear `MLPRegressor` with hidden layer sizes `(8, 2, 8)`, activation `tanh`, and an overall 4-8-2-8-4 structure on ESA Mission 2 nominal data. Running the pipeline exports this learned model as ONNX and replaces the bundled demo artifact. The pipeline also selects ensemble weights via grid search calibrated to the same normalization scale used by the browser.
+The **source-data training pipeline** (`scripts/data_pipeline/train_ensemble.py`) trains a nonlinear `MLPRegressor` with hidden layer sizes `(8, 2, 8)`, activation `tanh`, and an overall 4-8-2-8-4 structure on ESA Mission 2 nominal data. Running the pipeline exports a staged ONNX candidate and selects ensemble weights via grid search calibrated to the same normalization scale used by the browser. Promotion to `public/models` is deliberately gated by `--promote-web`.
 
 ## Score normalization
 
@@ -40,7 +40,9 @@ where `z = (score - median(calibration)) / (MAD(calibration) * 1.4826)`. This fo
 
 ## Evaluation
 
-The UI reports paired-case detector scores and dispositions, clearly labeled `n=2`. The source-data pipeline writes precision, recall, F1, false-alert samples, ensemble weights, and scenario boundaries to `artifacts/training/metrics.json`.
+The UI reports bundled paired-case detector scores and dispositions, clearly labeled `n=2`. The source-data pipeline writes event-level precision, recall, F1, false-alert episodes per replay hour, detection delay, detector ablation, ensemble weights, and scenario boundaries to `artifacts/training/source-v1/metrics.json`.
+
+The August 13 source run fit on 87 nominal samples, calibrated on 38 separate nominal samples, selected weights on event 609, and held event 618 out of fitting and selection. The staged ensemble detected both events. On held-out event 618 it achieved event F1 `0.50`, two false-alert episodes (`1.6736/hour`), and `198 s` detection delay. Rolling MAD alone achieved F1 `0.67` with one false-alert episode, so the candidate was not promoted. Exact results are in `docs/source-evaluation.md`.
 
 These are FlightSentry project metrics, not official ESA-ADB leaderboard scores.
 
@@ -49,4 +51,5 @@ These are FlightSentry project metrics, not official ESA-ADB leaderboard scores.
 - Two cases cannot establish generalization across spacecraft or mission phases.
 - The bundled linear autoencoder prioritizes browser transparency over state-of-the-art accuracy.
 - The source-pipeline MLPRegressor is more expressive but requires ESA Mission 2 data to train.
+- The source evaluation has one validation event and one held-out event; it does not establish mission-wide generalization.
 - Granite hypotheses remain probabilistic interpretations and require operator verification.

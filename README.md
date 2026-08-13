@@ -12,13 +12,17 @@ The ESA Mission 2 benchmark documents a useful pair: event **609** is a commande
 
 ## Solution
 
-1. Rolling median/MAD, Isolation Forest, and a rank-2 linear autoencoder score telemetry independently (the bundled demo model is linear and transparent; the source-data pipeline trains a nonlinear MLPRegressor 4-8-2-8-4 from ESA Mission 2 data and replaces it).
-2. A validation-selected weighted ensemble requires three of five windows above threshold.
+1. Rolling median/MAD, Isolation Forest, and a rank-2 linear autoencoder score telemetry independently. The bundled browser model is linear and transparent; the source-data pipeline stages a nonlinear MLPRegressor 4-8-2-8-4 candidate for review.
+2. A versioned weighted ensemble requires three of five windows above threshold; source candidates select weights through validation grid search.
 3. Trusted telecommands and planned events are correlated with the alert timeline.
 4. Granite 4 receives only a server-created evidence packet and returns a validated incident brief.
 5. A human operator reviews observations, uncertainty, and diagnostic checks. FlightSentry never executes spacecraft commands.
 
-The public demo contains a deterministic paired-case fixture modeled on ESA events 609 and 618 so it works without downloading raw mission data. It is clearly labeled and is **not** presented as an official ESA-ADB evaluation. The included pipeline downloads and verifies the source archive, extracts licensed windows, trains the ensemble, and replaces the bundled ONNX artifact.
+The public demo contains a deterministic paired-case fixture modeled on ESA events 609 and 618 so it works without downloading raw mission data. It is clearly labeled and is **not** presented as an official ESA-ADB evaluation. The included pipeline downloads and verifies the source archive, publishes two attributed extracts, and stages trained artifacts without replacing the proven browser model.
+
+### Source-data checkpoint
+
+The Mission 2 pipeline has now been run end to end. The checksum-verified extracts confirm that event 609 overlaps anonymized `telecommand_6` and `event_14`, while event 618 has neither record. The source-trained candidate detected both paired events, but did not outperform Rolling MAD on held-out event 618, so it remains staged. See the [source evaluation](docs/source-evaluation.md) and the Technical Proof view for exact metrics.
 
 ## Architecture
 
@@ -89,16 +93,16 @@ Raw archives and training artifacts are Git-ignored. Mission 2 is approximately 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-ml.txt
-.\.venv\Scripts\python.exe scripts\data_pipeline\download_esa_mission2.py --extract
-.\.venv\Scripts\python.exe scripts\data_pipeline\extract_scenarios.py data\raw\ESA-Mission2
-.\.venv\Scripts\python.exe scripts\data_pipeline\train_ensemble.py
+.\.venv\Scripts\python.exe -m scripts.data_pipeline.download_esa_mission2 --extract --workers 8
+.\.venv\Scripts\python.exe -m scripts.data_pipeline.extract_scenarios data\raw\ESA-Mission2 --publish-dir public\data\source-evaluation
+.\.venv\Scripts\python.exe -m scripts.data_pipeline.train_ensemble
 ```
 
-The downloader verifies the ESA-published MD5 `0b7505b7f0731ca037ee889ca2a520ce` before extraction and rejects archive path traversal.
+The downloader verifies the ESA-published MD5 `0b7505b7f0731ca037ee889ca2a520ce`, rejects archive path traversal, and resumes parallel byte ranges. Training defaults to ignored staging under `artifacts/training/source-v1`. Writing a candidate under `public/` requires the explicit `--promote-web` flag after parity and evaluation review.
 
 ## Deploy to Vercel
 
-Install the Vercel CLI to enable environment pulls, deployments, and log inspection. No deployment has been created from this workspace.
+Production is available at [flightsentry.vercel.app](https://flightsentry.vercel.app). Install the Vercel CLI to enable environment pulls, deployments, and log inspection.
 
 ```powershell
 npm i -g vercel
@@ -119,6 +123,7 @@ The challenge requires IBM Bob as the primary development tool. This repository 
 - [Three-minute video script](docs/video-script.md)
 - [Data card](docs/data-card.md)
 - [Model card](docs/model-card.md)
+- [Source-data evaluation](docs/source-evaluation.md)
 - [IBM Bob build log](docs/ibm-bob-build-log.md)
 - [Validation record](docs/validation.md)
 
