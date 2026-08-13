@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-display: optional;
+  font-weight: 400;
+  src: url("../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-display: optional;
+  font-weight: 500;
+  src: url("../../node_modules/@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-display: optional;
+  font-weight: 400;
+  src: url("../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-display: optional;
+  font-weight: 500;
+  src: url("../../node_modules/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Oxanium";
+  font-style: normal;
+  font-display: optional;
+  font-weight: 500;
+  src: url("../../node_modules/@fontsource/oxanium/files/oxanium-latin-500-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Oxanium";
+  font-style: normal;
+  font-display: optional;
+  font-weight: 600;
+  src: url("../../node_modules/@fontsource/oxanium/files/oxanium-latin-600-normal.woff2") format("woff2");
+}
+
+:root {
+  --ink: #dbe8e5;
+  --muted: #839390;
+  --faint: #778783;
+  --void: #080d0e;
+  --panel: #0c1314;
+  --panel-raised: #111a1b;
+  --line: #243332;
+  --line-hot: #3c5450;
+  --mint: #66f2c2;
+  --mint-dim: #2b8065;
+  --amber: #ffcb66;
+  --red: #ff7a7a;
+  --blue: #82aaff;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-display: "Oxanium", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--void);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 74% -20%, rgba(102, 242, 194, 0.08), transparent 34rem),
+    linear-gradient(rgba(102, 242, 194, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 242, 194, 0.025) 1px, transparent 1px),
+    var(--void);
+  background-size: auto, 42px 42px, 42px 42px, auto;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--mint);
+  color: var(--void);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 1rem;
+  left: 1rem;
+  transform: translateY(-150%);
+  background: var(--mint);
+  color: var(--void);
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.mission-shell {
+  width: min(1600px, 100%);
+  margin: 0 auto;
+  padding: 1.25rem clamp(1rem, 2.8vw, 3rem) 4rem;
+}
+
+.hairline-panel {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, rgba(18, 28, 29, 0.96), rgba(10, 16, 17, 0.96));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.025), 0 18px 60px rgba(0, 0, 0, 0.2);
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.display-type {
+  font-family: var(--font-display);
+  letter-spacing: 0.025em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.signal-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 16px currentColor;
+}
+
+.scanline {
+  position: absolute;
+  inset: 0 auto 0 var(--scan-position, 0%);
+  width: 1px;
+  pointer-events: none;
+  background: linear-gradient(transparent, var(--mint), transparent);
+  opacity: 0.8;
+  box-shadow: 0 0 18px rgba(102, 242, 194, 0.45);
+  transition: left 80ms linear;
+}
+
+.uplot {
+  font-family: var(--font-mono) !important;
+}
+
+.uplot .u-title,
+.uplot .u-legend {
+  display: none;
+}
+
+.uplot .u-axis {
+  color: var(--muted) !important;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 0.4; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.6s ease-in-out infinite;
+}
+
+@keyframes panel-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-enter {
+  animation: panel-enter 420ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

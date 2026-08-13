@@ -1,0 +1,140 @@
+import { detectorConfiguration } from "@/lib/detectors";
+import type { DetectorFrame, Scenario } from "@/lib/types";
+
+export function TechnicalProof({
+  scenarios,
+  frames,
+  modelRuntime,
+}: {
+  scenarios: Scenario[];
+  frames: Record<string, DetectorFrame[]>;
+  modelRuntime: "idle" | "loading" | "onnx" | "fallback";
+}) {
+  const rows = [
+    ["Rolling MAD", "mad"],
+    ["Isolation Forest", "isolationForest"],
+    [modelRuntime === "onnx" ? "Bundled linear autoencoder (ONNX)" : modelRuntime === "fallback" ? "TypeScript PCA fallback" : "Bundled linear autoencoder", "autoencoder"],
+    ["Weighted ensemble", "fused"],
+  ] as const;
+
+  return (
+    <main id="main-content" className="panel-enter mt-5" tabIndex={-1}>
+      <div className="mb-8 grid gap-4 lg:grid-cols-[1.2fr_.8fr]">
+        <section className="hairline-panel p-5 sm:p-7">
+          <p className="kicker mb-2 text-[var(--mint)]">Technical proof / 01</p>
+          <h1 className="display-type text-3xl font-semibold text-white">Signals first. Language model second.</h1>
+          <p className="mt-3 max-w-3xl text-base leading-relaxed text-[var(--muted)]">
+            FlightSentry keeps anomaly detection deterministic and reproducible. Granite receives a bounded evidence packet only after the numerical ensemble raises a persistent alert.
+          </p>
+          <div className="mt-6 grid gap-px bg-[var(--line)] sm:grid-cols-5">
+            {["Telemetry", "3 detectors", "Score fusion", "Trusted context", "Granite brief"].map((item, index) => (
+              <div key={item} className="relative bg-[var(--panel)] px-3 py-4">
+                <span className="mono mb-2 block text-[10px] text-[var(--mint)]">0{index + 1}</span>
+                <span className="kicker text-[var(--ink)]">{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="hairline-panel p-5">
+          <p className="kicker mb-3 text-[var(--mint)]">Calibration record</p>
+          <dl className="space-y-3 text-sm">
+            <ProofRow label="Config profile" value={detectorConfiguration.configProfile} />
+            <ProofRow label="Baseline" value={`${detectorConfiguration.baselineSamples} samples`} />
+            <ProofRow label="MAD window" value={`${detectorConfiguration.rollingWindow} samples`} />
+            <ProofRow label="Alert threshold" value={detectorConfiguration.threshold.toFixed(2)} />
+            <ProofRow label="Persistence" value={detectorConfiguration.persistence} />
+            <ProofRow
+              label="Fusion weights"
+              value={`${detectorConfiguration.weights.mad.toFixed(2)} / ${detectorConfiguration.weights.isolationForest.toFixed(2)} / ${detectorConfiguration.weights.autoencoder.toFixed(2)}`}
+            />
+            <ProofRow label="Weights source" value={detectorConfiguration.provenance.weightsSource} />
+            <ProofRow
+              label="Model runtime"
+              value={
+                modelRuntime === "onnx"
+                  ? "Browser / ONNX verified"
+                  : modelRuntime === "fallback"
+                    ? "Browser / TypeScript fallback"
+                    : modelRuntime === "loading"
+                      ? "Browser / loading ONNX"
+                      : "Browser / ONNX loads on replay"
+              }
+            />
+          </dl>
+        </section>
+      </div>
+
+      <section className="hairline-panel overflow-hidden">
+        <div className="border-b border-[var(--line)] p-5">
+          <p className="kicker mb-1 text-[var(--mint)]">Paired-case ablation / 02</p>
+          <h2 className="display-type text-2xl font-semibold text-white">Every detector sees change. Context determines action.</h2>
+          <p className="mt-2 text-sm text-[var(--muted)]">Bundled challenge fixture, n=2. These values are not official ESA-ADB benchmark results.</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+            <thead className="kicker text-[var(--muted)]">
+              <tr>
+                <th className="border-b border-[var(--line)] px-5 py-3 font-normal">Method</th>
+                {scenarios.map((scenario) => (
+                  <th key={scenario.id} className="border-b border-l border-[var(--line)] px-5 py-3 font-normal">
+                    Event {scenario.eventId} max score
+                  </th>
+                ))}
+                <th className="border-b border-l border-[var(--line)] px-5 py-3 font-normal">Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map(([label, key]) => (
+                <tr key={key}>
+                  <td className="border-b border-[var(--line)] px-5 py-4 text-[var(--ink)]">{label}</td>
+                  {scenarios.map((scenario) => {
+                    const maximum = Math.max(...frames[scenario.id].map((frame) => frame[key]));
+                    return (
+                      <td key={scenario.id} className="mono border-b border-l border-[var(--line)] px-5 py-4 text-[var(--amber)]">
+                        {maximum.toFixed(2)} · FLAG
+                      </td>
+                    );
+                  })}
+                  <td className="border-b border-l border-[var(--line)] px-5 py-4 text-[var(--muted)]">
+                    {key === "fused" ? "Persistent alert" : "Independent evidence"}
+                  </td>
+                </tr>
+              ))}
+              <tr className="bg-[#0d211c]">
+                <td className="px-5 py-4 font-medium text-[var(--mint)]">Context resolver</td>
+                <td className="mono border-l border-[var(--line)] px-5 py-4 text-[var(--mint)]">MONITOR</td>
+                <td className="mono border-l border-[var(--line)] px-5 py-4 text-[var(--red)]">ESCALATE</td>
+                <td className="border-l border-[var(--line)] px-5 py-4 text-[var(--muted)]">Human decision support</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div className="mt-5 grid gap-5 lg:grid-cols-3">
+        <ProofCard number="03" title="Grounded by construction" body="Granite can cite only evidence IDs present in the server-created packet. Unknown references fail validation and trigger the reference brief." />
+        <ProofCard number="04" title="Human remains in command" body="FlightSentry recommends low-risk checks. It exposes uncertainty and cannot create or execute spacecraft commands." />
+        <ProofCard number="05" title="Reproducible data path" body="The Python pipeline verifies the ESA archive checksum, extracts attributed windows, trains artifacts, and records configuration provenance." />
+      </div>
+    </main>
+  );
+}
+
+function ProofRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-[var(--line)] pb-2">
+      <dt className="text-[var(--muted)]">{label}</dt>
+      <dd className="mono text-right text-xs text-[var(--ink)]">{value}</dd>
+    </div>
+  );
+}
+
+function ProofCard({ number, title, body }: { number: string; title: string; body: string }) {
+  return (
+    <section className="hairline-panel p-5">
+      <p className="mono mb-5 text-xs text-[var(--mint)]">/{number}</p>
+      <h3 className="display-type text-lg font-semibold text-white">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{body}</p>
+    </section>
+  );
+}

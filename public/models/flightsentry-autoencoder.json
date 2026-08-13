@@ -1,0 +1,16 @@
+{
+  "name": "FlightSentry bundled linear autoencoder (demo artifact)",
+  "version": 1,
+  "architecture": "rank-2 linear: MatMul(encoder) + MatMul(decoder), no activation",
+  "input": "normalized telemetry rows (StandardScaler fit on first 36 samples)",
+  "channels": [
+    "eps_bus_voltage",
+    "aocs_wheel_current",
+    "thermal_panel_temp",
+    "aocs_attitude_error"
+  ],
+  "bottleneckDimensions": 2,
+  "trainingData": "bundled deterministic challenge fixture \u2014 NOT trained on ESA Mission 2 source data",
+  "distinction": "This is the transparent browser demo artifact. train_ensemble.py produces a nonlinear MLPRegressor 4-8-2-8-4 trained on ESA Mission 2 nominal data and replaces this file.",
+  "replacement": "Run train_ensemble.py against ESA Mission 2 extracts."
+}
