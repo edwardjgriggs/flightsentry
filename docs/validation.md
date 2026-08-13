@@ -1,6 +1,6 @@
 # Validation record
 
-Validated locally on Windows on August 13, 2026. The Session 4 build was deployed to Vercel production after local validation. No live watsonx request was performed.
+Validated locally and against Vercel production on Windows on August 13, 2026. Session 4 and the live watsonx configuration were deployed after local validation.
 
 ## Automated gates
 
@@ -140,6 +140,19 @@ npm audit --audit-level=high: zero vulnerabilities
 The first Python invocation used the shell's default interpreter and failed because `onnx` was absent. The documented ML requirements were then loaded through `uv run`; all 25 tests passed. No application change was made for that environment issue.
 
 **Deployment status:** Session 4 was deployed to Vercel production as `dpl_Bm5adobNcFoZDgWcjRJSUV1Hx1c7`. Public verification returned HTTP 200 and a complete paired replay rendered 2 `EVENT DETECTED` labels, 2 latched-peak labels, and 0 final `NOMINAL` labels at `https://flightsentry.vercel.app`.
+
+### Live Granite production verification
+
+Production environment variables were configured through Vercel as server-side values: `WATSONX_API_KEY` and `WATSONX_PROJECT_ID` are Sensitive; `GRANITE_LIVE_ENABLED=true` is non-sensitive. No credential values were printed, committed, or exposed to the browser.
+
+Deployment `dpl_BwwZ2KBmPUmw4XufbFjkoULn9fau` was verified through the bounded public API and full browser replay:
+
+| Scenario | Source | Offline | Validated disposition |
+| --- | --- | --- | --- |
+| `esa-m2-609` | `watsonx` | `false` | `MONITOR` |
+| `esa-m2-618` | `watsonx` | `false` | `INVESTIGATE` |
+
+The completed production UI rendered one `MONITOR`, one `INVESTIGATE`, two `EVENT DETECTED` labels, and zero `REFERENCE MODE` banners. Event 618 remains conservative: Granite did not claim a root cause, and an ambiguous live result resolved to `INVESTIGATE` as required by the incident contract.
 
 ## Lighthouse production audit
 
