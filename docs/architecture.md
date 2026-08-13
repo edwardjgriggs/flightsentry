@@ -7,8 +7,22 @@
 | Telemetry replay | Attributed scenario pack | Ordered numeric samples | No LLM processing |
 | Detector ensemble | Numeric samples | Scores, contributors, persistent alert | Deterministic and browser-local |
 | Context resolver | Known scenario ID | Trusted evidence packet | No arbitrary public prompt or telemetry upload |
+| Context-integrity gate | Active trusted evidence | Deterministic disposition | Every required replay check must pass before `MONITOR` |
 | Granite route | Trusted packet | Structured incident brief | Server-only credentials, temperature 0, one retry |
 | Response validator | Granite JSON | Operator-visible analysis | Reject unknown evidence IDs; ambiguity becomes `INVESTIGATE` |
+| Decision record export | Validated client state | JSON or printable HTML | No credentials, raw archive, or autonomous command interface |
+
+## Context policy
+
+`context-gate-v1` is deterministic and runs independently of Granite.
+
+1. Telemetry-only mode always resolves a persistent anomaly alert to `INVESTIGATE` because operational intent is unavailable.
+2. Trusted-context mode requires all six replay checks to pass: persistent detector alert, command record before onset, operational-event overlap, command-history completeness, mission-plan completeness, and the paired context record.
+3. Removing either event 609 context record makes the gate fail and immediately changes the disposition from `MONITOR` to `INVESTIGATE`.
+4. Event 618 remains `INVESTIGATE` because the complete replay slices contain no explanatory command or operational event.
+5. Counterfactual recalculation does not call Granite. This proves the policy result is caused by structured evidence, not persuasive model text.
+
+The completeness checks are explicitly labeled as bundled replay assertions. The ESA records verify anonymized command and event timing but do not prove command acknowledgement, subsystem mapping, or live-feed completeness. A production deployment must supply those attestations before applying the same policy to operational data.
 
 ## Detector flow
 
@@ -29,6 +43,10 @@ The full Python pipeline (`scripts/data_pipeline/train_ensemble.py`) trains a **
 5. Every model-cited evidence ID must exist in the trusted packet.
 6. `MONITOR` without operational context, or with explicit ambiguity, becomes `INVESTIGATE`.
 7. Failure returns a visibly labeled, validated reference brief; the replay remains usable.
+
+## Decision record
+
+Each completed scenario can export a versioned JSON record or self-contained printable HTML record containing detector configuration and peaks, event onset and first persistent alert, active evidence IDs and timestamps, context checks, policy version, Granite or reference model source, uncertainty, diagnostic checks, and blank operator acknowledgement fields. A counterfactual export records removed evidence and marks the analysis as policy-only.
 
 ## Safety properties
 

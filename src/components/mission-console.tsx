@@ -3,15 +3,18 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ScenarioPanel } from "@/components/scenario-panel";
+import { DecisionComparison } from "@/components/decision-comparison";
 import { TechnicalProof } from "@/components/technical-proof";
 import {
   replaceAutoencoderScores,
   runDetectorEnsemble,
 } from "@/lib/detectors";
 import { getLatchedDetectorFrame } from "@/lib/replay-presentation";
+import { evaluateContextDecision } from "@/lib/context-integrity";
 import type {
   AnalysisResponse,
   DetectorFrame,
+  DecisionMode,
   Scenario,
   ScenarioId,
 } from "@/lib/types";
@@ -27,6 +30,8 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
   const [responses, setResponses] = useState<Partial<Record<ScenarioId, AnalysisResponse>>>({});
   const [revealAnnotation, setRevealAnnotation] = useState(false);
   const [modelRuntime, setModelRuntime] = useState<ModelRuntime>("idle");
+  const [decisionMode, setDecisionMode] = useState<DecisionMode>("trusted-context");
+  const [excludedEvidence, setExcludedEvidence] = useState<Partial<Record<ScenarioId, string[]>>>({});
   const maximum = scenarios[0].telemetry.length - 1;
   const baseDetectorFrames = useMemo(
     () => Object.fromEntries(scenarios.map((scenario) => [scenario.id, runDetectorEnsemble(scenario)])),
@@ -44,6 +49,17 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
     [detectorFrames, scenarios],
   );
   const showLatchedResults = runState === "analyzing" || runState === "complete";
+  const telemetryDecisions = useMemo(
+    () => Object.fromEntries(scenarios.map((scenario) => [scenario.id, evaluateContextDecision(scenario, "telemetry-only")])),
+    [scenarios],
+  );
+  const contextDecisions = useMemo(
+    () => Object.fromEntries(scenarios.map((scenario) => [
+      scenario.id,
+      evaluateContextDecision(scenario, "trusted-context", excludedEvidence[scenario.id] ?? []),
+    ])),
+    [excludedEvidence, scenarios],
+  );
 
   const activateOnnx = useCallback(async () => {
     if (modelRuntime === "loading" || modelRuntime === "onnx") return;
@@ -119,6 +135,8 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
     setProgress(0);
     setResponses({});
     setRevealAnnotation(false);
+    setDecisionMode("trusted-context");
+    setExcludedEvidence({});
     setRunState("replaying");
   };
 
@@ -127,6 +145,20 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
     setProgress(0);
     setResponses({});
     setRevealAnnotation(false);
+    setDecisionMode("trusted-context");
+    setExcludedEvidence({});
+  };
+
+  const toggleEvidence = (scenarioId: ScenarioId, evidenceId: string) => {
+    setExcludedEvidence((current) => {
+      const ids = current[scenarioId] ?? [];
+      return {
+        ...current,
+        [scenarioId]: ids.includes(evidenceId)
+          ? ids.filter((id) => id !== evidenceId)
+          : [...ids, evidenceId],
+      };
+    });
   };
 
   return (
@@ -134,7 +166,7 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
       <a href="#main-content" className="skip-link">Skip to mission console</a>
       <div className="mission-shell">
         <header className="flex flex-col gap-5 border-b border-[var(--line)] pb-5 lg:flex-row lg:items-end lg:justify-between">
-          <div className="flex items-center gap-4">
+          <div className="brand-lockup flex min-w-0 items-center gap-4">
             <div className="grid h-12 w-12 place-items-center border border-[var(--mint-dim)] bg-[#0d211c]" aria-hidden="true">
               <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
                 <path d="M4 21.5 13.5 3l9.5 18.5-9.5-5.2L4 21.5Z" stroke="#66f2c2" strokeWidth="1.4" />
@@ -143,7 +175,7 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
             </div>
             <div>
               <p className="kicker text-[var(--mint)]">Mission assurance workbench</p>
-              <p className="display-type text-2xl font-semibold tracking-[.08em] text-white sm:text-3xl">FLIGHTSENTRY</p>
+              <p className="brand-title display-type text-2xl font-semibold tracking-[.08em] text-white sm:text-3xl">FLIGHTSENTRY</p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -151,7 +183,7 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
               <span className={`signal-dot ${runState === "analyzing" ? "pulse-ring text-[var(--amber)]" : "text-[var(--mint)]"}`} />
               <span className="kicker">{runState === "idle" ? "SYSTEM READY" : runState.toUpperCase()}</span>
             </div>
-            <nav aria-label="Primary views" className="flex border border-[var(--line)] bg-[var(--panel)] p-1">
+            <nav aria-label="Primary views" className="primary-nav grid w-full grid-cols-2 border border-[var(--line)] bg-[var(--panel)] p-1 sm:flex sm:w-auto">
               <ViewButton active={view === "operations"} onClick={() => setView("operations")}>Operations</ViewButton>
               <ViewButton active={view === "proof"} onClick={() => setView("proof")}>Technical proof</ViewButton>
             </nav>
@@ -163,8 +195,8 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
             <section className="mb-5 grid gap-4 border border-[var(--line)] bg-[var(--panel)] p-4 lg:grid-cols-[1fr_auto] lg:items-center">
               <div>
                 <p className="kicker mb-1 text-[var(--mint)]">Paired incident exercise · ESA Mission 2</p>
-                <h1 className="display-type text-xl font-semibold text-white sm:text-2xl">Same signal. Different operational truth.</h1>
-                <p className="mt-1 text-sm text-[var(--muted)]">Telemetry-only detection flags both cases. Command and mission-plan context decides which one deserves escalation.</p>
+                <h1 className="display-type text-lg font-semibold text-white sm:text-2xl">Same signal. Different operational truth.</h1>
+                <p className="mt-1 text-sm text-[var(--muted)]">Telemetry-only detection flags both cases. Command and mission-plan context decides which one still requires investigation.</p>
               </div>
               <div className="flex flex-wrap gap-2 lg:justify-end">
                 {runState === "idle" || runState === "complete" ? (
@@ -187,6 +219,16 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
               </div>
             </section>
 
+            {runState === "complete" && (
+              <DecisionComparison
+                scenarios={scenarios}
+                mode={decisionMode}
+                onModeChange={setDecisionMode}
+                telemetryDecisions={telemetryDecisions}
+                contextDecisions={contextDecisions}
+              />
+            )}
+
             <div className="mb-3 flex items-center gap-3">
               <span className="kicker text-[var(--muted)]">Replay progress</span>
               <div className="h-px flex-1 bg-[var(--line)]"><div className="h-px bg-[var(--mint)] transition-[width] duration-100" style={{ width: `${(progress / maximum) * 100}%` }} /></div>
@@ -207,6 +249,11 @@ export function MissionConsole({ scenarios }: { scenarios: Scenario[] }) {
                   response={responses[scenario.id]}
                   revealAnnotation={revealAnnotation}
                   scoreMode={showLatchedResults ? "peak" : "live"}
+                  decisionMode={decisionMode}
+                  decision={decisionMode === "telemetry-only" ? telemetryDecisions[scenario.id] : contextDecisions[scenario.id]}
+                  detectorHistory={detectorFrames[scenario.id]}
+                  excludedEvidenceIds={excludedEvidence[scenario.id] ?? []}
+                  onToggleEvidence={(evidenceId) => toggleEvidence(scenario.id, evidenceId)}
                 />
               ))}
             </div>

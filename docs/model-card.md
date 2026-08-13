@@ -35,6 +35,9 @@ where `z = (score - median(calibration)) / (MAD(calibration) * 1.4826)`. This fo
 - Granite sees only trusted scenario evidence.
 - Evidence IDs are validated after generation.
 - Ambiguous `MONITOR` results become `INVESTIGATE`.
+- The deterministic context gate, not Granite prose, controls whether event 609 qualifies for `MONITOR`.
+- Telemetry-only mode and every failed required context check resolve to `INVESTIGATE`.
+- Counterfactual evidence removal recalculates locally and withholds the now-stale Granite brief.
 - Diagnostic checks may be suggested; spacecraft commands may not.
 - Reference analyses keep the demo deterministic during API failure.
 
@@ -46,6 +49,19 @@ The August 13 source run fit on 87 nominal samples, calibrated on 38 separate no
 
 These are FlightSentry project metrics, not official ESA-ADB leaderboard scores.
 
+### Paired-case context evaluation
+
+| Metric | Result |
+| --- | ---: |
+| Telemetry-only investigations | 2 of 2 |
+| Trusted-context investigations | 1 of 2 |
+| Unnecessary investigations prevented | 1 |
+| Rare-nominal de-escalation rate | 100% |
+| Anomaly investigation recall | 100% |
+| Counterfactual dependency rate | 100% (2 of 2 removals) |
+
+This `n=2` result measures the intended paired demonstration only. It does not establish mission-wide generalization.
+
 ## Limitations
 
 - Two cases cannot establish generalization across spacecraft or mission phases.
@@ -53,3 +69,5 @@ These are FlightSentry project metrics, not official ESA-ADB leaderboard scores.
 - The source-pipeline MLPRegressor is more expressive but requires ESA Mission 2 data to train.
 - The source evaluation has one validation event and one held-out event; it does not establish mission-wide generalization.
 - Granite hypotheses remain probabilistic interpretations and require operator verification.
+- Replay command-history and mission-plan completeness are fixture assertions, not conclusions derived from the anonymized ESA files.
+- The ESA data does not prove command acknowledgement or map the anonymized command to a named subsystem.

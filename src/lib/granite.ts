@@ -19,6 +19,7 @@ function referenceResponse(scenario: Scenario, message: string): AnalysisRespons
     analysis: scenario.referenceAnalysis,
     source: "reference",
     offline: true,
+    model: "stored-reference-v1",
     message,
   };
 }
@@ -103,6 +104,7 @@ async function requestGranite(scenario: Scenario): Promise<AnalysisResponse> {
     analysis: enforceSafeDisposition(validated, scenario.evidence),
     source: "watsonx",
     offline: false,
+    model: process.env.WATSONX_MODEL_ID ?? "ibm/granite-4-h-small",
   };
 }
 

@@ -34,9 +34,12 @@ The browser replay ships with a deterministic, four-channel demonstration fixtur
 
 This establishes temporal context, not physical causation. The dataset identifiers are anonymized, so FlightSentry does not assign unsupported command or subsystem names.
 
+The bundled interactive replay separately asserts that its command-history and mission-plan slices are complete. That assertion makes missing context meaningful inside the challenge fixture. It is not derived from the ESA archive and is labeled `REPLAY ASSERTION` in the interface and exports.
+
 ## Limitations
 
 - The bundled fixture cannot support claims about operational accuracy.
 - A two-event replay is a product demonstration, not a statistically meaningful benchmark.
 - Channel identifiers and mission context may be anonymized or incomplete.
 - Event correlation does not establish physical causation.
+- Command acknowledgement, subsystem mapping, and live-feed completeness are not available in the anonymized source.

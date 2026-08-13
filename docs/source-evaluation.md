@@ -33,6 +33,17 @@ Event 618 is categorized as `Anomaly`. Its interval contains no priority-3 telec
 
 This verifies the anonymized temporal context used by the demo. It does not identify the physical command or prove that the command caused every channel response.
 
+The interactive context gate also needs complete command-history and mission-plan slices to interpret absence as evidence. For the bundled replay, those two completeness checks are transparent challenge-fixture assertions. They are not claims about the completeness of the ESA archive or a live ground-system feed. Command acknowledgement and subsystem mapping remain unavailable in the anonymized source.
+
+## Context-aware paired result
+
+| Policy | Event 609 | Event 618 | Investigations |
+| --- | --- | --- | ---: |
+| Telemetry only | `INVESTIGATE` | `INVESTIGATE` | 2 |
+| Trusted replay context | `MONITOR` | `INVESTIGATE` | 1 |
+
+The rare-nominal de-escalation rate is 100% (1 of 1), anomaly investigation recall is 100% (1 of 1), and removing either context record from event 609 changes its disposition to `INVESTIGATE` (2 of 2 counterfactual trials). These are paired-case FlightSentry product metrics with `n=2`, not official ESA-ADB benchmark results.
+
 ## Evaluation design
 
 - Fit the Isolation Forest, scaler, and nonlinear autoencoder on 87 nominal samples from the event-609 replay window.

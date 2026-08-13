@@ -158,6 +158,23 @@ a:focus-visible {
   box-shadow: 0 0 16px currentColor;
 }
 
+.decision-mode-active {
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(102, 242, 194, 0.1), transparent 58%),
+    var(--panel-raised);
+  box-shadow: inset 0 0 0 1px var(--mint-dim);
+}
+
+.decision-mode-active::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: var(--mint);
+  box-shadow: 0 0 18px rgba(102, 242, 194, 0.55);
+  content: "";
+}
+
 .scanline {
   position: absolute;
   inset: 0 auto 0 var(--scan-position, 0%);
@@ -192,8 +209,8 @@ a:focus-visible {
 }
 
 @keyframes panel-enter {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { transform: translateY(10px); }
+  to { transform: translateY(0); }
 }
 
 .panel-enter {
@@ -206,5 +223,37 @@ a:focus-visible {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .mission-shell {
+    padding-inline: 0.75rem;
+  }
+
+  .brand-lockup {
+    gap: 0.75rem;
+  }
+
+  .brand-lockup > div:first-child {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .brand-lockup .kicker {
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+  }
+
+  .brand-title {
+    font-size: 1.25rem;
+    letter-spacing: 0.055em;
+  }
+
+  .primary-nav button {
+    min-width: 0;
+    padding-inline: 0.5rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
   }
 }

@@ -17,7 +17,8 @@ describe("Granite prompt boundary", () => {
     const messages = buildGraniteMessages(getScenario("esa-m2-609"));
     const systemContent = messages.find((m) => m.role === "system")?.content ?? "";
     // The system prompt must instruct the model that MONITOR requires verified context
-    expect(systemContent).toMatch(/MONITOR requires verified planned-event or telecommand/i);
+    expect(systemContent).toMatch(/MONITOR requires both a trusted telecommand record and an overlapping planned-event record/i);
+    expect(systemContent).toMatch(/Missing operational context alone requires INVESTIGATE, not ESCALATE/i);
   });
 
   it("user content includes all evidence IDs from the scenario", () => {

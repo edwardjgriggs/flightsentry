@@ -15,14 +15,27 @@ The ESA Mission 2 benchmark documents a useful pair: event **609** is a commande
 1. Rolling median/MAD, Isolation Forest, and a rank-2 linear autoencoder score telemetry independently. The bundled browser model is linear and transparent; the source-data pipeline stages a nonlinear MLPRegressor 4-8-2-8-4 candidate for review.
 2. A versioned weighted ensemble requires three of five windows above threshold; source candidates select weights through validation grid search.
 3. Trusted telecommands and planned events are correlated with the alert timeline.
-4. Granite 4 receives only a server-created evidence packet and returns a validated incident brief.
-5. A human operator reviews observations, uncertainty, and diagnostic checks. FlightSentry never executes spacecraft commands.
+4. A deterministic context-integrity gate verifies timing, record pairing, and replay-feed completeness before `MONITOR` is allowed.
+5. Operators can compare telemetry-only and trusted-context decisions, then remove evidence to prove the result changes for the right reason.
+6. Granite 4 receives only a server-created evidence packet and returns a validated incident brief.
+7. A human operator reviews observations, uncertainty, and diagnostic checks, then can export an auditable JSON or printable HTML decision record. FlightSentry never executes spacecraft commands.
 
 The public demo contains a deterministic paired-case fixture modeled on ESA events 609 and 618 so it works without downloading raw mission data. It is clearly labeled and is **not** presented as an official ESA-ADB evaluation. The included pipeline downloads and verifies the source archive, publishes two attributed extracts, and stages trained artifacts without replacing the proven browser model.
 
 ### Source-data checkpoint
 
 The Mission 2 pipeline has now been run end to end. The checksum-verified extracts confirm that event 609 overlaps anonymized `telecommand_6` and `event_14`, while event 618 has neither record. The source-trained candidate detected both paired events, but did not outperform Rolling MAD on held-out event 618, so it remains staged. See the [source evaluation](docs/source-evaluation.md) and the Technical Proof view for exact metrics.
+
+### Operational differential
+
+The paired-case context policy makes FlightSentry's role measurable:
+
+| Mode | Event 609 | Event 618 |
+| --- | --- | --- |
+| Telemetry only | `INVESTIGATE` | `INVESTIGATE` |
+| Trusted context | `MONITOR` | `INVESTIGATE` |
+
+On this intentionally narrow `n=2` challenge replay, trusted context prevents one unnecessary investigation, preserves 100% anomaly investigation recall, and passes a 2-of-2 counterfactual dependency check. Removing either the command record or planned-event record from event 609 raises it back to `INVESTIGATE` without asking Granite. These are FlightSentry paired-case metrics, not official ESA-ADB results.
 
 ## Architecture
 
@@ -35,11 +48,12 @@ flowchart LR
     C1 --> D[Score fusion and persistence]
     C2 --> D
     C3 --> D
-    D --> E[Trusted context resolver]
-    E --> F[Bounded evidence packet]
-    F --> G[Granite 4 on watsonx.ai]
-    G --> H[Schema and evidence validation]
-    H --> I[Human operator decision]
+    D --> E[Context-integrity gate]
+    E --> F[Deterministic disposition]
+    F --> G[Bounded evidence packet]
+    G --> H[Granite 4 on watsonx.ai]
+    H --> I[Schema and evidence validation]
+    I --> J[Human decision and export]
 ```
 
 See [architecture.md](docs/architecture.md) for boundaries and failure behavior.

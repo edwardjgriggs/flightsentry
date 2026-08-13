@@ -13,10 +13,10 @@ describe("context resolution", () => {
     );
   });
 
-  it("escalates event 618 because no command or planned event explains it", () => {
+  it("investigates event 618 because no command or planned event explains it", () => {
     const result = resolveReferenceIncident(getScenario("esa-m2-618"));
 
-    expect(result.disposition).toBe("ESCALATE");
+    expect(result.disposition).toBe("INVESTIGATE");
     expect(result.uncertainty).toMatch(/root cause/i);
   });
 });

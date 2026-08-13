@@ -1,6 +1,10 @@
 import { detectorConfiguration } from "@/lib/detectors";
 import type { DetectorFrame, Scenario } from "@/lib/types";
 import sourceEvaluation from "@/data/source-evaluation.json";
+import {
+  calculateContextMetrics,
+  evaluateContextDecision,
+} from "@/lib/context-integrity";
 
 export function TechnicalProof({
   scenarios,
@@ -17,6 +21,7 @@ export function TechnicalProof({
     [modelRuntime === "onnx" ? "Bundled linear autoencoder (ONNX)" : modelRuntime === "fallback" ? "TypeScript PCA fallback" : "Bundled linear autoencoder", "autoencoder"],
     ["Weighted ensemble", "fused"],
   ] as const;
+  const contextMetrics = calculateContextMetrics(scenarios);
 
   return (
     <main id="main-content" className="panel-enter mt-5" tabIndex={-1}>
@@ -103,8 +108,14 @@ export function TechnicalProof({
               ))}
               <tr className="bg-[#0d211c]">
                 <td className="px-5 py-4 font-medium text-[var(--mint)]">Context resolver</td>
-                <td className="mono border-l border-[var(--line)] px-5 py-4 text-[var(--mint)]">MONITOR</td>
-                <td className="mono border-l border-[var(--line)] px-5 py-4 text-[var(--red)]">ESCALATE</td>
+                {scenarios.map((scenario) => {
+                  const disposition = evaluateContextDecision(scenario, "trusted-context").disposition;
+                  return (
+                    <td key={scenario.id} className={`mono border-l border-[var(--line)] px-5 py-4 ${disposition === "MONITOR" ? "text-[var(--mint)]" : "text-[var(--amber)]"}`}>
+                      {disposition}
+                    </td>
+                  );
+                })}
                 <td className="border-l border-[var(--line)] px-5 py-4 text-[var(--muted)]">Human decision support</td>
               </tr>
             </tbody>
@@ -113,9 +124,32 @@ export function TechnicalProof({
       </section>
 
       <section className="hairline-panel mt-5 overflow-hidden">
+        <div className="grid gap-px bg-[var(--line)] lg:grid-cols-[.85fr_1.15fr]">
+          <div className="bg-[#0d211c] p-5">
+            <p className="kicker text-[var(--mint)]">Context effectiveness / 03</p>
+            <h2 className="display-type mt-2 text-2xl font-semibold text-white">One unnecessary investigation prevented.</h2>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+              Telemetry-only policy investigates both cases. Trusted context de-prioritizes the rare-nominal event while retaining the anomaly for investigation.
+            </p>
+            <p className="mono mt-5 text-[10px] text-[var(--faint)]">
+              Paired challenge case, n={contextMetrics.sampleSize}. Project evaluation only, not an official ESA-ADB result.
+            </p>
+          </div>
+          <dl className="grid bg-[var(--panel)] sm:grid-cols-2">
+            <Metric label="Telemetry-only investigations" value={`${contextMetrics.telemetryOnlyInvestigations}/${contextMetrics.sampleSize}`} />
+            <Metric label="Trusted-context investigations" value={`${contextMetrics.trustedContextInvestigations}/${contextMetrics.sampleSize}`} />
+            <Metric label="Rare-nominal de-escalation" value={formatPercent(contextMetrics.rareNominalDeEscalationRate)} />
+            <Metric label="Anomaly investigation recall" value={formatPercent(contextMetrics.anomalyInvestigationRecall)} />
+            <Metric label="Unnecessary investigations prevented" value={`${contextMetrics.unnecessaryInvestigationsPrevented}`} />
+            <Metric label="Counterfactual dependency" value={formatPercent(contextMetrics.counterfactualDependencyRate)} />
+          </dl>
+        </div>
+      </section>
+
+      <section className="hairline-panel mt-5 overflow-hidden">
         <div className="grid gap-px bg-[var(--line)] lg:grid-cols-[1.15fr_.85fr]">
           <div className="bg-[var(--panel)] p-5">
-            <p className="kicker mb-1 text-[var(--mint)]">Source-data evaluation / 03</p>
+            <p className="kicker mb-1 text-[var(--mint)]">Source-data evaluation / 04</p>
             <h2 className="display-type text-2xl font-semibold text-white">Authentic data. Staged deployment.</h2>
             <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
               The checksum-verified Mission 2 extracts confirm the operational contrast: event 609 includes a priority-3 telecommand and overlapping event record; event 618 includes neither.
@@ -174,9 +208,9 @@ export function TechnicalProof({
       </section>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-3">
-        <ProofCard number="04" title="Grounded by construction" body="Granite can cite only evidence IDs present in the server-created packet. Unknown references fail validation and trigger the reference brief." />
-        <ProofCard number="05" title="Human remains in command" body="FlightSentry recommends low-risk checks. It exposes uncertainty and cannot create or execute spacecraft commands." />
-        <ProofCard number="06" title="Reproducible data path" body="The Python pipeline verifies the ESA archive checksum, extracts attributed windows, trains artifacts, and records configuration provenance." />
+        <ProofCard number="05" title="Grounded by construction" body="Granite can cite only evidence IDs present in the server-created packet. Unknown references fail validation and trigger the reference brief." />
+        <ProofCard number="06" title="Human remains in command" body="FlightSentry recommends low-risk checks. It exposes uncertainty and cannot create or execute spacecraft commands." />
+        <ProofCard number="07" title="Reproducible data path" body="The Python pipeline verifies the ESA archive checksum, extracts attributed windows, trains artifacts, and records configuration provenance." />
       </div>
     </main>
   );
@@ -186,6 +220,19 @@ function formatMethod(method: string): string {
   return method
     .replace(/([A-Z])/g, " $1")
     .replace(/^./, (character) => character.toUpperCase());
+}
+
+function formatPercent(value: number): string {
+  return `${Math.round(value * 100)}%`;
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border-b border-[var(--line)] p-5 sm:border-l">
+      <dt className="kicker text-[var(--muted)]">{label}</dt>
+      <dd className="display-type mt-3 text-2xl font-semibold text-white">{value}</dd>
+    </div>
+  );
 }
 
 function ProofRow({ label, value }: { label: string; value: string }) {

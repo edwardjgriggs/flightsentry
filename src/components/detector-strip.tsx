@@ -20,7 +20,7 @@ export function DetectorStrip({
           Latched peak detector scores
         </p>
       )}
-      <div className="grid grid-cols-3 gap-px overflow-hidden border border-[var(--line)] bg-[var(--line)]">
+      <div className="grid grid-cols-1 gap-px overflow-hidden border border-[var(--line)] bg-[var(--line)] sm:grid-cols-3">
         {detectors.map(([label, key]) => {
           const score = frame[key];
           const hot = score >= 0.78;

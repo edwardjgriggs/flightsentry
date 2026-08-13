@@ -1,6 +1,6 @@
 # Validation record
 
-Validated locally and against Vercel production on Windows on August 13, 2026. Session 4 and the live watsonx configuration were deployed after local validation.
+Validated locally on Windows on August 13, 2026. Session 4 and the live watsonx configuration were previously deployed after local validation. The current context-integrity phase remains uncommitted and undeployed.
 
 ## Automated gates
 
@@ -8,14 +8,64 @@ Validated locally and against Vercel production on Windows on August 13, 2026. S
 | --- | --- |
 | ESLint | Pass, zero warnings |
 | TypeScript | Pass |
-| Vitest | 85 tests passed (82 previous + 3 new Session 4 tests) |
-| Python pipeline safety | 25 tests passed (11 previous + 14 new detector-config schema tests) |
+| Vitest | 99 tests passed |
+| Python pipeline safety | 38 tests passed |
 | Next.js production build | Pass; static `/` and Node.js `/api/analyze` |
-| Playwright | 4/4 Chromium scenarios passed |
+| Playwright | 7/7 Chromium scenarios passed |
 | axe-core | Zero serious or critical findings |
 | npm audit | Zero known vulnerabilities |
 
-The browser workflow test verifies that the ONNX artifact initializes before incident analysis, both completed panels retain `EVENT DETECTED` with explicitly labeled peak scores, both event dispositions render, and expert annotations can be revealed. Other scenarios cover keyboard activation, evaluation-scope copy, axe, and a 390 × 844 viewport.
+The browser workflow verifies ONNX initialization, paired event detection, telemetry-only and trusted-context decisions, counterfactual evidence removal and restoration, JSON export, expert annotations, completed-state axe analysis, keyboard activation, a 390 by 844 viewport, and reduced motion.
+
+### Codex session (August 13, 2026): context-integrity and incident audit phase
+
+**Goal:** Make FlightSentry's competitive difference directly testable: telemetry detects change, deterministic context decides whether investigation remains necessary, and Granite explains only validated evidence.
+
+**Implementation:**
+
+- Added `context-gate-v1` with six required replay checks and explicit `PASS` or `FAIL` evidence.
+- Added telemetry-only and trusted-context comparison. Telemetry-only investigates both events; trusted context monitors 609 and investigates 618.
+- Added event 609 counterfactual controls. Removing either the telecommand or planned-event record raises the decision to `INVESTIGATE`; restoring both returns it to `MONITOR`.
+- Added context-effectiveness metrics: one unnecessary investigation prevented, 100% rare-nominal de-escalation, 100% anomaly investigation recall, and 100% counterfactual dependency on this `n=2` paired case.
+- Added versioned JSON and self-contained printable HTML decision records with detector configuration, peak scores, onset and first persistent alert, active evidence, policy checks, analysis model, uncertainty, diagnostic checks, and blank operator acknowledgement fields.
+- Added explicit provenance boundaries. Command and event timing come from the verified ESA extracts. Replay-feed completeness is labeled as a fixture assertion. Command acknowledgement and subsystem mapping remain documented production gaps.
+- Standardized the bounded event 618 disposition on `INVESTIGATE` and strengthened the Granite prompt so missing context alone cannot justify `ESCALATE`.
+- Delayed the comparison reveal until replay completion, preventing the landing view from spoiling the paired-case result.
+
+**New automated coverage:**
+
+- 7 context-policy tests, including both modes, both counterfactual removals, unknown-ID rejection, and paired metrics.
+- 4 export tests, including HTML escaping, policy-only telemetry export, and stale-brief suppression during counterfactuals.
+- 3 new end-to-end scenarios for counterfactual decisions, decision-record download, and reduced motion. Existing axe coverage now evaluates the completed interface.
+
+**Final gates:**
+
+```text
+npm run verify: Pass
+  ESLint: zero warnings
+  TypeScript: pass
+  Vitest: 99/99
+  Next.js production build: pass
+
+npm run test:e2e: 7/7 Chromium
+Python pipeline tests: 38/38
+npm audit --audit-level=high: zero vulnerabilities
+git diff --check: pass
+```
+
+**Lighthouse production-build audit:**
+
+| Category | Score |
+| --- | ---: |
+| Performance | 96 |
+| Accessibility | 100 |
+| Best Practices | 100 |
+| SEO | 100 |
+| Agentic Browsing | 100 |
+
+FCP was 1.5 s, LCP 2.7 s, TBT 50 ms, and CLS 0. Reports were regenerated at `reports/lighthouse-final.report.html` and `.json`.
+
+**Deployment status:** Not committed, pushed, or deployed. IBM Bob was intentionally not used for this phase.
 
 ### IBM Bob session (August 13, 2026) — Session 2 (configuration artifact)
 

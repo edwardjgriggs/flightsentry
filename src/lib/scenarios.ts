@@ -107,6 +107,7 @@ const evidence609: EvidenceItem[] = [
     timestamp: 48,
     label: "Overlapping operational event",
     detail: "The source events timeline records anonymized event_14 from 09:18:52 to 11:03:52 UTC.",
+    endTimestamp: 68,
   },
 ];
 
@@ -167,7 +168,7 @@ const analysis609: IncidentBrief = {
 };
 
 const analysis618: IncidentBrief = {
-  disposition: "ESCALATE",
+  disposition: "INVESTIGATE",
   summary: "A persistent multichannel deviation has no trusted command or planned-event explanation and requires operator investigation.",
   observations: [
     {
@@ -195,7 +196,7 @@ const analysis618: IncidentBrief = {
       evidenceIds: ["model-618-ensemble"],
     },
   ],
-  uncertainty: "The telemetry supports escalation but does not establish a root cause; command-history completeness must be verified.",
+  uncertainty: "The telemetry supports investigation but does not establish a root cause; command-history completeness must be verified.",
   diagnosticChecks: [
     "Verify command-history completeness across the onset window.",
     "Compare wheel speed and torque telemetry for saturation or control-loop oscillation.",
@@ -208,6 +209,17 @@ const common = {
   sourceUrl: SOURCE_URL,
   dataNotice:
     "Telemetry traces are a deterministic fixture. Context labels mirror the anonymized Mission 2 source records verified by the repository pipeline.",
+  contextAssurance: {
+    scope: "Bundled paired-case replay only",
+    commandHistoryComplete: true,
+    missionPlanComplete: true,
+    provenance: "Replay completeness is a bundled challenge-fixture assertion. Command and event identities come from the checksum-verified ESA Mission 2 extracts.",
+    productionLimitations: [
+      "The anonymized ESA records do not prove command acknowledgement.",
+      "The anonymized records do not map the command to a named spacecraft subsystem.",
+      "A live deployment must independently attest command-history and mission-plan feed completeness.",
+    ],
+  },
 } as const;
 
 const scenarios: Record<ScenarioId, Scenario> = {
@@ -215,8 +227,8 @@ const scenarios: Record<ScenarioId, Scenario> = {
     ...common,
     id: "esa-m2-609",
     eventId: 609,
-    title: "Commanded rare nominal",
-    eyebrow: "CASE A · CONTEXT EXPLAINS CHANGE",
+    title: "Context-correlated deviation",
+    eyebrow: "CASE A · COMMAND + PLAN PRESENT",
     classification: "RARE_NOMINAL",
     description: "An unusual telemetry signature aligns with recorded command and operational-event context.",
     eventWindow: [50, 61],
@@ -229,8 +241,8 @@ const scenarios: Record<ScenarioId, Scenario> = {
     ...common,
     id: "esa-m2-618",
     eventId: 618,
-    title: "Uncommanded disturbance",
-    eyebrow: "CASE B · NO EXPLANATORY CONTEXT",
+    title: "Unexplained multichannel deviation",
+    eyebrow: "CASE B · NO COMMAND OR PLAN",
     classification: "ANOMALY",
     description: "A similar multichannel shift occurs without a trusted command or planned operation.",
     eventWindow: [50, 61],

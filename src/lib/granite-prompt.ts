@@ -1,4 +1,5 @@
 import type { Scenario } from "@/lib/types";
+import { evaluateContextDecision } from "@/lib/context-integrity";
 
 export interface GraniteMessage {
   role: "system" | "user";
@@ -52,6 +53,7 @@ const RESPONSE_SCHEMA = {
 };
 
 export function buildGraniteMessages(scenario: Scenario): GraniteMessage[] {
+  const contextDecision = evaluateContextDecision(scenario, "trusted-context");
   return [
     {
       role: "system",
@@ -60,7 +62,8 @@ export function buildGraniteMessages(scenario: Scenario): GraniteMessage[] {
         "Use only the trusted evidence packet. Cite evidence IDs exactly; never invent an ID.",
         "Never issue or execute spacecraft commands. Recommend diagnostic checks only.",
         "If evidence is ambiguous or incomplete, disposition must be INVESTIGATE.",
-        "MONITOR requires verified planned-event or telecommand context.",
+        "MONITOR requires both a trusted telecommand record and an overlapping planned-event record.",
+        "Missing operational context alone requires INVESTIGATE, not ESCALATE. Use ESCALATE only when trusted evidence establishes active critical progression.",
         "Return only JSON matching this schema:",
         JSON.stringify(RESPONSE_SCHEMA),
       ].join("\n"),
@@ -75,6 +78,12 @@ export function buildGraniteMessages(scenario: Scenario): GraniteMessage[] {
           description: scenario.description,
         },
         evidence: scenario.evidence,
+        contextIntegrity: {
+          policyVersion: contextDecision.policyVersion,
+          gatePassed: contextDecision.gatePassed,
+          requiredChecks: contextDecision.checks,
+          scope: contextDecision.scope,
+        },
         task: "Produce an evidence-grounded incident brief for a human operator.",
       }),
     },
