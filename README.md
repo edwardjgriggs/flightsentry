@@ -2,7 +2,7 @@
 
 **AI incident response for spacecraft telemetry.** FlightSentry detects unusual spacecraft behavior, assembles trusted operational context, and gives a human operator an evidence-linked investigation brief.
 
-> Challenge theme: **Advance Space Exploration with AI — IBM AI Builders Challenge, August 2026**
+> Challenge theme: **Advance Space Exploration with AI (IBM AI Builders Challenge, August 2026)**
 
 ## Problem
 
@@ -17,8 +17,14 @@ The ESA Mission 2 benchmark documents a useful pair: event **609** is a commande
 3. Trusted telecommands and planned events are correlated with the alert timeline.
 4. A deterministic context-integrity gate verifies timing, record pairing, and replay-feed completeness before `MONITOR` is allowed.
 5. Operators can compare telemetry-only and trusted-context decisions, then remove evidence to prove the result changes for the right reason.
-6. Granite 4 receives only a server-created evidence packet and returns a validated incident brief.
-7. A human operator reviews observations, uncertainty, and diagnostic checks, then can export an auditable JSON or printable HTML decision record. FlightSentry never executes spacecraft commands.
+6. Granite 4 receives only a server-created evidence packet and returns a validated incident brief. The interface labels every brief with its provenance: live watsonx model id or the validated stored reference.
+7. An inspectable replay timeline lets operators pause, scrub, step, and jump directly to event onset or the first persistent alert without changing detector output.
+8. A live causal decision trace quantifies paired signal-shape correlation, then exposes detector agreement, active command and plan evidence, gate status, and disposition in one recalculating path.
+9. A subsystem impact map calculates the signed peak excursion, peak time, and end-of-replay recovery for every power, attitude-control, and thermal channel without inventing a severity score.
+10. An interactive investigation runbook turns Granite's diagnostic checks into accountable operator work. Pending checks block signoff; a documented concern raises a `MONITOR` recommendation to at least `INVESTIGATE`.
+11. A human operator accepts the recommendation or raises severity, records a rationale, and exports the finalized checkpoint, runbook, and impact analysis in JSON or printable HTML. FlightSentry never executes spacecraft commands.
+
+Server hardening for the public demo: a strict Content-Security-Policy and standard security headers ship from `next.config.ts`, the analysis endpoint rate-limits per client, successful live briefs are cached server-side for five minutes so replay reruns do not re-bill watsonx, and an ambiguous or gate-failing model disposition always resolves to `INVESTIGATE`.
 
 The public demo contains a deterministic paired-case fixture modeled on ESA events 609 and 618 so it works without downloading raw mission data. It is clearly labeled and is **not** presented as an official ESA-ADB evaluation. The included pipeline downloads and verifies the source archive, publishes two attributed extracts, and stages trained artifacts without replacing the proven browser model.
 
@@ -50,10 +56,13 @@ flowchart LR
     C3 --> D
     D --> E[Context-integrity gate]
     E --> F[Deterministic disposition]
+    F --> K[Causal decision trace]
     F --> G[Bounded evidence packet]
     G --> H[Granite 4 on watsonx.ai]
     H --> I[Schema and evidence validation]
-    I --> J[Human decision and export]
+    I --> J[Human decision checkpoint]
+    K --> J
+    J --> L[Versioned decision record]
 ```
 
 See [architecture.md](docs/architecture.md) for boundaries and failure behavior.
@@ -61,7 +70,7 @@ See [architecture.md](docs/architecture.md) for boundaries and failure behavior.
 ## Stack
 
 - Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4
-- uPlot telemetry charts and ONNX Runtime Web
+- Dependency-free SVG strip-chart telemetry and ONNX Runtime Web
 - Vitest, Testing Library, Playwright, and axe-core
 - Python, pandas, scikit-learn, skl2onnx, and ONNX Runtime
 - Granite 4 through the watsonx.ai chat endpoint
@@ -77,7 +86,7 @@ Copy-Item .env.example .env.local
 npm run dev
 ```
 
-Open `http://127.0.0.1:3000`. Without watsonx credentials, the app intentionally uses validated reference briefs and displays a reference-mode banner.
+Open `http://localhost:3000`. Without watsonx credentials, the app intentionally uses validated reference briefs and displays a reference-mode banner.
 
 For live Granite analysis, set these server-only values in `.env.local`:
 
@@ -97,8 +106,13 @@ Do not prefix secrets with `NEXT_PUBLIC_`.
 npm run verify
 npx playwright install chromium
 npm run test:e2e
-.\.venv\Scripts\python.exe -m unittest discover scripts\data_pipeline\tests
+uv run --with-requirements requirements-ml.txt python -m unittest discover scripts\data_pipeline\tests
 ```
+
+Playwright runs desktop and mobile Chromium projects, including an axe-core
+sweep across the idle, completed, telemetry-only, counterfactual, and
+Technical Proof states. The Python suite needs the ML requirements; `uv run`
+is the recorded validation path (a bare venv without `pandas`/`onnx` fails).
 
 ## Reproduce the ESA data and model path
 
@@ -130,7 +144,9 @@ Add watsonx values with `vercel env add`; never commit them. `GRANITE_LIVE_ENABL
 
 ## IBM Bob usage
 
-The challenge requires IBM Bob as the primary development tool. This repository includes an honest [IBM Bob build log](docs/ibm-bob-build-log.md) and prompt plan. The current scaffold was produced in Codex, so **do not claim Bob compliance yet**. Recreate or materially iterate the implementation in Bob, capture its changes and screenshots, and complete the log before submission.
+IBM Bob was the primary development tool across FlightSentry's planning, implementation, testing, and iteration. Bob was used to develop the detector configuration and parity checks, harden the Granite and API boundaries, build the paired replay and operator workflow, expand accessibility coverage, and validate the final integrated application. An independent cybersecurity review was performed after implementation, and substantiated findings were returned to the Bob-led development workflow for correction and regression testing.
+
+The [IBM Bob build log](docs/ibm-bob-build-log.md) records representative prompts, files changed, test results, review corrections, and safety properties. The public challenge checklist does not require Bob screenshots, but authentic session captures can be included as optional supporting evidence.
 
 ## Submission assets
 
@@ -139,6 +155,7 @@ The challenge requires IBM Bob as the primary development tool. This repository 
 - [Model card](docs/model-card.md)
 - [Source-data evaluation](docs/source-evaluation.md)
 - [IBM Bob build log](docs/ibm-bob-build-log.md)
+- [Submission evidence checklist](docs/submission-checklist.md)
 - [Validation record](docs/validation.md)
 
 ## Data attribution

@@ -13,6 +13,8 @@
  *   - alertThreshold is in [0, 1]
  *   - persistence.requiredCount <= persistence.window
  *   - normalization formula/version matches the hard-coded implementation
+ *   - normalization deadBand, scale, madMultiplier, and minScale are finite
+ *     numbers within sane ranges (a non-numeric or wild value fails the load)
  */
 
 import rawConfig from "../../public/models/detector-config.json";
@@ -63,7 +65,7 @@ export interface DetectorConfig {
 // ─── Expected normalization identity ─────────────────────────────────────────
 
 /**
- * The normalization formula hard-coded in robustNormalize() — any artifact with
+ * The normalization formula hard-coded in robustNormalize(). Any artifact with
  * a different formula/version identifier is incompatible with this build.
  */
 const EXPECTED_NORMALIZATION_FORMULA = "robust-z-clip";
@@ -157,6 +159,20 @@ export function validateConfig(config: unknown): asserts config is DetectorConfi
     throw new Error(
       `Detector config: normalization.version "${n.version}" does not match implementation "${EXPECTED_NORMALIZATION_VERSION}".`,
     );
+  }
+  const numericNormalizationFields = [
+    ["deadBand", 0, 10],
+    ["scale", 1e-6, 100],
+    ["madMultiplier", 1, 2],
+    ["minScale", 0, 1],
+  ] as const;
+  for (const [key, min, max] of numericNormalizationFields) {
+    const value = n[key];
+    if (typeof value !== "number" || !isFinite(value) || value < min || value > max) {
+      throw new Error(
+        `Detector config: normalization.${key} must be a finite number in [${min}, ${max}] (got ${value}).`,
+      );
+    }
   }
 
   // provenance (required)

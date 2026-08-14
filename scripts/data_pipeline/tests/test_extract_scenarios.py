@@ -55,6 +55,27 @@ class ExtractScenarioTests(unittest.TestCase):
             ["channel_18", "channel_20", "channel_9"],
         )
 
+    def test_shared_channels_handle_names_without_numeric_suffix(self) -> None:
+        # Regression: channel_key referenced sys.maxsize without importing sys,
+        # which raised NameError for any shared channel name not ending in digits.
+        frame = pd.DataFrame(
+            {
+                "ID": ["id_609"] * 3 + ["id_618"] * 3,
+                "Channel": [
+                    "bus_voltage",
+                    "channel_18",
+                    "channel_2",
+                    "bus_voltage",
+                    "channel_18",
+                    "channel_2",
+                ],
+            }
+        )
+        self.assertEqual(
+            select_shared_channels(frame, (609, 618), 3),
+            ["channel_18", "channel_2", "bus_voltage"],
+        )
+
     def test_adjacent_event_windows_do_not_overlap(self) -> None:
         frame = pd.DataFrame(
             {

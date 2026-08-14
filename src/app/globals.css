@@ -96,7 +96,9 @@ a {
 }
 
 button:focus-visible,
-a:focus-visible {
+a:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
   outline: 2px solid var(--mint);
   outline-offset: 3px;
 }
@@ -186,17 +188,318 @@ a:focus-visible {
   transition: left 80ms linear;
 }
 
-.uplot {
-  font-family: var(--font-mono) !important;
+/* Per-channel telemetry strip charts */
+.telemetry-strips {
+  --strip-trace: #9fd8c6;
 }
 
-.uplot .u-title,
-.uplot .u-legend {
-  display: none;
+.strip-row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.6rem;
+  align-items: stretch;
+  border-bottom: 1px solid var(--line);
+  padding: 0.3rem 0.25rem;
 }
 
-.uplot .u-axis {
-  color: var(--muted) !important;
+.strip-row:last-of-type {
+  border-bottom: none;
+}
+
+.strip-gutter {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.strip-plot {
+  position: relative;
+  min-width: 0;
+}
+
+.strip-svg {
+  display: block;
+  width: 100%;
+  height: 46px;
+}
+
+.strip-trace {
+  fill: none;
+  stroke: var(--strip-trace);
+  stroke-width: 1.5px;
+  stroke-linejoin: round;
+}
+
+.strip-row[data-phase="idle"] .strip-trace {
+  opacity: 0.35;
+}
+
+.strip-alert-band {
+  fill: rgba(255, 203, 102, 0.09);
+}
+
+.strip-alert-line {
+  stroke: var(--amber);
+  stroke-width: 1px;
+  opacity: 0.85;
+}
+
+.strip-range {
+  position: absolute;
+  right: 3px;
+  font-size: 8.5px;
+  line-height: 1;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.strip-range-max {
+  top: 2px;
+}
+
+.strip-range-min {
+  bottom: 2px;
+}
+
+.strip-axis {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--line);
+  margin-top: 0.15rem;
+  padding: 0.35rem 0.25rem 0.1rem;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+/* Detector strip: threshold ticks and persistence pips */
+.score-bar {
+  position: relative;
+  height: 4px;
+  background: #192322;
+}
+
+.score-bar-threshold {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 1px;
+  background: var(--muted);
+  opacity: 0.75;
+}
+
+.persistence-pip {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border: 1px solid var(--line-hot);
+}
+
+.persistence-pip-hot {
+  border-color: var(--amber);
+  background: var(--amber);
+}
+
+/* Replay command strip and inspectable mission clock */
+.replay-range-wrap {
+  position: relative;
+  height: 1.25rem;
+}
+
+.replay-range {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 1.25rem;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+  cursor: crosshair;
+}
+
+.replay-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.replay-range::-webkit-slider-runnable-track {
+  height: 3px;
+  border: 0;
+  background: linear-gradient(90deg, var(--mint) 0 var(--replay-fill), var(--line) var(--replay-fill) 100%);
+}
+
+.replay-range::-moz-range-track {
+  height: 3px;
+  border: 0;
+  background: linear-gradient(90deg, var(--mint) 0 var(--replay-fill), var(--line) var(--replay-fill) 100%);
+}
+
+.replay-range::-webkit-slider-thumb {
+  width: 11px;
+  height: 19px;
+  margin-top: -8px;
+  appearance: none;
+  border: 1px solid var(--mint);
+  border-radius: 0;
+  background: var(--void);
+  box-shadow: 0 0 12px rgba(102, 242, 194, 0.45);
+}
+
+.replay-range::-moz-range-thumb {
+  width: 11px;
+  height: 19px;
+  border: 1px solid var(--mint);
+  border-radius: 0;
+  background: var(--void);
+  box-shadow: 0 0 12px rgba(102, 242, 194, 0.45);
+}
+
+.replay-marker {
+  position: absolute;
+  z-index: 1;
+  top: 0.35rem;
+  width: 1px;
+  height: 0.9rem;
+  background: var(--line-hot);
+  pointer-events: none;
+}
+
+.replay-marker span {
+  position: absolute;
+  top: 1.1rem;
+  left: 0;
+  width: max-content;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+}
+
+.replay-marker-alert {
+  background: var(--amber);
+}
+
+.replay-marker-alert span {
+  color: var(--amber);
+}
+
+/* Explainability surface: one deterministic path, two outcomes */
+.trace-grid {
+  overflow-x: auto;
+}
+
+.trace-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 1px;
+  background: var(--line);
+}
+
+.trace-stage-column {
+  width: 25%;
+}
+
+.trace-table th,
+.trace-table td {
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 400;
+}
+
+.trace-stage,
+.trace-case {
+  min-width: 0;
+  padding: 0.8rem 1rem;
+  background: #0a1213;
+}
+
+.trace-stage {
+  position: relative;
+  background: #0d1718;
+}
+
+.trace-stage:not(.trace-heading)::after {
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 9px;
+  height: 1px;
+  background: var(--mint-dim);
+  content: "";
+}
+
+.trace-heading {
+  min-height: 4.4rem;
+}
+
+.trace-stage.trace-heading {
+  vertical-align: middle;
+}
+
+.trace-case.trace-heading {
+  background: #0b1516;
+}
+
+.trace-heading > span,
+.trace-heading > strong {
+  display: block;
+}
+
+.trace-heading > * + * {
+  margin-top: 0.25rem;
+}
+
+.trace-outcome {
+  background:
+    linear-gradient(135deg, rgba(102, 242, 194, 0.06), transparent 58%),
+    #0b1516;
+}
+
+.operator-choice:has(input:focus-visible) {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+}
+
+/* Granite hypothesis confidence bars */
+.confidence-bar {
+  height: 3px;
+  margin-top: 4px;
+  background: #192322;
+}
+
+.confidence-bar span {
+  display: block;
+  height: 100%;
+  background: var(--mint-dim);
+}
+
+/* Granite brief loading skeleton */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+.skeleton-lines span {
+  display: block;
+  height: 8px;
+  background: #15201f;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-lines span + span {
+  margin-top: 6px;
+}
+
+.skeleton-lines span:nth-child(2) {
+  width: 82%;
+}
+
+.skeleton-lines span:nth-child(3) {
+  width: 64%;
 }
 
 @keyframes pulse-ring {
@@ -255,5 +558,20 @@ a:focus-visible {
     padding-inline: 0.5rem;
     font-size: 0.58rem;
     letter-spacing: 0.1em;
+  }
+}
+
+@media (max-width: 720px) {
+  .trace-table {
+    min-width: 34rem;
+  }
+
+  .trace-stage,
+  .trace-case {
+    padding: 0.7rem;
+  }
+
+  .replay-marker span {
+    display: none;
   }
 }

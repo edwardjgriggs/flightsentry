@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   replaceAutoencoderScores,
+  robustNormalize,
   runDetectorEnsemble,
 } from "@/lib/detectors";
 import { getScenario } from "@/lib/scenarios";
@@ -86,7 +87,7 @@ describe("detector ensemble", () => {
   });
 });
 
-describe("normalization parity — TypeScript vs Python", () => {
+describe("normalization parity: TypeScript vs Python", () => {
   const calibration = [2.0, 2.1, 1.9, 2.05, 1.95, 2.0, 2.02, 1.98, 2.0, 1.99];
 
   it("nominal score at median maps to 0 (dead-band)", () => {
@@ -136,6 +137,23 @@ describe("normalization parity — TypeScript vs Python", () => {
       const z = (score - center) / scale;
       const direct = Math.max(0, Math.min(1, (z - 1.5) / 7));
       expect(py).toBeCloseTo(direct, 9);
+    }
+  });
+
+  it("production robustNormalize matches the Python reference on fixed inputs", () => {
+    // The production function reads deadBand/scale/madMultiplier from the
+    // config artifact; this is the direct guard that the artifact-driven
+    // implementation and the Python formula stay bit-identical.
+    const testCases: [number, number[]][] = [
+      [5.0, [1.0, 1.1, 0.9, 1.05, 0.95, 1.0, 1.02, 0.98, 1.0, 0.99]],
+      [1.2, [0.5, 0.6, 0.55, 0.48, 0.62, 0.51, 0.59, 0.53, 0.57, 0.56]],
+      [20.0, [10.0, 11.0, 9.0, 10.5, 9.5, 10.0, 10.2, 9.8, 10.0, 9.9]],
+      [1.15, [1.0, 1.1, 0.9, 1.05, 0.95, 1.0, 1.02, 0.98, 1.0, 0.99]],
+      [-1000, calibration],
+      [1000, calibration],
+    ];
+    for (const [score, cal] of testCases) {
+      expect(robustNormalize(score, cal)).toBeCloseTo(pyRobustNormalize(score, cal), 9);
     }
   });
 

@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "1",
+  "recordId": "flightsentry-esa-m2-609-20260814100232",
+  "generatedAt": "2026-08-14T10:02:32.499Z",
+  "project": "FlightSentry",
+  "scenario": {
+    "id": "esa-m2-609",
+    "eventId": 609,
+    "title": "Context-correlated deviation",
+    "sourceUrl": "https://openreview.net/pdf?id=bbpRMoatVO",
+    "dataNotice": "Telemetry traces are a deterministic fixture. Context labels mirror the anonymized Mission 2 source records verified by the repository pipeline."
+  },
+  "detection": {
+    "configurationProfile": "bundled-demo-v1",
+    "threshold": 0.78,
+    "persistence": "3 of 5 windows",
+    "weights": {
+      "mad": 0.3,
+      "isolationForest": 0.3,
+      "autoencoder": 0.4
+    },
+    "eventOnset": 50,
+    "firstPersistentAlert": 52,
+    "detectionDelay": 2,
+    "peakScores": {
+      "mad": 1,
+      "isolationForest": 0.8597979181762204,
+      "autoencoder": 1,
+      "fused": 0.9579393754528661
+    }
+  },
+  "decision": {
+    "mode": "trusted-context",
+    "disposition": "MONITOR",
+    "gatePassed": true,
+    "rationale": "Independent command and operational-event records explain the timing, so monitor through recovery.",
+    "activeEvidenceIds": [
+      "model-609-ensemble",
+      "tel-609-wheel",
+      "tc-609-recorded",
+      "plan-609-event-14"
+    ],
+    "excludedEvidenceIds": [],
+    "checks": [
+      {
+        "id": "persistent-alert",
+        "label": "Persistent telemetry alert",
+        "status": "PASS",
+        "detail": "The numerical ensemble raised a persistent event-level alert.",
+        "evidenceIds": [
+          "model-609-ensemble"
+        ],
+        "provenance": "DETECTOR"
+      },
+      {
+        "id": "command-precedes-onset",
+        "label": "Command record precedes onset",
+        "status": "PASS",
+        "detail": "A trusted command record occurs before the annotated telemetry onset.",
+        "evidenceIds": [
+          "tc-609-recorded"
+        ],
+        "provenance": "ESA RECORD"
+      },
+      {
+        "id": "plan-overlaps-event",
+        "label": "Operational event overlaps window",
+        "status": "PASS",
+        "detail": "A trusted operational-event record overlaps the anomaly window.",
+        "evidenceIds": [
+          "plan-609-event-14"
+        ],
+        "provenance": "ESA RECORD"
+      },
+      {
+        "id": "command-history-complete",
+        "label": "Replay command history complete",
+        "status": "PASS",
+        "detail": "The bundled replay trust assertion marks the command-history slice complete for this window.",
+        "evidenceIds": [
+          "tc-609-recorded"
+        ],
+        "provenance": "REPLAY ASSERTION"
+      },
+      {
+        "id": "mission-plan-complete",
+        "label": "Replay mission-plan history complete",
+        "status": "PASS",
+        "detail": "The bundled replay trust assertion marks the operational-event slice complete for this window.",
+        "evidenceIds": [
+          "plan-609-event-14"
+        ],
+        "provenance": "REPLAY ASSERTION"
+      },
+      {
+        "id": "context-pair-available",
+        "label": "Command and plan evidence pair available",
+        "status": "PASS",
+        "detail": "Both independent context records remain in the active evidence packet.",
+        "evidenceIds": [
+          "tc-609-recorded",
+          "plan-609-event-14"
+        ],
+        "provenance": "POLICY"
+      }
+    ],
+    "policyVersion": "context-gate-v1",
+    "scope": "Bundled paired-case replay only",
+    "productionLimitations": [
+      "The anonymized ESA records do not prove command acknowledgement.",
+      "The anonymized records do not map the command to a named spacecraft subsystem.",
+      "A live deployment must independently attest command-history and mission-plan feed completeness."
+    ]
+  },
+  "evidence": [
+    {
+      "id": "model-609-ensemble",
+      "kind": "model",
+      "timestamp": 52,
+      "label": "Three-detector agreement",
+      "detail": "MAD, Isolation Forest, and the bundled rank-2 linear autoencoder all exceed their calibrated thresholds."
+    },
+    {
+      "id": "tel-609-wheel",
+      "kind": "telemetry",
+      "timestamp": 52,
+      "label": "Reaction wheel current shift",
+      "detail": "Wheel current rises with a corresponding, bounded bus-voltage response."
+    },
+    {
+      "id": "tc-609-recorded",
+      "kind": "telecommand",
+      "timestamp": 49,
+      "label": "Recorded priority-3 telecommand",
+      "detail": "Mission 2 source data records anonymized telecommand_6 at 09:18:31 UTC, aligned with the annotated onset."
+    },
+    {
+      "id": "plan-609-event-14",
+      "kind": "planned-event",
+      "timestamp": 48,
+      "endTimestamp": 68,
+      "label": "Overlapping operational event",
+      "detail": "The source events timeline records anonymized event_14 from 09:18:52 to 11:03:52 UTC."
+    }
+  ],
+  "analysis": {
+    "source": "reference",
+    "offline": true,
+    "model": "stored-reference-v1",
+    "validatedDisposition": "MONITOR",
+    "summary": "The telemetry shift coincides with recorded command and operational-event context, so it should be monitored through recovery.",
+    "uncertainty": "The replay does not prove the command caused every observed channel response.",
+    "diagnosticChecks": [
+      "Confirm the recorded telecommand completed with the expected acknowledgement.",
+      "Verify wheel current returns to its nominal envelope after the operational event.",
+      "Escalate if attitude error persists beyond the planned recovery interval."
+    ],
+    "policyOnly": false,
+    "originalBriefWithheld": false
+  },
+  "operatorAcknowledgement": {
+    "name": "",
+    "timestamp": "",
+    "notes": ""
+  }
+}

@@ -22,7 +22,7 @@ _BUNDLED_DETECTOR_CONFIG = {
     "schemaVersion": "1",
     "configProfile": "bundled-demo-v1",
     "scope": (
-        "DEMONSTRATION ONLY — not official ESA-ADB benchmark results. "
+        "DEMONSTRATION ONLY: not official ESA-ADB benchmark results. "
         "Bundled weights were hand-selected for the two-scenario browser demo; "
         "run train_ensemble.py against ESA Mission 2 source data to replace with "
         "grid-search-calibrated values."
@@ -51,7 +51,7 @@ _BUNDLED_DETECTOR_CONFIG = {
     },
     "modelType": "bundled-rank2-linear-onnx",
     "provenance": {
-        "source": "build_demo_model.py deterministic construction — no ESA source data",
+        "source": "build_demo_model.py deterministic construction, no ESA source data",
         "weightsSource": "hand-selected for bundled two-scenario demo",
         "thresholdSource": "hand-selected for bundled two-scenario demo",
         "generatedBy": "scripts/data_pipeline/build_demo_model.py",
@@ -120,7 +120,7 @@ def build_model(output_path: Path) -> None:
         "input": "normalized telemetry rows (StandardScaler fit on first 36 samples)",
         "channels": CHANNELS,
         "bottleneckDimensions": 2,
-        "trainingData": "bundled deterministic challenge fixture — NOT trained on ESA Mission 2 source data",
+        "trainingData": "bundled deterministic challenge fixture, NOT trained on ESA Mission 2 source data",
         "distinction": (
             "This is the transparent browser demo artifact. "
             "train_ensemble.py produces a nonlinear MLPRegressor 4-8-2-8-4 "

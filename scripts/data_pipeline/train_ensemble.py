@@ -343,9 +343,9 @@ def main() -> None:
     provenance_doc = {
         "randomSeed": 609618,
         "normalization": "StandardScaler fit on nominal training samples",
-        "scoreNormalization": "clip((z - 1.5) / 7, 0, 1) — matches TypeScript robustNormalize in src/lib/detectors.ts",
-        "autoencoderPipeline": "MLPRegressor hidden_layer_sizes=(8, 2, 8) activation=tanh — nonlinear, 4-8-2-8-4 structure",
-        "autoencoderBundled": "Rank-2 linear ONNX model from build_demo_model.py — replaced by this artifact on pipeline run",
+        "scoreNormalization": "clip((z - 1.5) / 7, 0, 1); matches TypeScript robustNormalize in src/lib/detectors.ts",
+        "autoencoderPipeline": "MLPRegressor hidden_layer_sizes=(8, 2, 8) activation=tanh; nonlinear, 4-8-2-8-4 structure",
+        "autoencoderBundled": "Rank-2 linear ONNX model from build_demo_model.py, replaced by this artifact on pipeline run",
         "isolationForestTrees": 128,
         "source": "ESA Mission 2 / Zenodo 12528696",
     }

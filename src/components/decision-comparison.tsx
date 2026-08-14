@@ -1,10 +1,5 @@
+import { dispositionStyle } from "@/components/disposition-style";
 import type { ContextDecision, DecisionMode, Scenario } from "@/lib/types";
-
-const dispositionStyle = {
-  MONITOR: "text-[var(--mint)] border-[var(--mint-dim)]",
-  INVESTIGATE: "text-[var(--amber)] border-[#765d2e]",
-  ESCALATE: "text-[var(--red)] border-[#743f3f]",
-};
 
 export function DecisionComparison({
   scenarios,
@@ -20,10 +15,10 @@ export function DecisionComparison({
   contextDecisions: Record<string, ContextDecision>;
 }) {
   return (
-    <section className="mb-5 overflow-hidden border border-[var(--line-hot)] bg-[#0a1213]" aria-labelledby="decision-comparison-title">
+    <section className="panel-enter mb-5 overflow-hidden border border-[var(--line-hot)] bg-[#0a1213]" aria-labelledby="decision-comparison-title">
       <div className="grid gap-px bg-[var(--line)] xl:grid-cols-[.7fr_1fr_1fr]">
         <div className="bg-[#0d1718] p-4 sm:p-5">
-          <p className="kicker text-[var(--mint)]">Operational differential</p>
+          <p className="kicker text-[var(--mint)]">Decision comparison</p>
           <h2 id="decision-comparison-title" className="display-type mt-2 text-xl font-semibold text-white">
             The same alert changes meaning when trusted context arrives.
           </h2>
@@ -70,7 +65,6 @@ function ModeCard({
   return (
     <button
       type="button"
-      aria-label={label}
       aria-pressed={active}
       onClick={onClick}
       className={`group bg-[var(--panel)] p-4 text-left transition sm:p-5 ${active ? "decision-mode-active" : "hover:bg-[#111c1d]"}`}

@@ -22,8 +22,8 @@ These are FlightSentry project results, not official ESA-ADB leaderboard metrics
 
 Published extracts:
 
-- [`esa-m2-609.json`](../public/data/source-evaluation/esa-m2-609.json) — SHA-256 `d9a4eb12dccdde4b95a7689b5d78a919c36b76280c0e2af29cdb2bacccbea059`
-- [`esa-m2-618.json`](../public/data/source-evaluation/esa-m2-618.json) — SHA-256 `67f922b8d320e6078e14244abcf0c5e79f9d50db95e3f5a9568df5091021ca58`
+- [`esa-m2-609.json`](../public/data/source-evaluation/esa-m2-609.json): SHA-256 `d9a4eb12dccdde4b95a7689b5d78a919c36b76280c0e2af29cdb2bacccbea059`
+- [`esa-m2-618.json`](../public/data/source-evaluation/esa-m2-618.json): SHA-256 `67f922b8d320e6078e14244abcf0c5e79f9d50db95e3f5a9568df5091021ca58`
 
 ## Operational-context check
 
@@ -67,7 +67,7 @@ Held-out event-618 ablation:
 | Method | Detected | Event F1 | False-alert episodes | Detection delay |
 | --- | ---: | ---: | ---: | ---: |
 | Rolling MAD | Yes | 0.67 | 1 | 198 s |
-| Isolation Forest | No | 0.00 | 0 | — |
+| Isolation Forest | No | 0.00 | 0 | n/a |
 | Autoencoder | Yes | 0.22 | 7 | 0 s |
 | Weighted ensemble | Yes | 0.50 | 2 | 198 s |
 

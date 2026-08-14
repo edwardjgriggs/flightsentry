@@ -4,6 +4,10 @@ export type Disposition = "MONITOR" | "INVESTIGATE" | "ESCALATE";
 
 export type DecisionMode = "telemetry-only" | "trusted-context";
 
+export type OperatorDecisionAction = "ACCEPTED" | "RAISED";
+
+export type DiagnosticCheckStatus = "PENDING" | "VERIFIED" | "CONCERN";
+
 export type IntegrityStatus = "PASS" | "FAIL";
 
 export interface ChannelDefinition {
@@ -58,6 +62,31 @@ export interface ContextDecision {
   policyVersion: string;
   scope: string;
   productionLimitations: readonly string[];
+}
+
+export interface OperatorAcknowledgement {
+  status: "RECORDED";
+  operatorId: string;
+  timestamp: string;
+  notes: string;
+  action: OperatorDecisionAction;
+  recommendedDisposition: Disposition;
+  finalDisposition: Disposition;
+  decisionMode: DecisionMode;
+  activeEvidenceIds: string[];
+}
+
+export interface DiagnosticCheckRecord {
+  id: string;
+  prompt: string;
+  status: DiagnosticCheckStatus;
+  note: string;
+  updatedAt: string | null;
+}
+
+export interface InvestigationRunbook {
+  scenarioId: ScenarioId;
+  checks: DiagnosticCheckRecord[];
 }
 
 export interface IncidentObservation {

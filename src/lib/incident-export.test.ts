@@ -3,6 +3,10 @@ import { describe, expect, it } from "vitest";
 import { evaluateContextDecision } from "@/lib/context-integrity";
 import { runDetectorEnsemble } from "@/lib/detectors";
 import {
+  createInvestigationRunbook,
+  updateInvestigationCheck,
+} from "@/lib/investigation";
+import {
   buildIncidentDecisionRecord,
   renderIncidentDecisionHtml,
 } from "@/lib/incident-export";
@@ -31,7 +35,18 @@ describe("incident decision record", () => {
     expect(record.detection.firstPersistentAlert).not.toBeNull();
     expect(record.evidence.map((item) => item.id)).toContain("tc-609-recorded");
     expect(record.analysis.validatedDisposition).toBe("MONITOR");
-    expect(record.operatorAcknowledgement).toEqual({ name: "", timestamp: "", notes: "" });
+    expect(record.schemaVersion).toBe("3");
+    expect(record.subsystemImpact).toHaveLength(3);
+    expect(record.investigation).toMatchObject({
+      status: "IN_PROGRESS",
+      resolved: 0,
+      total: 3,
+    });
+    expect(record.operatorAcknowledgement).toMatchObject({
+      status: "PENDING",
+      recommendedDisposition: "MONITOR",
+      finalDisposition: null,
+    });
   });
 
   it("omits removed evidence and labels a counterfactual policy-only record", () => {
@@ -82,7 +97,59 @@ describe("incident decision record", () => {
 
     expect(html).toContain("<!doctype html>");
     expect(html).toContain("Operator acknowledgement");
+    expect(html).toContain("Subsystem impact analysis");
+    expect(html).toContain("Investigation runbook");
     expect(html).not.toContain("<script>alert");
     expect(html).toContain("&lt;script&gt;");
+  });
+
+  it("records a human severity raise in JSON and printable HTML", () => {
+    const decision = evaluateContextDecision(scenario, "trusted-context");
+    let runbook = createInvestigationRunbook(
+      scenario.id,
+      response.analysis.diagnosticChecks,
+    );
+    runbook = updateInvestigationCheck(
+      runbook,
+      runbook.checks[0].id,
+      { status: "CONCERN", note: "Recovery remains outside <limits>." },
+      "2026-08-14T14:29:00.000Z",
+    );
+    const record = buildIncidentDecisionRecord({
+      scenario,
+      frames: runDetectorEnsemble(scenario),
+      response,
+      decision,
+      runbook,
+      acknowledgement: {
+        status: "RECORDED",
+        operatorId: "OPS-07",
+        timestamp: "2026-08-14T14:30:00.000Z",
+        notes: "Attitude recovery is slower than expected <verify>.",
+        action: "RAISED",
+        recommendedDisposition: "MONITOR",
+        finalDisposition: "INVESTIGATE",
+        decisionMode: "trusted-context",
+        activeEvidenceIds: decision.activeEvidenceIds,
+      },
+      generatedAt: "2026-08-14T14:31:00.000Z",
+    });
+    const html = renderIncidentDecisionHtml(record);
+
+    expect(record.operatorAcknowledgement).toMatchObject({
+      status: "RECORDED",
+      operatorId: "OPS-07",
+      finalDisposition: "INVESTIGATE",
+    });
+    expect(record.investigation.checks[0]).toMatchObject({
+      status: "CONCERN",
+      note: "Recovery remains outside <limits>.",
+    });
+    expect(html).toContain("Final disposition</dt><dd>INVESTIGATE");
+    expect(html).toContain("OPS-07");
+    expect(html).toContain("&lt;verify&gt;");
+    expect(html).toContain("Recovery remains outside &lt;limits&gt;.");
+    expect(html).not.toContain("<verify>");
+    expect(html).not.toContain("<limits>");
   });
 });

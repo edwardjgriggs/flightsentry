@@ -534,4 +534,122 @@ describe("Granite service boundary", () => {
     expect(iamCalls).toHaveLength(1);
     expect(watsonxCalls).toHaveLength(2);
   });
+
+  it("serves a repeated scenario request from the response cache without re-billing", async () => {
+    process.env.GRANITE_LIVE_ENABLED = "true";
+    process.env.WATSONX_API_KEY = "test-key";
+    process.env.WATSONX_PROJECT_ID = "test-project";
+    const scenario = getScenario("esa-m2-609");
+    const fetchSpy = vi.fn().mockImplementation((url: string) => {
+      if (url.includes("iam.cloud.ibm.com")) {
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              access_token: "test-token",
+              expiration: Math.floor(Date.now() / 1000) + 600,
+            }),
+            { status: 200 },
+          ),
+        );
+      }
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            choices: [
+              { message: { content: JSON.stringify(scenario.referenceAnalysis) } },
+            ],
+          }),
+          { status: 200 },
+        ),
+      );
+    });
+    globalThis.fetch = fetchSpy;
+    const { analyzeScenario, clearAnalysisCache } = await import("@/lib/granite");
+
+    const first = await analyzeScenario(scenario);
+    expect(first.source).toBe("watsonx");
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+
+    const second = await analyzeScenario(scenario);
+    expect(second).toEqual(first);
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+
+    clearAnalysisCache();
+    const third = await analyzeScenario(scenario);
+    expect(third.source).toBe("watsonx");
+    // Token is still cached, so only one additional watsonx call occurs.
+    expect(fetchSpy).toHaveBeenCalledTimes(3);
+  });
+
+  it("does not cache reference fallbacks so a recovered provider is retried", async () => {
+    process.env.GRANITE_LIVE_ENABLED = "true";
+    process.env.WATSONX_API_KEY = "test-key";
+    process.env.WATSONX_PROJECT_ID = "test-project";
+    const scenario = getScenario("esa-m2-609");
+    const fetchSpy = vi
+      .fn()
+      .mockRejectedValue(new Error("network unreachable"));
+    globalThis.fetch = fetchSpy;
+    const { analyzeScenario } = await import("@/lib/granite");
+
+    const firstPromise = analyzeScenario(scenario);
+    await vi.runAllTimersAsync();
+    const first = await firstPromise;
+    expect(first).toMatchObject({ source: "reference", offline: true });
+    const callsAfterFirst = fetchSpy.mock.calls.length;
+
+    const secondPromise = analyzeScenario(scenario);
+    await vi.runAllTimersAsync();
+    const second = await secondPromise;
+    expect(second).toMatchObject({ source: "reference", offline: true });
+    expect(fetchSpy.mock.calls.length).toBeGreaterThan(callsAfterFirst);
+  });
+
+  it("shares one IAM exchange across parallel scenario requests", async () => {
+    process.env.GRANITE_LIVE_ENABLED = "true";
+    process.env.WATSONX_API_KEY = "test-key";
+    process.env.WATSONX_PROJECT_ID = "test-project";
+    const scenario609 = getScenario("esa-m2-609");
+    const scenario618 = getScenario("esa-m2-618");
+    const fetchSpy = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      if (url.includes("iam.cloud.ibm.com")) {
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({
+              access_token: "test-token",
+              expiration: Math.floor(Date.now() / 1000) + 600,
+            }),
+            { status: 200 },
+          ),
+        );
+      }
+      const body = String(init?.body ?? "");
+      const brief = body.includes("esa-m2-618")
+        ? scenario618.referenceAnalysis
+        : scenario609.referenceAnalysis;
+      return Promise.resolve(
+        new Response(
+          JSON.stringify({
+            choices: [{ message: { content: JSON.stringify(brief) } }],
+          }),
+          { status: 200 },
+        ),
+      );
+    });
+    globalThis.fetch = fetchSpy;
+    const { analyzeScenario } = await import("@/lib/granite");
+
+    const [first, second] = await Promise.all([
+      analyzeScenario(scenario609),
+      analyzeScenario(scenario618),
+    ]);
+
+    expect(first.source).toBe("watsonx");
+    expect(second.source).toBe("watsonx");
+    const iamCalls = fetchSpy.mock.calls.filter((call) =>
+      String(call[0]).includes("iam.cloud.ibm.com"),
+    );
+    expect(iamCalls).toHaveLength(1);
+    expect(fetchSpy).toHaveBeenCalledTimes(3);
+  });
 });

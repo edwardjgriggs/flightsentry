@@ -1,21 +1,13 @@
 import * as ort from "onnxruntime-web/wasm";
 
-import { normalizeAutoencoderScores } from "@/lib/detectors";
+import {
+  channelBaselineStats,
+  normalizeAutoencoderScores,
+} from "@/lib/detectors";
 import type { Scenario } from "@/lib/types";
 
 let sessionPromise: Promise<ort.InferenceSession> | undefined;
 let inferenceQueue: Promise<void> = Promise.resolve();
-
-function mean(values: number[]): number {
-  return values.reduce((sum, value) => sum + value, 0) / values.length;
-}
-
-function standardDeviation(values: number[], average: number): number {
-  return Math.sqrt(
-    values.reduce((sum, value) => sum + Math.pow(value - average, 2), 0) /
-      values.length,
-  );
-}
 
 function getSession(): Promise<ort.InferenceSession> {
   if (!sessionPromise) {
@@ -25,6 +17,11 @@ function getSession(): Promise<ort.InferenceSession> {
       "/models/flightsentry-autoencoder.onnx",
       { executionProviders: ["wasm"] },
     );
+    // A transient failure (network blip during wasm fetch) must not poison
+    // every later attempt; clear the cached promise so the next call retries.
+    sessionPromise.catch(() => {
+      sessionPromise = undefined;
+    });
   }
   return sessionPromise;
 }
@@ -32,15 +29,9 @@ function getSession(): Promise<ort.InferenceSession> {
 export async function runOnnxAutoencoder(scenario: Scenario): Promise<number[]> {
   const session = await getSession();
   const channelIds = scenario.channels.map((channel) => channel.id);
-  const baseline = scenario.telemetry.slice(0, 36);
-  const stats = channelIds.map((id) => {
-    const values = baseline.map((sample) => sample.values[id]);
-    const average = mean(values);
-    return {
-      average,
-      scale: Math.max(standardDeviation(values, average), 1e-6),
-    };
-  });
+  // Shared with the TypeScript detector path so ONNX inference and the PCA
+  // fallback normalize inputs identically.
+  const stats = channelBaselineStats(scenario);
   const normalized = scenario.telemetry.flatMap((sample) =>
     channelIds.map(
       (id, index) => (sample.values[id] - stats[index].average) / stats[index].scale,

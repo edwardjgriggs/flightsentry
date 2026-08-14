@@ -34,7 +34,8 @@ where `z = (score - median(calibration)) / (MAD(calibration) * 1.4826)`. This fo
 
 - Granite sees only trusted scenario evidence.
 - Evidence IDs are validated after generation.
-- Ambiguous `MONITOR` results become `INVESTIGATE`.
+- Ambiguous `MONITOR` results become `INVESTIGATE`, and `MONITOR` is refused server-side unless the full deterministic context gate passes, not merely when both evidence kinds exist.
+- Explicitly ambiguous `ESCALATE` results resolve to `INVESTIGATE`.
 - The deterministic context gate, not Granite prose, controls whether event 609 qualifies for `MONITOR`.
 - Telemetry-only mode and every failed required context check resolve to `INVESTIGATE`.
 - Counterfactual evidence removal recalculates locally and withholds the now-stale Granite brief.

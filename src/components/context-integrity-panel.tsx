@@ -1,3 +1,4 @@
+import { dispositionStyle } from "@/components/disposition-style";
 import {
   buildIncidentDecisionRecord,
   downloadIncidentDecisionRecord,
@@ -7,26 +8,26 @@ import type {
   ContextDecision,
   DetectorFrame,
   EvidenceItem,
+  InvestigationRunbook,
+  OperatorAcknowledgement,
   Scenario,
 } from "@/lib/types";
-
-const dispositionStyle = {
-  MONITOR: "text-[var(--mint)] border-[var(--mint-dim)]",
-  INVESTIGATE: "text-[var(--amber)] border-[#765d2e]",
-  ESCALATE: "text-[var(--red)] border-[#743f3f]",
-};
 
 export function ContextIntegrityPanel({
   scenario,
   decision,
   response,
   frames,
+  runbook,
+  acknowledgement,
   onToggleEvidence,
 }: {
   scenario: Scenario;
   decision: ContextDecision;
-  response: AnalysisResponse;
+  response?: AnalysisResponse;
   frames: DetectorFrame[];
+  runbook?: InvestigationRunbook;
+  acknowledgement?: OperatorAcknowledgement;
   onToggleEvidence: (evidenceId: string) => void;
 }) {
   const passed = decision.checks.filter((item) => item.status === "PASS").length;
@@ -36,7 +37,15 @@ export function ContextIntegrityPanel({
   const counterfactualActive = decision.excludedEvidenceIds.length > 0;
 
   const exportRecord = (format: "json" | "html") => {
-    const record = buildIncidentDecisionRecord({ scenario, frames, response, decision });
+    if (!response) return;
+    const record = buildIncidentDecisionRecord({
+      scenario,
+      frames,
+      response,
+      decision,
+      runbook,
+      acknowledgement,
+    });
     downloadIncidentDecisionRecord(record, format);
   };
 
@@ -90,11 +99,18 @@ export function ContextIntegrityPanel({
               ))}
             </div>
           </div>
-          {counterfactualActive && (
-            <p role="status" className="mt-3 border-l-2 border-[var(--amber)] bg-[#241d10] px-3 py-2 text-xs text-[#f1d69d]">
-              COUNTERFACTUAL ACTIVE · The deterministic policy was recalculated. The original Granite brief is withheld because it used the complete evidence packet.
-            </p>
-          )}
+          <p
+            role="status"
+            className={
+              counterfactualActive
+                ? "mt-3 border-l-2 border-[var(--amber)] bg-[#241d10] px-3 py-2 text-xs text-[#f1d69d]"
+                : "sr-only"
+            }
+          >
+            {counterfactualActive
+              ? "COUNTERFACTUAL ACTIVE · The deterministic policy was recalculated. The original Granite brief is withheld because it used the complete evidence packet."
+              : ""}
+          </p>
         </div>
       )}
 
@@ -106,11 +122,23 @@ export function ContextIntegrityPanel({
             {decision.productionLimitations.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </details>
-        <div className="flex shrink-0 flex-wrap gap-2" aria-label="Download incident decision record">
-          <button type="button" onClick={() => exportRecord("json")} className="kicker border border-[var(--line-hot)] px-3 py-2 text-[var(--ink)] hover:border-[var(--mint)] hover:text-[var(--mint)]">
+        <div className="flex shrink-0 flex-wrap gap-2" role="group" aria-label="Download incident decision record">
+          <button
+            type="button"
+            disabled={!response}
+            title={response ? undefined : "Available once the analysis brief resolves"}
+            onClick={() => exportRecord("json")}
+            className="kicker border border-[var(--line-hot)] px-3 py-2 text-[var(--ink)] hover:border-[var(--mint)] hover:text-[var(--mint)] disabled:opacity-40 disabled:hover:border-[var(--line-hot)] disabled:hover:text-[var(--ink)]"
+          >
             Export JSON
           </button>
-          <button type="button" onClick={() => exportRecord("html")} className="kicker border border-[var(--line-hot)] px-3 py-2 text-[var(--ink)] hover:border-[var(--mint)] hover:text-[var(--mint)]">
+          <button
+            type="button"
+            disabled={!response}
+            title={response ? undefined : "Available once the analysis brief resolves"}
+            onClick={() => exportRecord("html")}
+            className="kicker border border-[var(--line-hot)] px-3 py-2 text-[var(--ink)] hover:border-[var(--mint)] hover:text-[var(--mint)] disabled:opacity-40 disabled:hover:border-[var(--line-hot)] disabled:hover:text-[var(--ink)]"
+          >
             Printable HTML
           </button>
         </div>
@@ -128,10 +156,12 @@ function EvidenceToggle({
   removed: boolean;
   onClick: () => void;
 }) {
+  // Plain action button: the visible verb states exactly what activating it
+  // does, so no aria-pressed state is exposed (a pressed-state paired with a
+  // swapping action verb reads incoherently in screen readers).
   return (
     <button
       type="button"
-      aria-pressed={!removed}
       onClick={onClick}
       className={`mono border px-3 py-2 text-[10px] transition ${removed ? "border-[#765d2e] bg-[#241d10] text-[var(--amber)]" : "border-[var(--mint-dim)] text-[var(--mint)] hover:bg-[#10251f]"}`}
     >

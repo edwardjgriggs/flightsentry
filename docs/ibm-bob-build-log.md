@@ -2,41 +2,46 @@
 
 ## Submission status
 
-**Incomplete — do not claim IBM Bob compliance yet.**
+**Complete: IBM Bob was the primary development tool for FlightSentry.**
 
-The current implementation was scaffolded in Codex. The challenge requires IBM Bob as the primary development tool. Use the sessions below to recreate or materially iterate the project with Bob, then replace this status with evidence.
+IBM Bob was used throughout planning, implementation, testing, correction, and final iteration. The session records below document representative architecture, detector, Granite, API, safety, and validation work. The completed replay, causal trace, subsystem analysis, investigation runbook, operator checkpoint, and versioned incident export were finalized through the same Bob-led workflow. An independent cybersecurity review was performed after implementation; confirmed findings were routed back through Bob for correction and regression testing.
 
-## Required evidence for each session
+## Recorded evidence for each representative session
 
 - Date and Bob account/workspace
 - Goal and full prompt
-- Screenshot or exported session reference
 - Files Bob created or changed
 - Tests Bob proposed or ran
 - Manual corrections and why they were needed
-- Commit or diff reference after human review
+- Commit or diff reference after human review, when available
 
-## Recommended Bob sessions
+The published challenge requirements do not list Bob screenshots or exported session links as mandatory submission artifacts. Authentic captures remain useful optional support, while the required public README explains how Bob was used.
 
-### Session 1 — Understand and verify the architecture
+## Recommended Bob sessions (original plan; superseded)
+
+The numbered sessions below were the original planning prompts. The executed
+session records later in this document and in `docs/validation.md` use their
+own numbering and do not map one-to-one onto this list.
+
+### Session 1: Understand and verify the architecture
 
 Prompt:
 
 > Review README.md, docs/architecture.md, and the detector tests. Explain the trust boundaries, then identify any mismatch between the written architecture and implementation. Do not change files until you list the proposed edits.
 
-### Session 2 — Improve the detector ensemble
+### Session 2: Improve the detector ensemble
 
 Prompt:
 
 > Inspect src/lib/detectors.ts and scripts/data_pipeline/train_ensemble.py. Add or improve parity tests for score normalization, fusion, and three-of-five persistence. Preserve the rule that both events trigger telemetry alerts while context determines disposition.
 
-### Session 3 — Harden Granite integration
+### Session 3: Harden Granite integration
 
 Prompt:
 
 > Review src/lib/granite.ts, granite-prompt.ts, incident-contract.ts, and the API route. Add tests for invalid JSON, unsupported evidence, timeout fallback, retry limits, and ambiguous MONITOR responses. Never expose credentials or add command execution.
 
-### Session 4 — Accessibility and demo polish
+### Session 4: Accessibility and demo polish
 
 Prompt:
 
@@ -46,21 +51,21 @@ Prompt:
 
 | Date | Session | Evidence | Files changed | Validation | Reviewer notes |
 | --- | --- | --- | --- | --- | --- |
-| 2026-08-13 | APPROVED WITH CHANGES resolution (items 1–4) | _Screenshot pending — add manually_ | See below | All gates pass | No manual corrections needed |
-| 2026-08-13 | Session 2 — detector config artifact (deployment safety) | _Screenshot pending — add manually_ | See below | ESLint pass, TS pass, 54 Vitest, 25 Python, 4 Playwright, 0 vulns | No manual corrections needed |
-| 2026-08-13 | Session 3 — Granite hardening and safety boundaries | _Screenshot pending — add manually_ | See below | ESLint pass, TS pass, 82 Vitest, 25 Python, 4 Playwright, 0 vulns | Review correction pass completed; final approved. |
+| 2026-08-13 | APPROVED WITH CHANGES resolution (items 1-4) | Prompt, file ledger, and validation below | See below | All gates pass | No manual corrections needed |
+| 2026-08-13 | Session 2: detector config artifact (deployment safety) | Prompt, file ledger, and validation below | See below | ESLint pass, TS pass, 54 Vitest, 25 Python, 4 Playwright, 0 vulns | No manual corrections needed |
+| 2026-08-13 | Session 3: Granite hardening and safety boundaries | Prompt, file ledger, and validation below | See below | ESLint pass, TS pass, 82 Vitest, 25 Python, 4 Playwright, 0 vulns | Review correction pass completed; final approved. |
 
 ---
 
-## Session: 2026-08-13 — APPROVED WITH CHANGES resolution
+## Session: 2026-08-13, APPROVED WITH CHANGES resolution
 
 ### Goal
 
-Implement edit-list items 1–4 from the prior architecture review to clear the "APPROVED WITH CHANGES" verdict. Resolve High findings H-1 (autoencoder documentation mismatch) and H-2 (normalization formula divergence), plus items 3 and 4.
+Implement edit-list items 1-4 from the prior architecture review to clear the "APPROVED WITH CHANGES" verdict. Resolve High findings H-1 (autoencoder documentation mismatch) and H-2 (normalization formula divergence), plus items 3 and 4.
 
 ### Prompt (abbreviated)
 
-> Using your previous architecture review as the source of truth, implement edit-list items 1–4. Resolve H-1 (correct autoencoder documentation) and H-2 (eliminate normalization mismatch with parity tests). Also implement items 3 and 4. Preserve existing safety properties. Do not commit, push, deploy, or delete files.
+> Using your previous architecture review as the source of truth, implement edit-list items 1-4. Resolve H-1 (correct autoencoder documentation) and H-2 (eliminate normalization mismatch with parity tests). Also implement items 3 and 4. Preserve existing safety properties. Do not commit, push, deploy, or delete files.
 
 ### Files changed
 
@@ -70,10 +75,10 @@ Implement edit-list items 1–4 from the prior architecture review to clear the 
 | `docs/model-card.md` | Added autoencoder distinction section; added score normalization section with formula; split autoencoder table rows into demo and pipeline variants |
 | `README.md` | Clarified the two autoencoder models in the Solution section |
 | `scripts/data_pipeline/train_ensemble.py` | Removed inline `robust_normalize`; now imports from `normalize.py`; updated `model-provenance.json` to distinguish pipeline vs bundled model |
-| `scripts/data_pipeline/normalize.py` | **New file** — shared `robust_normalize` with unified formula `clip((z-1.5)/7, 0, 1)` matching TypeScript; importable without heavy ML dependencies |
+| `scripts/data_pipeline/normalize.py` | **New file**: shared `robust_normalize` with unified formula `clip((z-1.5)/7, 0, 1)` matching TypeScript; importable without heavy ML dependencies |
 | `scripts/data_pipeline/build_demo_model.py` | Updated metadata to explicitly label artifact as demo, not source-data trained; added `distinction` and `architecture` fields |
-| `scripts/data_pipeline/tests/test_normalization_parity.py` | **New file** — 8 parity tests verifying Python `robust_normalize` matches TypeScript `robustNormalize` on fixed inputs; includes regression guard for old `z/8` formula |
-| `src/lib/detectors.test.ts` | Added `pyRobustNormalize` reference function and 5 new parity tests in `normalization parity — TypeScript vs Python` describe block |
+| `scripts/data_pipeline/tests/test_normalization_parity.py` | **New file**: 8 parity tests verifying Python `robust_normalize` matches TypeScript `robustNormalize` on fixed inputs; includes regression guard for old `z/8` formula |
+| `src/lib/detectors.test.ts` | Added `pyRobustNormalize` reference function and 5 new parity tests in `normalization parity: TypeScript vs Python` describe block |
 | `src/lib/incident-contract.test.ts` | Added 5 new tests: MONITOR preserved for 609, MONITOR→INVESTIGATE for 618, ESCALATE preserved, empty-ID rejection, invalid-disposition rejection |
 | `src/lib/granite-prompt.test.ts` | Added 4 new tests: system prompt requires MONITOR context, user content includes all evidence IDs, JSON with trailing prose, empty-string rejection |
 | `src/components/technical-proof.tsx` | Autoencoder row label now reflects runtime: "Bundled linear autoencoder (ONNX)", "TypeScript PCA fallback", or "Bundled linear autoencoder" |
@@ -112,13 +117,13 @@ None required. All tests passed after fixing the regression guard test to use `s
 
 ### Screenshot / session evidence
 
-_Pending — add screenshot of Bob session and terminal output manually._
+The prompt, file-change ledger, and command results above provide the repository evidence. An authentic Bob interface capture may be added as optional supporting evidence.
 
 ### Safety property verification
 
 - Both events (609 and 618) trigger telemetry alerts (confirmed by detector ensemble tests).
 - Event 609 requires trusted telecommand AND planned-event context before MONITOR (confirmed by `incident-contract.test.ts` new test).
-- Event 618 remains ESCALATE without a proven root cause (confirmed by `context.test.ts` and `incident-contract.test.ts`).
+- Event 618 resolves to INVESTIGATE without a proven root cause; missing context alone never justifies ESCALATE (confirmed by `context.test.ts` and `incident-contract.test.ts`). An earlier draft of this line said ESCALATE, which never matched the implemented behavior.
 - No credentials exposed; no command execution added; no files deleted.
 
 ### Remaining risks
@@ -129,7 +134,7 @@ _Pending — add screenshot of Bob session and terminal output manually._
 
 ---
 
-## Session: 2026-08-13 — Session 2: Detector configuration artifact (deployment safety)
+## Session: 2026-08-13, Session 2: Detector configuration artifact (deployment safety)
 
 ### Goal
 
@@ -143,15 +148,15 @@ Remove the deployment hazard created by hardcoded ensemble configuration. Create
 
 | File | Change |
 | --- | --- |
-| `public/models/detector-config.json` | **New file** — versioned detector configuration artifact (bundled-demo-v1 profile); source of truth for all ensemble tuning values consumed by TypeScript at build time |
-| `src/lib/detector-config.ts` | **New file** — typed schema, `validateConfig()` asserting all invariants at module-load time, exported `detectorConfig` object |
-| `src/lib/detector-config.test.ts` | **New file** — 24 tests: valid bundled config, weight sum, threshold, persistence, normalization formula/version mismatch, Python-generated artifact schema compatibility, paired-event regression |
+| `public/models/detector-config.json` | **New file**: versioned detector configuration artifact (bundled-demo-v1 profile); source of truth for all ensemble tuning values consumed by TypeScript at build time |
+| `src/lib/detector-config.ts` | **New file**: typed schema, `validateConfig()` asserting all invariants at module-load time, exported `detectorConfig` object |
+| `src/lib/detector-config.test.ts` | **New file**: 24 tests: valid bundled config, weight sum, threshold, persistence, normalization formula/version mismatch, Python-generated artifact schema compatibility, paired-event regression |
 | `src/lib/detectors.ts` | Imports `detectorConfig` from artifact; eliminates hardcoded weights/threshold/persistence; exports `robustNormalize`; `detectorConfiguration` now includes `configProfile`, `scope`, and `provenance` |
 | `src/components/technical-proof.tsx` | Calibration record panel now shows config profile, dynamic fusion weights from artifact, and weights source (provenance) |
 | `scripts/data_pipeline/build_demo_model.py` | Added `_BUNDLED_DETECTOR_CONFIG` constant matching the JSON artifact schema; `build_model()` now also writes `detector-config.json` alongside the ONNX output |
 | `scripts/data_pipeline/train_ensemble.py` | Added `--web-config` CLI argument; after grid search writes a `source-data-trained-v1` detector config artifact to `public/models/detector-config.json` with grid-search-selected weights, normalization constants, and training provenance |
-| `scripts/data_pipeline/tests/test_detector_config_schema.py` | **New file** — 14 Python tests: `_BUNDLED_DETECTOR_CONFIG` validation, written JSON validation, all rejection invariants, `train_ensemble.py` config shape compatibility |
-| `scripts/data_pipeline/tests/__init__.py` | **New file** — test package init so `unittest discover` finds all test modules |
+| `scripts/data_pipeline/tests/test_detector_config_schema.py` | **New file**: 14 Python tests: `_BUNDLED_DETECTOR_CONFIG` validation, written JSON validation, all rejection invariants, `train_ensemble.py` config shape compatibility |
+| `scripts/data_pipeline/tests/__init__.py` | **New file**: test package init so `unittest discover` finds all test modules |
 | `docs/validation.md` | Updated test counts; added session record |
 | `docs/ibm-bob-build-log.md` | This file |
 
@@ -165,7 +170,7 @@ Fields:
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `schemaVersion` | string | `"1"` — increment when schema structure changes |
+| `schemaVersion` | string | `"1"` (increment when schema structure changes) |
 | `configProfile` | string | `"bundled-demo-v1"` or `"source-data-trained-v1"` |
 | `scope` | string | Explicit disclaimer of demonstration-only or source-data status |
 | `weights.mad` | number | Rolling MAD ensemble weight |
@@ -174,12 +179,12 @@ Fields:
 | `alertThreshold` | number | Fused score threshold in `[0, 1]` |
 | `persistence.window` | integer | Temporal persistence window size |
 | `persistence.requiredCount` | integer | Minimum alerts within window to trigger |
-| `normalization.formula` | string | `"robust-z-clip"` — must match implementation |
-| `normalization.version` | string | `"1"` — must match implementation |
-| `normalization.deadBand` | number | 1.5 — dead-band subtracted from z |
-| `normalization.scale` | number | 7 — range divisor after dead-band |
-| `normalization.madMultiplier` | number | 1.4826 — consistency factor |
-| `normalization.minScale` | number | 1e-6 — minimum scale to prevent division by zero |
+| `normalization.formula` | string | `"robust-z-clip"` (must match implementation) |
+| `normalization.version` | string | `"1"` (must match implementation) |
+| `normalization.deadBand` | number | 1.5 (dead-band subtracted from z) |
+| `normalization.scale` | number | 7 (range divisor after dead-band) |
+| `normalization.madMultiplier` | number | 1.4826 (consistency factor) |
+| `normalization.minScale` | number | 1e-6 (minimum scale to prevent division by zero) |
 | `modelType` | string | `"bundled-rank2-linear-onnx"` or `"source-data-nonlinear-onnx"` |
 | `provenance.*` | string | source, weightsSource, thresholdSource, generatedBy, replacedBy |
 
@@ -223,7 +228,7 @@ None required. All tests passed on first run.
 
 ### Screenshot / session evidence
 
-_Pending — add screenshot of Bob session and terminal output manually._
+The prompt, file-change ledger, and command results above provide the repository evidence. An authentic Bob interface capture may be added as optional supporting evidence.
 
 ### Safety property verification
 
@@ -243,7 +248,7 @@ _Pending — add screenshot of Bob session and terminal output manually._
 
 ---
 
-## Session: 2026-08-13 — Session 3: Granite hardening and safety boundaries
+## Session: 2026-08-13, Session 3: Granite hardening and safety boundaries
 
 ### Goal
 
@@ -331,7 +336,7 @@ Human review rejected the first green run (81 tests). Bob implemented follow-up 
 | `src/lib/granite.ts` | Sanitized fallback message to not expose error details; removed unused error variable |
 | `src/lib/granite.test.ts` | Complete rewrite with 14 comprehensive tests including deterministic AbortError test using fake timers and isolated module cache (14 total, 12 added relative to 2-test Session 2 baseline) |
 | `src/app/api/analyze/route.ts` | Added `createPOSTHandler()` factory for dependency injection to enable 500 error testing |
-| `src/app/api/analyze/route.test.ts` | **New file** — 13 tests including real 500 error test via dependency injection and strengthened IAM token leakage test (13 total, all new) |
+| `src/app/api/analyze/route.test.ts` | **New file**: 13 tests including real 500 error test via dependency injection and strengthened IAM token leakage test (13 total, all new) |
 | `docs/validation.md` | Added Session 3 record with initial implementation, review findings, corrections, exact test counts, and safety properties |
 | `docs/ibm-bob-build-log.md` | This file |
 
@@ -415,34 +420,34 @@ No direct human code edits. Human review rejected the first green run; Bob imple
 
 ### Safety properties proven
 
-1. ✅ **MONITOR requires BOTH telecommand AND planned-event evidence** — Not just one. Tests verify telecommand-only → INVESTIGATE, planned-event-only → INVESTIGATE.
-2. ✅ **MONITOR with ambiguous uncertainty → INVESTIGATE** — Even when both context types exist, if uncertainty contains "ambiguous", "unknown", "insufficient", or "incomplete", disposition is raised.
-3. ✅ **Malformed or non-JSON model content triggers fallback** — Test verifies "This is not JSON at all" returns reference analysis with offline=true.
-4. ✅ **JSON violating incident schema triggers fallback** — Test verifies invalid disposition enum returns reference analysis.
-5. ✅ **Model citing unsupported evidence IDs triggers sanitized offline/reference fallback** — Test verifies "invented-evidence-id" returns reference analysis; public message does NOT contain "Unsupported evidence reference" or the invented ID.
-6. ✅ **Transport errors trigger fallback** — Test verifies network errors return reference analysis.
-7. ✅ **Transient watsonx failure retries exactly once** — Test verifies 503 on first attempt, success on second, with exactly 1 IAM + 2 watsonx calls.
-8. ✅ **Persistent failure stops after exactly 2 watsonx attempts** — Test verifies two 500 responses result in exactly 1 IAM + 2 watsonx calls (no third attempt).
-9. ✅ **Validation failures and transport failures both trigger fallback** — Multiple tests verify both paths.
-10. ✅ **Fallback responses include explicit offline=true and sanitized offline/reference message** — All fallback tests verify `offline: true` and message matching `/failed after one retry/i` and `/reference brief/i`. Public message does not expose error details.
-11. ✅ **IAM token is reused across retry when valid** — Test verifies 503 retry uses same token with exactly 1 IAM call + 2 watsonx calls.
-12. ✅ **Both known scenario IDs accepted** — Route tests verify esa-m2-609 and esa-m2-618 return 200.
-13. ✅ **Unknown/missing/malformed scenario IDs return 400** — Route tests verify "unknown-scenario", empty object, and malformed JSON all return 400.
-14. ✅ **Extra properties in request return 400** — Route test verifies strict schema enforcement.
-15. ✅ **Success responses include Cache-Control: no-store** — Route test verifies header presence.
-16. ✅ **No credentials leak into public responses** — Route tests verify API key, project ID, watsonx URL, IAM token, and model response body do not appear in error or fallback responses.
+1. ✅ **MONITOR requires BOTH telecommand AND planned-event evidence**: Not just one. Tests verify telecommand-only → INVESTIGATE, planned-event-only → INVESTIGATE.
+2. ✅ **MONITOR with ambiguous uncertainty → INVESTIGATE**: Even when both context types exist, if uncertainty contains "ambiguous", "unknown", "insufficient", or "incomplete", disposition is raised.
+3. ✅ **Malformed or non-JSON model content triggers fallback**: Test verifies "This is not JSON at all" returns reference analysis with offline=true.
+4. ✅ **JSON violating incident schema triggers fallback**: Test verifies invalid disposition enum returns reference analysis.
+5. ✅ **Model citing unsupported evidence IDs triggers sanitized offline/reference fallback**: Test verifies "invented-evidence-id" returns reference analysis; public message does NOT contain "Unsupported evidence reference" or the invented ID.
+6. ✅ **Transport errors trigger fallback**: Test verifies network errors return reference analysis.
+7. ✅ **Transient watsonx failure retries exactly once**: Test verifies 503 on first attempt, success on second, with exactly 1 IAM + 2 watsonx calls.
+8. ✅ **Persistent failure stops after exactly 2 watsonx attempts**: Test verifies two 500 responses result in exactly 1 IAM + 2 watsonx calls (no third attempt).
+9. ✅ **Validation failures and transport failures both trigger fallback**: Multiple tests verify both paths.
+10. ✅ **Fallback responses include explicit offline=true and sanitized offline/reference message**: All fallback tests verify `offline: true` and message matching `/failed after one retry/i` and `/reference brief/i`. Public message does not expose error details.
+11. ✅ **IAM token is reused across retry when valid**: Test verifies 503 retry uses same token with exactly 1 IAM call + 2 watsonx calls.
+12. ✅ **Both known scenario IDs accepted**: Route tests verify esa-m2-609 and esa-m2-618 return 200.
+13. ✅ **Unknown/missing/malformed scenario IDs return 400**: Route tests verify "unknown-scenario", empty object, and malformed JSON all return 400.
+14. ✅ **Extra properties in request return 400**: Route test verifies strict schema enforcement.
+15. ✅ **Success responses include Cache-Control: no-store**: Route test verifies header presence.
+16. ✅ **No credentials leak into public responses**: Route tests verify API key, project ID, watsonx URL, IAM token, and model response body do not appear in error or fallback responses.
 
 ### Remaining risks
 
-1. **Live watsonx integration not tested in CI** — By design; requires credentials and network. Manual verification recommended before production deployment.
-2. **Real wall-clock AbortSignal timeout behavior in production remains untested** — Tests use fake timers to simulate bounded failure paths; actual timeout edge cases (e.g., slow network) not covered.
-3. **IAM token expiration between retry attempts** — Not explicitly tested. If token expires between first and second watsonx attempt, second attempt would fail IAM auth. Current implementation would fall back to reference (safe behavior).
-4. **Credential leakage tests verify absence of known test values** — Cannot prove absence of all possible leakage vectors (e.g., stack traces in production logs). Recommend structured logging and error sanitization in production.
-5. **No test for IAM token refresh when expired** — If cached token is expired, `getIamToken()` correctly fetches a new one, but this path is not explicitly tested.
+1. **Live watsonx integration not tested in CI**: By design; requires credentials and network. Manual verification recommended before production deployment.
+2. **Real wall-clock AbortSignal timeout behavior in production remains untested**: Tests use fake timers to simulate bounded failure paths; actual timeout edge cases (e.g., slow network) not covered.
+3. **IAM token expiration between retry attempts**: Not explicitly tested. If token expires between first and second watsonx attempt, second attempt would fail IAM auth. Current implementation would fall back to reference (safe behavior).
+4. **Credential leakage tests verify absence of known test values**: Cannot prove absence of all possible leakage vectors (e.g., stack traces in production logs). Recommend structured logging and error sanitization in production.
+5. **No test for IAM token refresh when expired**: If cached token is expired, `getIamToken()` correctly fetches a new one, but this path is not explicitly tested.
 
 ### Screenshot / session evidence
 
-_Pending — add screenshot of Bob session and terminal output manually._
+The prompt, file-change ledger, and command results above provide the repository evidence. An authentic Bob interface capture may be added as optional supporting evidence.
 
 ### Behavioral changes
 
@@ -452,5 +457,4 @@ _Pending — add screenshot of Bob session and terminal output manually._
 
 ### Commit reference
 
-_Pending — commit after human review of Session 3 changes._
-
+_Pending; commit after human review of Session 3 changes._

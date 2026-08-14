@@ -1,7 +1,7 @@
 import { detectorConfig } from "@/lib/detector-config";
 import type { DetectorFrame, Scenario, TelemetrySample } from "@/lib/types";
 
-const BASELINE_END = 36;
+export const BASELINE_END = 36;
 const ROLLING_WINDOW = 10;
 
 // All tuning values come from the versioned config artifact.
@@ -40,10 +40,11 @@ function standardDeviation(values: number[], average = mean(values)): number {
  * Formula: clip((z - 1.5) / 7, 0, 1)
  * where z = (score - median(calibration)) / (MAD(calibration) * 1.4826)
  *
- * The dead-band constant (1.5) and range divisor (7) must match the values in
- * public/models/detector-config.json normalization.deadBand and normalization.scale.
- * The MAD multiplier (1.4826) must match normalization.madMultiplier.
- * A mismatch causes validateConfig() to throw at module-load time.
+ * The dead-band, range divisor, and MAD multiplier are read from
+ * public/models/detector-config.json (normalization.deadBand, .scale, and
+ * .madMultiplier). validateConfig() rejects an artifact whose formula/version
+ * identifiers differ from this implementation or whose numeric normalization
+ * fields are non-finite or out of range at module-load time.
  */
 export function robustNormalize(score: number, baseline: number[]): number {
   const center = median(baseline);
@@ -73,8 +74,13 @@ function madScores(scenario: Scenario): number[] {
       ...ids.map((id) => {
         const values = history.map((item) => item.values[id]);
         const center = median(values);
+        // Rolling-window guards, independent of the calibration artifact: the
+        // 0.25-sigma floor and 1e-6 epsilon keep a locally flat window from
+        // exploding the score. Only the MAD consistency factor is shared with
+        // the artifact's normalization block.
         const scale = Math.max(
-          median(values.map((value) => Math.abs(value - center))) * 1.4826,
+          median(values.map((value) => Math.abs(value - center))) *
+            detectorConfig.normalization.madMultiplier,
           standardDeviation(values) * 0.25,
           1e-6,
         );
@@ -152,14 +158,25 @@ function isolationPath(row: number[], node: IsolationNode, depth = 0): number {
     : isolationPath(row, node.right, depth + 1);
 }
 
-function normalizedRows(scenario: Scenario): number[][] {
-  const ids = scenario.channels.map((channel) => channel.id);
+/**
+ * Per-channel baseline mean and standard-deviation scale over the first
+ * BASELINE_END samples. Shared with the ONNX input path so browser inference
+ * and the TypeScript fallback normalize identically.
+ */
+export function channelBaselineStats(
+  scenario: Scenario,
+): Array<{ average: number; scale: number }> {
   const baseline = scenario.telemetry.slice(0, BASELINE_END);
-  const stats = ids.map((id) => {
-    const values = baseline.map((sample) => sample.values[id]);
+  return scenario.channels.map((channel) => {
+    const values = baseline.map((sample) => sample.values[channel.id]);
     const average = mean(values);
     return { average, scale: Math.max(standardDeviation(values, average), 1e-6) };
   });
+}
+
+function normalizedRows(scenario: Scenario): number[][] {
+  const ids = scenario.channels.map((channel) => channel.id);
+  const stats = channelBaselineStats(scenario);
 
   return scenario.telemetry.map((sample, index) =>
     ids.flatMap((id, channelIndex) => {
@@ -265,6 +282,19 @@ function channelContributors(
     .map((item) => item.id);
 }
 
+function applyPersistence(frames: DetectorFrame[]): DetectorFrame[] {
+  return frames.map((frame, index) => {
+    const windowStart = Math.max(0, index - (PERSISTENCE_WINDOW - 1));
+    const recent = frames.slice(windowStart, index + 1);
+    return {
+      ...frame,
+      alert:
+        recent.filter((item) => item.fused >= ENSEMBLE_THRESHOLD).length >=
+        PERSISTENCE_REQUIRED,
+    };
+  });
+}
+
 export function runDetectorEnsemble(scenario: Scenario): DetectorFrame[] {
   const madRaw = madScores(scenario);
   const rows = normalizedRows(scenario);
@@ -296,13 +326,7 @@ export function runDetectorEnsemble(scenario: Scenario): DetectorFrame[] {
     };
   });
 
-  return frames.map((frame, index) => {
-    const windowStart = Math.max(0, index - (PERSISTENCE_WINDOW - 1));
-    const recent = frames.slice(windowStart, index + 1);
-    const persistent =
-      recent.filter((item) => item.fused >= ENSEMBLE_THRESHOLD).length >= PERSISTENCE_REQUIRED;
-    return { ...frame, alert: persistent };
-  });
+  return applyPersistence(frames);
 }
 
 export function replaceAutoencoderScores(
@@ -326,14 +350,7 @@ export function replaceAutoencoderScores(
     };
   });
 
-  return updated.map((frame, index) => {
-    const windowStart = Math.max(0, index - (PERSISTENCE_WINDOW - 1));
-    const recent = updated.slice(windowStart, index + 1);
-    return {
-      ...frame,
-      alert: recent.filter((item) => item.fused >= ENSEMBLE_THRESHOLD).length >= PERSISTENCE_REQUIRED,
-    };
-  });
+  return applyPersistence(updated);
 }
 
 export function normalizeAutoencoderScores(rawScores: number[]): number[] {

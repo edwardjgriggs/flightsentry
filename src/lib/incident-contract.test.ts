@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { evaluateContextDecision } from "@/lib/context-integrity";
 import {
   enforceSafeDisposition,
   validateIncidentBrief,
@@ -50,7 +51,7 @@ describe("Granite incident contract", () => {
   });
 
   it("upgrades MONITOR to INVESTIGATE for event 618 because no operational context exists", () => {
-    // Event 618 evidence contains only telemetry and model items — no telecommand or planned-event.
+    // Event 618 evidence contains only telemetry and model items, no telecommand or planned-event.
     const scenario618 = getScenario("esa-m2-618");
     const monitorWithoutContext = {
       ...scenario618.referenceAnalysis,
@@ -103,6 +104,57 @@ describe("Granite incident contract", () => {
   it("preserves ESCALATE disposition without modification", () => {
     const escalated = { ...scenario.referenceAnalysis, disposition: "ESCALATE" as const };
     expect(enforceSafeDisposition(escalated, scenario.evidence).disposition).toBe("ESCALATE");
+  });
+
+  it("resolves explicitly ambiguous ESCALATE to INVESTIGATE", () => {
+    const escalated = {
+      ...scenario.referenceAnalysis,
+      disposition: "ESCALATE" as const,
+      uncertainty: "The root cause is unknown and the evidence is insufficient.",
+    };
+    const result = enforceSafeDisposition(escalated, scenario.evidence);
+    expect(result.disposition).toBe("INVESTIGATE");
+    expect(result.summary).toMatch(/resolved the ambiguous escalation/i);
+  });
+
+  it("demotes MONITOR when the context gate fails even though both evidence kinds exist", () => {
+    // The evidence packet still contains a telecommand and a planned event,
+    // but the deterministic gate fails because the command record has been
+    // excluded from the active decision. The kind-presence check alone would
+    // allow MONITOR; the gate result must win.
+    const scenario609 = getScenario("esa-m2-609");
+    const failingDecision = evaluateContextDecision(scenario609, "trusted-context", [
+      "tc-609-recorded",
+    ]);
+    expect(failingDecision.gatePassed).toBe(false);
+    const monitorBrief = {
+      ...scenario609.referenceAnalysis,
+      disposition: "MONITOR" as const,
+      uncertainty: "Bounded response consistent with the planned window.",
+    };
+    const result = enforceSafeDisposition(
+      monitorBrief,
+      scenario609.evidence,
+      failingDecision,
+    );
+    expect(result.disposition).toBe("INVESTIGATE");
+  });
+
+  it("preserves MONITOR when the full context gate passes", () => {
+    const scenario609 = getScenario("esa-m2-609");
+    const passingDecision = evaluateContextDecision(scenario609, "trusted-context");
+    expect(passingDecision.gatePassed).toBe(true);
+    const monitorBrief = {
+      ...scenario609.referenceAnalysis,
+      disposition: "MONITOR" as const,
+      uncertainty: "Bounded response consistent with the planned window.",
+    };
+    const result = enforceSafeDisposition(
+      monitorBrief,
+      scenario609.evidence,
+      passingDecision,
+    );
+    expect(result.disposition).toBe("MONITOR");
   });
 
   it("rejects briefs with empty string evidence IDs", () => {

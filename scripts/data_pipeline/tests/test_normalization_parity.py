@@ -137,7 +137,7 @@ class NormalizationParityTests(unittest.TestCase):
         py_result = float(robust_normalize(np.array([score]), np.array(calibration))[0])
         # The old formula differs from TypeScript
         self.assertNotAlmostEqual(old_formula, ts_result, places=3,
-            msg="Old formula unexpectedly matches TypeScript — guard is invalid")
+            msg="Old formula unexpectedly matches TypeScript; guard is invalid")
         # The new formula matches TypeScript
         self.assertAlmostEqual(py_result, ts_result, places=9)
         self.assertAlmostEqual(py_result, new_formula, places=9)

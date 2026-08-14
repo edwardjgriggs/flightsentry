@@ -177,12 +177,16 @@ export function calculateContextMetrics(scenarios: Scenario[]): ContextMetrics {
   );
   const rareNominal = scenarios.filter((scenario) => scenario.classification === "RARE_NOMINAL");
   const anomalies = scenarios.filter((scenario) => scenario.classification === "ANOMALY");
-  const prevented = rareNominal.filter((scenario) => {
-    const index = scenarios.indexOf(scenario);
-    return telemetryOnly[index].disposition === "INVESTIGATE" && trustedContext[index].disposition === "MONITOR";
-  }).length;
-  const anomalyRetained = anomalies.filter((scenario) =>
-    evaluateContextDecision(scenario, "trusted-context").disposition === "INVESTIGATE",
+  const prevented = scenarios.filter(
+    (scenario, index) =>
+      scenario.classification === "RARE_NOMINAL" &&
+      telemetryOnly[index].disposition === "INVESTIGATE" &&
+      trustedContext[index].disposition === "MONITOR",
+  ).length;
+  const anomalyRetained = scenarios.filter(
+    (scenario, index) =>
+      scenario.classification === "ANOMALY" &&
+      trustedContext[index].disposition === "INVESTIGATE",
   ).length;
   const counterfactualTrials = rareNominal.flatMap((scenario) =>
     scenario.evidence

@@ -14,8 +14,14 @@ export default defineConfig({
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    env: {
+      // E2E must be deterministic and free: always exercise the validated
+      // reference-brief path, never live watsonx calls.
+      GRANITE_LIVE_ENABLED: "false",
+    },
   },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
   ],
 });

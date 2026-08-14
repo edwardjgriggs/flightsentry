@@ -1,18 +1,12 @@
 import { routes, type VercelConfig } from "@vercel/config/v1";
 
+// Security headers (CSP and friends) live in next.config.ts so they apply on
+// every host, including local production builds. This file keeps only the
+// platform cache policy for immutable model and wasm assets.
 export const config: VercelConfig = {
   framework: "nextjs",
   buildCommand: "npm run build",
   headers: [
-    {
-      source: "/(.*)",
-      headers: [
-        { key: "X-Content-Type-Options", value: "nosniff" },
-        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-        { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-        { key: "X-Frame-Options", value: "DENY" },
-      ],
-    },
     routes.cacheControl("/models/(.*)", {
       public: true,
       maxAge: "1 year",

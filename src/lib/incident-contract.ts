@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { EvidenceItem, IncidentBrief } from "@/lib/types";
+import type { ContextDecision, EvidenceItem, IncidentBrief } from "@/lib/types";
 
 const observationSchema = z.strictObject({
   statement: z.string().min(1).max(400),
@@ -49,19 +49,32 @@ export function validateIncidentBrief(
 export function enforceSafeDisposition(
   brief: IncidentBrief,
   evidence: EvidenceItem[],
+  contextDecision?: ContextDecision,
 ): IncidentBrief {
   const hasTelecommand = evidence.some((item) => item.kind === "telecommand");
   const hasPlannedEvent = evidence.some((item) => item.kind === "planned-event");
   const hasBothOperationalContexts = hasTelecommand && hasPlannedEvent;
+  const gatePassed = contextDecision ? contextDecision.gatePassed : true;
   const explicitlyAmbiguous = /ambiguous|unknown|insufficient|incomplete/i.test(
     brief.uncertainty,
   );
 
-  if (brief.disposition === "MONITOR" && (!hasBothOperationalContexts || explicitlyAmbiguous)) {
+  if (
+    brief.disposition === "MONITOR" &&
+    (!hasBothOperationalContexts || !gatePassed || explicitlyAmbiguous)
+  ) {
     return {
       ...brief,
       disposition: "INVESTIGATE",
       summary: `${brief.summary} FlightSentry raised the disposition because the evidence is insufficient for monitoring alone.`,
+    };
+  }
+
+  if (brief.disposition === "ESCALATE" && explicitlyAmbiguous) {
+    return {
+      ...brief,
+      disposition: "INVESTIGATE",
+      summary: `${brief.summary} FlightSentry resolved the ambiguous escalation to investigation pending operator review.`,
     };
   }
 

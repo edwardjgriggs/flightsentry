@@ -49,7 +49,7 @@ function validConfig() {
 
 // ─── Bundled config validity ──────────────────────────────────────────────────
 
-describe("detector configuration artifact — bundled profile", () => {
+describe("detector configuration artifact: bundled profile", () => {
   it("loads without throwing (valid bundled config)", () => {
     // If this test file even runs, the module loaded successfully.
     expect(detectorConfig).toBeDefined();
@@ -87,7 +87,7 @@ describe("detector configuration artifact — bundled profile", () => {
 
 // ─── validateConfig invariant tests ──────────────────────────────────────────
 
-describe("validateConfig — invariant rejection", () => {
+describe("validateConfig: invariant rejection", () => {
   it("accepts a valid config without throwing", () => {
     expect(() => validateConfig(validConfig())).not.toThrow();
   });
@@ -154,6 +154,30 @@ describe("validateConfig — invariant rejection", () => {
     expect(() => validateConfig(cfg)).toThrow(/normalization.version/i);
   });
 
+  it("rejects a string normalization deadBand", () => {
+    const cfg = validConfig();
+    (cfg.normalization as Record<string, unknown>).deadBand = "1.5";
+    expect(() => validateConfig(cfg)).toThrow(/normalization.deadBand must be a finite number/i);
+  });
+
+  it("rejects a NaN normalization scale", () => {
+    const cfg = validConfig();
+    (cfg.normalization as Record<string, unknown>).scale = NaN;
+    expect(() => validateConfig(cfg)).toThrow(/normalization.scale must be a finite number/i);
+  });
+
+  it("rejects an out-of-range madMultiplier", () => {
+    const cfg = validConfig();
+    (cfg.normalization as Record<string, unknown>).madMultiplier = 50;
+    expect(() => validateConfig(cfg)).toThrow(/normalization.madMultiplier must be a finite number/i);
+  });
+
+  it("rejects a negative minScale", () => {
+    const cfg = validConfig();
+    (cfg.normalization as Record<string, unknown>).minScale = -1;
+    expect(() => validateConfig(cfg)).toThrow(/normalization.minScale must be a finite number/i);
+  });
+
   it("rejects null config", () => {
     expect(() => validateConfig(null)).toThrow(/expected a JSON object/i);
   });
@@ -169,8 +193,9 @@ describe("validateConfig — invariant rejection", () => {
 
 describe("Python-generated artifact schema compatibility", () => {
   it("train_ensemble.py output schema is compatible with validateConfig", () => {
-    // This is the exact shape that train_ensemble.py writes.
-    // If that script changes its schema, this test will catch the drift.
+    // Frozen copy of the shape train_ensemble.py writes. This guards the
+    // TypeScript loader against that shape; the live drift guard on the Python
+    // side is scripts/data_pipeline/tests/test_detector_config_schema.py.
     const pythonGeneratedShape = {
       schemaVersion: "1",
       configProfile: "source-data-trained-v1",
@@ -211,7 +236,7 @@ describe("Python-generated artifact schema compatibility", () => {
     const demoGeneratedShape = {
       schemaVersion: "1",
       configProfile: "bundled-demo-v1",
-      scope: "DEMONSTRATION ONLY — not official ESA-ADB benchmark results. Bundled weights were hand-selected for the two-scenario browser demo; run train_ensemble.py against ESA Mission 2 source data to replace with grid-search-calibrated values.",
+      scope: "DEMONSTRATION ONLY: not official ESA-ADB benchmark results. Bundled weights were hand-selected for the two-scenario browser demo; run train_ensemble.py against ESA Mission 2 source data to replace with grid-search-calibrated values.",
       weights: {
         mad: 0.3,
         isolationForest: 0.3,
@@ -233,7 +258,7 @@ describe("Python-generated artifact schema compatibility", () => {
       },
       modelType: "bundled-rank2-linear-onnx",
       provenance: {
-        source: "build_demo_model.py deterministic construction — no ESA source data",
+        source: "build_demo_model.py deterministic construction, no ESA source data",
         weightsSource: "hand-selected for bundled two-scenario demo",
         thresholdSource: "hand-selected for bundled two-scenario demo",
         generatedBy: "scripts/data_pipeline/build_demo_model.py",
@@ -246,7 +271,7 @@ describe("Python-generated artifact schema compatibility", () => {
 
 // ─── Paired-event regression (unchanged behavior) ────────────────────────────
 
-describe("detector ensemble — paired-event regression with artifact config", () => {
+describe("detector ensemble: paired-event regression with artifact config", () => {
   it.each(["esa-m2-609", "esa-m2-618"] as const)(
     "still detects telemetry shift in %s after config artifact migration",
     (scenarioId) => {

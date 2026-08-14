@@ -51,12 +51,17 @@ function noise(index: number, offset: number): number {
   );
 }
 
+// Annotated fixture event window, shared by the generated traces and the
+// scenario metadata so the two can never drift apart.
+const EVENT_WINDOW: [number, number] = [50, 61];
+
 function makeTelemetry(eventId: 609 | 618): TelemetrySample[] {
+  const [eventStart, eventEnd] = EVENT_WINDOW;
   return Array.from({ length: 84 }, (_, timestamp) => {
-    const inEvent = timestamp >= 50 && timestamp <= 61;
-    const tail = timestamp > 61 && timestamp <= 68;
-    const eventStep = inEvent ? Math.min(1, (timestamp - 49) / 4) : 0;
-    const recovery = tail ? Math.max(0, 1 - (timestamp - 61) / 7) : 0;
+    const inEvent = timestamp >= eventStart && timestamp <= eventEnd;
+    const tail = timestamp > eventEnd && timestamp <= eventEnd + 7;
+    const eventStep = inEvent ? Math.min(1, (timestamp - (eventStart - 1)) / 4) : 0;
+    const recovery = tail ? Math.max(0, 1 - (timestamp - eventEnd) / 7) : 0;
     const magnitude = eventId === 609 ? eventStep : eventStep * 1.15;
     const residual = eventId === 618 ? recovery : recovery * 0.18;
 
@@ -231,7 +236,7 @@ const scenarios: Record<ScenarioId, Scenario> = {
     eyebrow: "CASE A · COMMAND + PLAN PRESENT",
     classification: "RARE_NOMINAL",
     description: "An unusual telemetry signature aligns with recorded command and operational-event context.",
-    eventWindow: [50, 61],
+    eventWindow: EVENT_WINDOW,
     telemetry: makeTelemetry(609),
     evidence: evidence609,
     referenceAnalysis: analysis609,
@@ -245,7 +250,7 @@ const scenarios: Record<ScenarioId, Scenario> = {
     eyebrow: "CASE B · NO COMMAND OR PLAN",
     classification: "ANOMALY",
     description: "A similar multichannel shift occurs without a trusted command or planned operation.",
-    eventWindow: [50, 61],
+    eventWindow: EVENT_WINDOW,
     telemetry: makeTelemetry(618),
     evidence: evidence618,
     referenceAnalysis: analysis618,

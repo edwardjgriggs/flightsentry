@@ -10,7 +10,7 @@
     "aocs_attitude_error"
   ],
   "bottleneckDimensions": 2,
-  "trainingData": "bundled deterministic challenge fixture \u2014 NOT trained on ESA Mission 2 source data",
+  "trainingData": "bundled deterministic challenge fixture, NOT trained on ESA Mission 2 source data",
   "distinction": "This is the transparent browser demo artifact. train_ensemble.py produces a nonlinear MLPRegressor 4-8-2-8-4 trained on ESA Mission 2 nominal data and replaces this file.",
   "replacement": "Run train_ensemble.py against ESA Mission 2 extracts."
 }
