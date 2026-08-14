@@ -1,0 +1,23 @@
+# Local dependency and build output
+.git/
+.vercel/
+.next/
+node_modules/
+.venv/
+
+# Raw ESA archives, extracted working data, and staged models
+data/
+artifacts/
+
+# Local validation output
+playwright-report/
+test-results/
+coverage/
+reports/
+
+# Local assistant and environment state
+.bob/
+.env*
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
